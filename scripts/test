@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+set -euo pipefail
+
+# Usage: ./scripts/test <stage-number>
+if [ $# -lt 1 ]; then
+  echo "使用方法: $0 <ステージ番号>" >&2
+  echo "例: $0 1  # Stage 1 のテストを実行" >&2
+  echo "例: $0 01 # Stage 01 のテストを実行" >&2
+  exit 1
+fi
+
+STAGE_NUM="$1"
+
+# ステージ番号を2桁の形式に変換（例: 1 -> 01, 10 -> 10）
+STAGE_FORMATTED=$(printf "%02d" "$STAGE_NUM")
+
+echo "Stage $STAGE_FORMATTED のテストを実行中..."
+python -m pytest -m "stage$STAGE_FORMATTED" -v
+
+# マーカーが見つからない場合のフォールバック
+if [ $? -ne 0 ]; then
+  echo "マーカー 'stage$STAGE_FORMATTED' が見つかりません。ディレクトリベースで実行を試行中..."
+  if [ -d "tests/stages/stage-$STAGE_FORMATTED" ]; then
+    python -m pytest "tests/stages/stage-$STAGE_FORMATTED/" -v
+  else
+    echo "エラー: Stage $STAGE_FORMATTED のテストが見つかりません" >&2
+    exit 1
+  fi
+fi
