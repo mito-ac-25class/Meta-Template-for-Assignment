@@ -4,7 +4,8 @@
   "customizations": {
     "vscode": {
       "settings": {
-        "python.defaultInterpreterPath": "/usr/local/bin/python"
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "chat.useAgentsMdFile": true
       },
       "extensions": [
         "ms-python.python",
