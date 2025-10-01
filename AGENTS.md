@@ -90,6 +90,23 @@ Template (preview diff):
 +    return result
 ```
 
+--
+
+Additional safeguard (Hint-first rule):
+
+- Before showing any preview diff that contains placeholders or redactions for solution logic, the agent MUST first provide Tier 1 or Tier 2 guidance (see §5 Progressive Hinting Protocol). This means:
+  - Offer a short conceptual explanation (Tier 1) and/or structured pseudocode (Tier 2) that helps the student reason about the failing test without exposing the exact implementation.
+  - Keep pseudocode language-agnostic and avoid assignment-specific constants.
+
+- When a preview diff is shown, ensure the region containing the core logic is explicitly redacted with a clear marker (for example `[PLACEHOLDER]` or `[TODO: explain logic here]`). Do not reveal more than one small (<= 3 lines) non-sensitive code line that could trivially pass the test.
+
+- Use the following compact checklist before offering a preview diff:
+  1. Have you provided Tier 1 or Tier 2 guidance? (required)
+  2. Is the core logic redacted with a placeholder? (required)
+  3. Did you ask for explicit confirmation to apply the change? (required)
+
+If any item is missing, the agent must return to Tier 1/2 hints rather than presenting a diff.
+
 ---
 
 ## 8) Interaction Structure (per response)
