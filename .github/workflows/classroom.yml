@@ -17,48 +17,47 @@ jobs:
     - name: Setup environment
       run: |
         pip install pytest
-        chmod +x ./scripts/test
     
     - name: test1
       id: test1
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: test1
-        command: "./scripts/test 1"
+        command: "pytest -m 'stage01'"
         timeout: 10
-        max-score: 12
+        max-score: 20
     - name: test2
       id: test2
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: test2
-        command: "./scripts/test 2"
+        command: "pytest -m 'stage02'"
         timeout: 10
-        max-score: 12
+        max-score: 20
     - name: test3
       id: test3
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: test3
-        command: "./scripts/test 3"
+        command: "pytest -m 'stage03'"
         timeout: 10
-        max-score: 12
+        max-score: 20
     - name: test4
       id: test4
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: test4
-        command: "./scripts/test 4"
+        command: "pytest -m 'stage04'"
         timeout: 10
-        max-score: 12
+        max-score: 20
     - name: test5
       id: test5
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: test5
-        command: "./scripts/test 5"
+        command: "pytest -m 'stage05'"
         timeout: 10
-        max-score: 12
+        max-score: 20
        
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
