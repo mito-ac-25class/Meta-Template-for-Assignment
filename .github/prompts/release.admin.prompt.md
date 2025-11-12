@@ -19,8 +19,8 @@ description: "課題リポジトリをリリース可能な状態とするため
    - `README.md`
 
 3. 以下のファイル名を変更してください。
-   - `evac.AGENTS.md` → `AGENTS.md`
-   - `evac.README.md` → `README.md`
+   - `release/evac.AGENTS.md` → `AGENTS.md` (リポジトリのルートディレクトリへ移動)
+   - `release/README.md` → `README.md` (リポジトリのルートディレクトリへ移動)
 
 4. 変更内容を確認し、コミットメッセージ "fix: remove admin prompt files" で変更を保存してください。
 
