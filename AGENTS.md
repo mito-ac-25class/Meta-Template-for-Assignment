@@ -9,13 +9,22 @@
 ├─ .devcontainer
 ├─ .github
 │   ├─ prompts
+│   │   ├─ plan.admin.prompt.md
+│   │   ├─ release.admin.prompt.md
+│   │   └─ verify.admin.prompt.md
 │   └─ workflows
+├─ agent-input
+│   └─ topics.md
+├─ agent-output
+│   └─ plan.md
 ├─ release
 │   ├─ README.md
 │   └─ evac.AGENTS.md
 ├─ src
 │   ├─ kadai
 │   └─ tutorial
+├─ templates
+│   └─ template.plan.md
 ├─ tests
 │   ├─ stages
 │   │   └─ stage-0X
@@ -35,6 +44,9 @@
 
 ### `.admin` プロンプト (開発用)
 開発用 `.admin` プロンプトは `release.admin.prompt.md` によって削除されます。
+
+- `plan.admin.prompt.md`
+	- 課題で取り扱うトピックを基に課題実施手法を選定し、ユーザーストーリーやテストシナリオをドラフトします。
 
 - `release.admin.prompt.md`
 	- 課題リポジトリをリリース可能な状態とするために、不要なファイルを削除し、必要なファイルを整理します。
