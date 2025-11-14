@@ -15,6 +15,8 @@ description: "課題リポジトリをリリース可能な状態とするため
 
 2. 以下のファイルをリポジトリから削除してください。
    - `.github/prompts/*.admin.prompt.md` （管理者用プロンプトファイル）
+   - `agent-input/*` （エージェント入力用ファイル群）
+   - `agent-output/*` （エージェント出力用ファイル群）
    - `AGENTS.md` （エージェント動作制御ファイル）
    - `README.md`
 
