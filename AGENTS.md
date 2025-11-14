@@ -11,6 +11,7 @@
 │   ├─ prompts
 │   │   ├─ plan.admin.prompt.md
 │   │   ├─ release.admin.prompt.md
+│   │   ├─ topics.admin.prompt.md
 │   │   └─ verify.admin.prompt.md
 │   └─ workflows
 ├─ agent-input
@@ -51,6 +52,9 @@
 - `release.admin.prompt.md`
 	- 課題リポジトリをリリース可能な状態とするために、不要なファイルを削除し、必要なファイルを整理します。
 
+- `topics.admin.prompt.md`
+	- agent-input/topics.md の内容から入力例・コメントなどのノイズを削除し、/plan.admin で利用できるクリーンなトピック定義を出力します。
+
 - `verify.admin.prompt.md`
 	- 課題リポジトリの課題内容、CIテストの内容や設定に問題点が無いかを包括的にチェックし、修正します。
 
@@ -60,11 +64,13 @@
 
 ## 想定フロー
 1. 課題を実装する
-	1. リポジトリで取り扱うトピックを決定する
-	2. 大まかな課題内容をドラフトする
-	3. 必要に応じて `TUTORIAL.md` を作成し、課題の前提知識をインプットするためのチュートリアルを記述する
-	4. `release/README.md` に課題内容を記述する
-	5. `tests/` 配下にテストを実装する
+	1. リポジトリで取り扱うトピックを決定し、`agent-input/topics.md` に記入する。
+	2. `/topics.admin` を実行し、不要な情報を削除する。
+	3. `/plan.admin` を実行し、課題実施プランを作成する。
+	4. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
+	5. 必要に応じて `TUTORIAL.md` を作成し、課題の前提知識をインプットするためのチュートリアルを記述する
+	6. `release/README.md` に課題内容を記述する
+	7. `tests/` 配下にテストを実装する
 2. `/verify.admin` で課題の包括的チェックを行う
 3. `/release.admin` で課題リポジトリをリリース可能状態とする
 
