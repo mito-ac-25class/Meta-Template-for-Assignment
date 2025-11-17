@@ -17,13 +17,17 @@ description: "課題リポジトリをリリース可能な状態とするため
    - `.github/prompts/*.admin.prompt.md` （管理者用プロンプトファイル）
    - `agent-input/*` （エージェント入力用ファイル群）
    - `agent-output/*` （エージェント出力用ファイル群）
+   - `templates/*` （テンプレートファイル群）
    - `AGENTS.md` （エージェント動作制御ファイル）
    - `README.md`
 
-3. 以下のファイル名を変更してください。
+3. チュートリアルが存在しない課題の場合は、以下の空ファイルを削除してください。
+   - `TUTORIAL.md` （チュートリアル用ドキュメント）
+
+4. 以下のファイル名を変更してください。
    - `release/evac.AGENTS.md` → `AGENTS.md` (リポジトリのルートディレクトリへ移動)
    - `release/README.md` → `README.md` (リポジトリのルートディレクトリへ移動)
 
-4. 変更内容を確認し、コミットメッセージ "fix: remove admin prompt files" で変更を保存してください。
+5. 変更内容を確認し、コミットメッセージ "fix: remove admin prompt files" で変更を保存してください。
 
-5. 最後に、リポジトリのルートディレクトリで `git push origin feature/remove-admin-prompts` を実行し、変更をリモートリポジトリにプッシュしてください。
+6. 最後に、リポジトリのルートディレクトリで `git push origin feature/remove-admin-prompts` を実行し、変更をリモートリポジトリにプッシュしてください。
