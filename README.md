@@ -15,6 +15,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   │   ├─ readme.admin.prompt.md         # release/README.md 作成
 │   │   ├─ release.admin.prompt.md        # リリース準備
 │   │   ├─ topics.admin.prompt.md         # トピック整理
+│   │   ├─ tutorial.admin.prompt.md       # TUTORIAL.md 作成
 │   │   └─ verify.admin.prompt.md         # 包括的検証
 │   └─ workflows         # GitHub Actions 設定
 ├─ agent-input           # エージェント入力ファイル
@@ -29,7 +30,8 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   └─ tutorial         # チュートリアル用ディレクトリ
 ├─ templates             # テンプレートファイル
 │   ├─ template.plan.md  # プランテンプレート
-│   └─ template.README.md # README テンプレート
+│   ├─ template.README.md # README テンプレート
+│   └─ template.TUTORIAL.md # TUTORIAL テンプレート
 ├─ tests                 # テストファイル
 │   ├─ stages           # ステージ別テスト
 │   └─ tutorial         # チュートリアルテスト
@@ -76,7 +78,9 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 5. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正
 
 #### 2.5 チュートリアルの作成（必要に応じて）
-6. `TUTORIAL.md` に課題の前提知識をインプットするためのチュートリアルを記述
+6. `agent-output/plan.md` の「チュートリアルの必要性」で「必要」と判断された場合、GitHub Copilot Chat で `/tutorial.admin` を実行
+   - 課題の前提知識をインプットするためのチュートリアルを自動作成
+   - `TUTORIAL.md` に出力される
 
 #### 2.6 テストの実装
 7. GitHub Copilot Chat で `/implement-test.admin` を実行
@@ -129,6 +133,10 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 - **`/readme.admin`** (`readme.admin.prompt.md`)
   - `agent-output/plan.md` の内容から課題説明用 `release/README.md` を作成
+
+- **`/tutorial.admin`** (`tutorial.admin.prompt.md`)
+  - 課題の前提知識をインプットするためのチュートリアル（`TUTORIAL.md`）を作成
+  - プランでチュートリアルが「必要」と判断された場合に実行
 
 - **`/implement-test.admin`** (`implement-test.admin.prompt.md`)
   - 課題用テストコードの実装
