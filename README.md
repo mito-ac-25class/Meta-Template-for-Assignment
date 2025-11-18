@@ -42,6 +42,18 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ## 教員向け: GitHub Classroom 課題作成手順
 
+### 大まかなフロー
+1. 課題で取り扱うトピックを記入 -> [topics.md](agent-input/topics.md)
+2. トピックをクリーン -> `/topics.admin`
+3. 課題プランを作成 -> `/plan.admin`
+4. **教員によるレビュー** -> [plan.md](agent-output/plan.md)
+5. (Optional)チュートリアルの作成 -> `/tutorial.admin`
+6. READMEの作成 -> `/readme.admin`
+7. CIテストの実装と検証 -> `/implement-test.admin`
+8. 課題の整合性を包括的にチェック -> `/verify.admin`
+9. リリース用にファイルの整理 -> `/release.admin`
+
+
 ### 1. 課題テンプレートリポジトリの作成
 
 1. GitHub 上の本リポジトリから **Use this template** > **Create a new repository** を選択
