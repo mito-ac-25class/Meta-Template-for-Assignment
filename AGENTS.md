@@ -9,6 +9,7 @@
 ├─ .devcontainer
 ├─ .github
 │   ├─ prompts
+│   │   ├─ implement-test.admin.prompt.md
 │   │   ├─ plan.admin.prompt.md
 │   │   ├─ release.admin.prompt.md
 │   │   ├─ topics.admin.prompt.md
@@ -46,6 +47,9 @@
 ### `.admin` プロンプト (開発用)
 開発用 `.admin` プロンプトは `release.admin.prompt.md` によって削除されます。
 
+- `implement-test.admin.prompt.md`
+    - 課題をCIで自動採点するためのテストコードを実装し、実際に実行することで課題内容との整合性を検証します。
+
 - `plan.admin.prompt.md`
 	- 課題で取り扱うトピックを基に課題実施手法を選定し、ユーザーストーリーやテストシナリオをドラフトします。
 
@@ -70,7 +74,7 @@
 	4. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
 	5. 必要に応じて `TUTORIAL.md` を作成し、課題の前提知識をインプットするためのチュートリアルを記述する
 	6. `release/README.md` に課題内容を記述する
-	7. `tests/` 配下にテストを実装する
+	7. `/implement-test.admin` でテストを実装・検証する
 2. `/verify.admin` で課題の包括的チェックを行う
 3. `/release.admin` で課題リポジトリをリリース可能状態とする
 
