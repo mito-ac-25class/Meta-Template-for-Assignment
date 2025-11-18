@@ -80,10 +80,9 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
    - 実装上の注意
 
 #### 2.7 テストの実装
-7. `tests/stages/` 配下にステージ別テストを実装
-   - 各ステージの要件に対応するテストケースを作成
-   - `pytest.ini` の `markers` にステージマーカーを定義
-   - `.github/workflows/classroom.yml` にステージ毎のテスト設定
+7. GitHub Copilot Chat で `/implement-test.admin` を実行
+   - 課題に沿ったテストを実装・検証
+   - 検証用の模範解答コードが `agent-output/` に出力される
 
 ### 3. 課題の検証
 
