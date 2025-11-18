@@ -10,15 +10,19 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
 ユーザーストーリーやテストシナリオを仮決めしドラフトとしてアウトプットします。
 
 ## 手順
-1. `agent-input/topics.md` を読み込みます。Markdownに記述されている以下項目を受け取り、トピックに合った課題の実施方式を決定します。
+1. 以下のブランチ名で作業用の新しいブランチを作成してください。
+   - `feature/make-a-plan`
+2. `agent-input/topics.md` を読み込みます。Markdownに記述されている以下項目を受け取り、トピックに合った課題の実施方式を決定します。
    課題の実施方式は下記 ## 課題の実施方式 の一覧から選択します。
 	 - 学習トピック一覧
 	 - 事前知識レベル
 	 - 学習目標
 	 - 難易度
 	 - 想定学習時間
-2. `templates/template.plan.md` を `agent-output/plan.md` にコピーします。
-3. `agent-output/plan.md` の `$` プレースホルダを埋める形で、課題実施プランを作成します。
+3. `templates/template.plan.md` を `agent-output/plan.md` にコピーします。
+4. `agent-output/plan.md` の `$` プレースホルダを埋める形で、課題実施プランを作成します。
+5. 変更内容を確認し、コミットメッセージ "add: output plan.md" で変更を保存してください。
+6. 最後に、リポジトリのルートディレクトリで `git push origin feature/make-a-plan` を実行し、変更をリモートリポジトリにプッシュしてください。
 
 ## 課題の実施方式
 
