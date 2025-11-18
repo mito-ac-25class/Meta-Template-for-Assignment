@@ -5,11 +5,11 @@ description: "release/README.md に記載する課題の説明文を作成しま
 # /readme.admin
 
 ## 目的
-`/readme.admin` では、課題の実施プランを `agent-input/topics.md` から取得し、  
+`/readme.admin` では、課題の実施プランを `agent-output/plan.md` から取得し、  
 学生が課題を理解しやすいように、`release/README.md` に記載する課題の説明文を作成します。
 
 ## 手順
-1. `agent-input/topics.md` を読み込みます。Markdownに記述されている以下項目を取得します。
+1. `agent-output/plan.md` を読み込みます。Markdownに記述されている以下項目を取得します。
    - 学習トピック一覧
 
 2. 以下のブランチ名で作業用の新しいブランチを作成してください。  
