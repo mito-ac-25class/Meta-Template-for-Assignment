@@ -10,10 +10,11 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 ├─ .devcontainer          # 開発コンテナ設定
 ├─ .github
 │   ├─ prompts           # エージェント用プロンプトファイル
-│   │   ├─ plan.admin.prompt.md       # 課題プラン作成
-│   │   ├─ release.admin.prompt.md    # リリース準備
-│   │   ├─ topics.admin.prompt.md     # トピック整理
-│   │   └─ verify.admin.prompt.md     # 包括的検証
+│   │   ├─ implement-test.admin.prompt.md # テスト実装と検証
+│   │   ├─ plan.admin.prompt.md           # 課題プラン作成
+│   │   ├─ release.admin.prompt.md        # リリース準備
+│   │   ├─ topics.admin.prompt.md         # トピック整理
+│   │   └─ verify.admin.prompt.md         # 包括的検証
 │   └─ workflows         # GitHub Actions 設定
 ├─ agent-input           # エージェント入力ファイル
 │   └─ topics.md        # 学習トピック定義
@@ -127,6 +128,11 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 - **`/plan.admin`** (`plan.admin.prompt.md`)
   - 課題で取り扱うトピックを基に課題実施手法を選定
   - ユーザーストーリーやテストシナリオをドラフト
+
+- **`/implement-test.admin`** (`implement-test.admin.prompt.md`)
+  - 課題用テストコードの実装
+  - テストの実行・検証と修正
+  - テスト周辺設定ファイルの修正
 
 - **`/verify.admin`** (`verify.admin.prompt.md`)
   - 課題リポジトリの課題内容、CIテストの内容や設定に問題点が無いかを包括的にチェック
