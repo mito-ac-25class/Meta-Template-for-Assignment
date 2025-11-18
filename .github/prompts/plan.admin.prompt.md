@@ -19,6 +19,7 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
 	 - 学習目標
 	 - 難易度
 	 - 想定学習時間
+	 - チュートリアルの必要性
 3. `templates/template.plan.md` を `agent-output/plan.md` にコピーします。
 4. `agent-output/plan.md` の `$` プレースホルダを埋める形で、課題実施プランを作成します。
 5. 変更内容を確認し、コミットメッセージ "add: output plan.md" で変更を保存してください。

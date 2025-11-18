@@ -149,10 +149,10 @@ $チュートリアルで扱うべき前提知識や概念（箇条書きで3-5�
 
 ## 10. 次のステップ
 
-1. 本プランを基に `release/README.md` を詳細化する
-2. `tests/stages/stage-0X/` にテストを実装する
-3. `src/kadai/` に初期状態のファイルを配置する
-4. （必要に応じて）`TUTORIAL.md` を作成する
+1. 本プランを基に `release/README.md` を詳細化する（`/readme.admin` を実行）
+2. （チュートリアルが「必要」の場合）`TUTORIAL.md` を作成する（`/tutorial.admin` を実行）
+3. `tests/stages/stage-0X/` にテストを実装する（`/implement-test.admin` を実行）
+4. `src/kadai/` に初期状態のファイルを配置する
 5. `.github/workflows/classroom.yml` のCI設定を調整する
 6. `/verify.admin` で包括的チェックを実行する
 7. `/release.admin` でリリース可能状態にする
