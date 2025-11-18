@@ -12,6 +12,7 @@
 │   │   ├─ implement-test.admin.prompt.md
 │   │   ├─ plan.admin.prompt.md
 │   │   ├─ release.admin.prompt.md
+│   │   ├─ readme.admin.prompt.md
 │   │   ├─ topics.admin.prompt.md
 │   │   └─ verify.admin.prompt.md
 │   └─ workflows
@@ -26,7 +27,8 @@
 │   ├─ kadai
 │   └─ tutorial
 ├─ templates
-│   └─ template.plan.md
+│   ├─ template.plan.md
+│   └─ template.README.md
 ├─ tests
 │   ├─ stages
 │   │   └─ stage-0X
@@ -53,6 +55,9 @@
 - `plan.admin.prompt.md`
 	- 課題で取り扱うトピックを基に課題実施手法を選定し、ユーザーストーリーやテストシナリオをドラフトします。
 
+- `readme.admin.prompt.md`
+    - release/README.md に記載する課題の説明文を作成します。
+
 - `release.admin.prompt.md`
 	- 課題リポジトリをリリース可能な状態とするために、不要なファイルを削除し、必要なファイルを整理します。
 
@@ -72,9 +77,10 @@
 	2. `/topics.admin` を実行し、不要な情報を削除する。
 	3. `/plan.admin` を実行し、課題実施プランを作成する。
 	4. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
-	5. 必要に応じて `TUTORIAL.md` を作成し、課題の前提知識をインプットするためのチュートリアルを記述する
-	6. `release/README.md` に課題内容を記述する
-	7. `/implement-test.admin` でテストを実装・検証する
+	5. `/readme.admin` を実行し、`release/README.md` を作成する。
+	6. 必要に応じて `TUTORIAL.md` を作成し、課題の前提知識をインプットするためのチュートリアルを記述する
+	7. `release/README.md` に課題内容を記述する
+	8. `/implement-test.admin` でテストを実装・検証する
 2. `/verify.admin` で課題の包括的チェックを行う
 3. `/release.admin` で課題リポジトリをリリース可能状態とする
 
