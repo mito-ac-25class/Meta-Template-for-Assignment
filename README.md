@@ -12,6 +12,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   ├─ prompts           # エージェント用プロンプトファイル
 │   │   ├─ implement-test.admin.prompt.md # テスト実装と検証
 │   │   ├─ plan.admin.prompt.md           # 課題プラン作成
+│   │   ├─ readme.admin.prompt.md         # release/README.md 作成
 │   │   ├─ release.admin.prompt.md        # リリース準備
 │   │   ├─ topics.admin.prompt.md         # トピック整理
 │   │   └─ verify.admin.prompt.md         # 包括的検証
@@ -27,7 +28,8 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   ├─ kadai            # 課題実装用ディレクトリ
 │   └─ tutorial         # チュートリアル用ディレクトリ
 ├─ templates             # テンプレートファイル
-│   └─ template.plan.md # プランテンプレート
+│   ├─ template.plan.md  # プランテンプレート
+│   └─ template.README.md # README テンプレート
 ├─ tests                 # テストファイル
 │   ├─ stages           # ステージ別テスト
 │   └─ tutorial         # チュートリアルテスト
@@ -66,27 +68,31 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
    - トピックに基づいて課題実施プランを自動生成
    - `agent-output/plan.md` に出力される
 
+#### 2.3.1 README 作成（テンプレート利用）
+4. GitHub Copilot Chat で `/readme.admin` を実行
+   - プランに基づいてリリース用 `release/README.md` を自動作成
+
 #### 2.4 プランの確認と調整
-4. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正
+5. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正
 
 #### 2.5 チュートリアルの作成（必要に応じて）
-5. `TUTORIAL.md` に課題の前提知識をインプットするためのチュートリアルを記述
+6. `TUTORIAL.md` に課題の前提知識をインプットするためのチュートリアルを記述
 
 #### 2.6 課題内容の記述
-6. `release/README.md` に学生向けの課題内容を記述
+7. `release/README.md` に学生向けの課題内容を記述
    - 課題の目的と到達目標
    - 実装する機能一覧とステージ
    - 仕様と動作例
    - 実装上の注意
 
 #### 2.7 テストの実装
-7. GitHub Copilot Chat で `/implement-test.admin` を実行
+8. GitHub Copilot Chat で `/implement-test.admin` を実行
    - 課題に沿ったテストを実装・検証
    - 検証用の模範解答コードが `agent-output/` に出力される
 
 ### 3. 課題の検証
 
-8. GitHub Copilot Chat で `/verify.admin` を実行
+9. GitHub Copilot Chat で `/verify.admin` を実行
    - 課題内容の明確性を確認
    - CIテストの設定と妥当性を検証
    - 不要なファイルの有無を確認
@@ -94,7 +100,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ### 4. リリースの準備
 
-9. GitHub Copilot Chat で `/release.admin` を実行
+10. GitHub Copilot Chat で `/release.admin` を実行
    - 開発用ファイル（`.admin.prompt.md`、`agent-input/*`、`agent-output/*`、`templates/*`）を削除
    - `release/README.md` → `README.md` に移動
    - `release/evac.AGENTS.md` → `AGENTS.md` に移動
@@ -102,17 +108,17 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ### 5. 課題の割り当て
 
-10. [Github Classroom](https://classroom.github.com/classrooms) のクラスから **+ New assignment** を選択
-11. **Assignment title**, **Deadline** をそれぞれ設定し、**Individual assignment** が選択されていることを確認して **Continue**
-12. **Find a Github repository** から作成したリポジトリを検索して選択
-13. **visibility** が **Private**、**Copy the default branch only** にのみ✅が付いていることを確認
-14. **Add a supported editor** で **Github Codespaces** を選択して **Continue**
-15. **Add autograding tests** に表示される YAML にテストが設定されていることを確認し **Create assignment**
+11. [Github Classroom](https://classroom.github.com/classrooms) のクラスから **+ New assignment** を選択
+12. **Assignment title**, **Deadline** をそれぞれ設定し、**Individual assignment** が選択されていることを確認して **Continue**
+13. **Find a Github repository** から作成したリポジトリを検索して選択
+14. **visibility** が **Private**、**Copy the default branch only** にのみ✅が付いていることを確認
+15. **Add a supported editor** で **Github Codespaces** を選択して **Continue**
+16. **Add autograding tests** に表示される YAML にテストが設定されていることを確認し **Create assignment**
 
 ### 6. 課題の配布
 
-16. 課題の **Copy invite link** を生徒に共有
-17. 学生は招待を Accept 後、**Open in Github Codespaces** ボタンから課題実施
+17. 課題の **Copy invite link** を生徒に共有
+18. 学生は招待を Accept 後、**Open in Github Codespaces** ボタンから課題実施
 
 ## プロンプトファイル概要
 
@@ -127,6 +133,9 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 - **`/plan.admin`** (`plan.admin.prompt.md`)
   - 課題で取り扱うトピックを基に課題実施手法を選定
   - ユーザーストーリーやテストシナリオをドラフト
+
+- **`/readme.admin`** (`readme.admin.prompt.md`)
+  - `agent-output/plan.md` の内容から課題説明用 `release/README.md` を作成
 
 - **`/implement-test.admin`** (`implement-test.admin.prompt.md`)
   - 課題用テストコードの実装
