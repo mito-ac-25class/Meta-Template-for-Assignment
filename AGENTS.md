@@ -79,8 +79,7 @@
 	4. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
 	5. `/readme.admin` を実行し、`release/README.md` を作成する。
 	6. 必要に応じて `TUTORIAL.md` を作成し、課題の前提知識をインプットするためのチュートリアルを記述する
-	7. `release/README.md` に課題内容を記述する
-	8. `/implement-test.admin` でテストを実装・検証する
+	7. `/implement-test.admin` でテストを実装・検証する
 2. `/verify.admin` で課題の包括的チェックを行う
 3. `/release.admin` で課題リポジトリをリリース可能状態とする
 
