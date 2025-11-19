@@ -21,7 +21,7 @@ description: "課題をCIで自動採点するためのテストコードを実�
    - 各ステージのテストコードは、課題の各機能に対応するように設計してください。
    - 各ステージ用ディレクトリ `tests/stages/stage-XX` には、対応するステージ番号に基づいたテストファイルを1つのみ作成してください。
    - 各テストファイル内では、以下のルールでテストを実装してください。
-     - 全てのテスト関数には、`@pytest.mark.stage_XX` デコレータを付与してください（XXはステージ番号）。
+     - 全てのテスト関数には、`@pytest.mark.stageXX` デコレータを付与してください（XXはステージ番号）。
      - テスト対象のモジュールやクラスのインポートは、`pytest.ini` のルールに従って、 **必ず** テスト関数内で行ってください。
      - 1つのテスト関数内には、基本的に1つのアサーションのみを含めてください。  
      - 各アサーションの上の行には、何をテストしているのかが学生にとって明確になるよう、日本語のコメントを追加してください。
@@ -30,7 +30,7 @@ description: "課題をCIで自動採点するためのテストコードを実�
       # tests/stages/stage-01/test_bank_account.py
       import pytest
 
-      @pytest.mark.stage_01
+      @pytest.mark.stage01
       def test_bank_account_exists():
           from kadai.bank_account import BankAccount
 
@@ -50,7 +50,7 @@ description: "課題をCIで自動採点するためのテストコードを実�
 
    3. ターミナルでリポジトリのルートディレクトリに移動し、以下のコマンドを実行してステージ1のテストを実行します。
       ```bash
-      pytest -m stage_01
+      pytest -m stage01
       ```
 
    4. ステージ1のテストが全て成功することを確認します。
