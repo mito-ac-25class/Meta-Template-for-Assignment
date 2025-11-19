@@ -5,7 +5,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ## リポジトリ構成
 
-```
+```text
 .
 ├─ .devcontainer          # 開発コンテナ設定
 ├─ .github
@@ -43,6 +43,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 ## 教員向け: GitHub Classroom 課題作成手順
 
 ### 大まかなフロー
+
 1. 課題で取り扱うトピックを記入 -> [topics.md](agent-input/topics.md)
 2. トピックをクリーン -> `/topics.admin`
 3. 課題プランを作成 -> `/plan.admin`
@@ -52,7 +53,6 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 7. CIテストの実装と検証 -> `/implement-test.admin`
 8. 課題の整合性を包括的にチェック -> `/verify.admin`
 9. リリース用にファイルの整理 -> `/release.admin`
-
 
 ### 1. 課題テンプレートリポジトリの作成
 
@@ -64,6 +64,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 ### 2. 課題の設計と実装
 
 #### 2.1 トピックの定義
+
 1. `agent-input/topics.md` を開き、課題で取り扱うトピックを記入する
    - 学習トピック一覧
    - 事前知識レベル
@@ -73,35 +74,41 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
    - 補足情報（任意）
 
 #### 2.2 トピックのクリーンアップ
-2. GitHub Copilot Chat で `/topics.admin` を実行
+
+1. GitHub Copilot Chat で `/topics.admin` を実行
    - `agent-input/topics.md` から入力例やコメントを削除
    - クリーンなトピック定義を作成
 
 #### 2.3 課題プランの作成
-3. GitHub Copilot Chat で `/plan.admin` を実行
+
+1. GitHub Copilot Chat で `/plan.admin` を実行
    - トピックに基づいて課題実施プランを自動生成
    - `agent-output/plan.md` に出力される
 
 #### 2.3.1 README 作成（テンプレート利用）
-4. GitHub Copilot Chat で `/readme.admin` を実行
+
+1. GitHub Copilot Chat で `/readme.admin` を実行
    - プランに基づいてリリース用 `release/README.md` を自動作成
 
 #### 2.4 プランの確認と調整
-5. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正
+
+1. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正
 
 #### 2.5 チュートリアルの作成（必要に応じて）
-6. `agent-output/plan.md` の「チュートリアルの必要性」で「必要」と判断された場合、GitHub Copilot Chat で `/tutorial.admin` を実行
+
+1. `agent-output/plan.md` の「チュートリアルの必要性」で「必要」と判断された場合、GitHub Copilot Chat で `/tutorial.admin` を実行
    - 課題の前提知識をインプットするためのチュートリアルを自動作成
    - `TUTORIAL.md` に出力される
 
 #### 2.6 テストの実装
-7. GitHub Copilot Chat で `/implement-test.admin` を実行
+
+1. GitHub Copilot Chat で `/implement-test.admin` を実行
    - 課題に沿ったテストを実装・検証
    - 検証用の模範解答コードが `agent-output/` に出力される
 
 ### 3. 課題の検証
 
-8. GitHub Copilot Chat で `/verify.admin` を実行
+1. GitHub Copilot Chat で `/verify.admin` を実行
    - 課題内容の明確性を確認
    - CIテストの設定と妥当性を検証
    - 不要なファイルの有無を確認
@@ -109,7 +116,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ### 4. リリースの準備
 
-9. GitHub Copilot Chat で `/release.admin` を実行
+1. GitHub Copilot Chat で `/release.admin` を実行
    - 開発用ファイル（`.admin.prompt.md`、`agent-input/*`、`agent-output/*`、`templates/*`）を削除
    - `release/README.md` → `README.md` に移動
    - `release/evac.AGENTS.md` → `AGENTS.md` に移動
@@ -117,17 +124,17 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ### 5. 課題の割り当て
 
-10. [Github Classroom](https://classroom.github.com/classrooms) のクラスから **+ New assignment** を選択
-11. **Assignment title**, **Deadline** をそれぞれ設定し、**Individual assignment** が選択されていることを確認して **Continue**
-12. **Find a Github repository** から作成したリポジトリを検索して選択
-13. **visibility** が **Private**、**Copy the default branch only** にのみ✅が付いていることを確認
-14. **Add a supported editor** で **Github Codespaces** を選択して **Continue**
-15. **Add autograding tests** に表示される YAML にテストが設定されていることを確認し **Create assignment**
+1. [Github Classroom](https://classroom.github.com/classrooms) のクラスから **+ New assignment** を選択
+2. **Assignment title**, **Deadline** をそれぞれ設定し、**Individual assignment** が選択されていることを確認して **Continue**
+3. **Find a Github repository** から作成したリポジトリを検索して選択
+4. **visibility** が **Private**、**Copy the default branch only** にのみ✅が付いていることを確認
+5. **Add a supported editor** で **Github Codespaces** を選択して **Continue**
+6. **Add autograding tests** に表示される YAML にテストが設定されていることを確認し **Create assignment**
 
 ### 6. 課題の配布
 
-16. 課題の **Copy invite link** を生徒に共有
-17. 学生は招待を Accept 後、**Open in Github Codespaces** ボタンから課題実施
+1. 課題の **Copy invite link** を生徒に共有
+2. 学生は招待を Accept 後、**Open in Github Codespaces** ボタンから課題実施
 
 ## プロンプトファイル概要
 
@@ -168,20 +175,24 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 本テンプレートでは、以下の実施方式から選択できます：
 
 ### プログラム実装課題
+
 - 学生は `README.md` の仕様や `tests/` のREDテストを前提に、`src/kadai/` 配下にプログラムを実装
 - RED確認 → 1ステージGREEN → コミットのサイクルで進行
 - CI で自動採点
 
 ### リファクタリング課題
+
 - 実装済みのプログラムをリファクタリング
 - GREEN状態のテストを維持しながら品質を改善
 - ASTによるコード品質チェックで採点
 
 ### テスト実装課題
+
 - バグのあるプログラムに対してテストを記述
 - バグを検出できるかどうかで採点
 
 ### テスト駆動開発課題
+
 - RED → GREEN → リファクタリングのサイクルで実装
 - 現状はCI採点なし
 
