@@ -23,7 +23,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   └─ topics.md        # 学習トピック定義
 ├─ agent-output          # エージェント出力ファイル
 │   ├─ plan.md          # 課題実施プラン
-│   └─ scenario[0-2].md # シナリオ案（/suggest-scenario.admin 使用時）
+│   └─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
 ├─ release               # リリース用ファイル
 │   ├─ README.md        # 学生向けREADME
 │   └─ evac.AGENTS.md   # 学生向けAGENTS.md

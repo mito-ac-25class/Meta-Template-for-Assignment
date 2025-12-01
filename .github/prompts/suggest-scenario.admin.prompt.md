@@ -33,8 +33,8 @@ description: "トピック定義を基に、課題のシナリオ案を3つ提�
    - シナリオは実世界の問題や身近な題材を使用し、学生のモチベーションを高めるものにする
    - 各シナリオは同じ学習目標を達成できるが、異なる切り口やストーリーを持つ
    - 難易度や想定学習時間がトピック定義と整合するようにする
-4. `templates/template.scenario.md` を `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` にコピーします。
-5. 各ファイルの `$` プレースホルダを埋める形で、シナリオ案を作成します。
+4. `templates/template.scenario.md` をテンプレートとして、`agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` を作成します。
+5. 各ファイルの `$` プレースホルダを具体的な内容で置換し、シナリオ案を完成させます。
 6. 変更内容を確認し、コミットメッセージ "add: scenario proposals" で変更を保存してください。
 7. 最後に、リポジトリのルートディレクトリで `git push origin feature/suggest-scenarios` を実行し、変更をリモートリポジトリにプッシュしてください。
 

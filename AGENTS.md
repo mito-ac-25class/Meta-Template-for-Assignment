@@ -23,7 +23,7 @@
 │   └─ topics.md
 ├─ agent-output
 │   ├─ plan.md
-│   └─ scenario[0-2].md
+│   └─ scenario0.md, scenario1.md, scenario2.md
 ├─ release
 │   ├─ README.md
 │   └─ evac.AGENTS.md
@@ -63,7 +63,7 @@
   - 課題で取り扱うトピックを基に課題実施手法を選定し、ユーザーストーリーやテストシナリオをドラフトします。
 
 - `suggest-scenario.admin.prompt.md`
-  - トピック定義を基に、課題のシナリオ案を3つ提案し、`agent-output/scenario[0-2].md` に出力します。
+  - トピック定義を基に、課題のシナリオ案を3つ提案し、`agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力します。
   - `/topics.admin` と `/plan.admin` の間にオプションで実行し、レビュー後に採用シナリオを `topics.md` に追記します。
 
 - `readme.admin.prompt.md`
@@ -92,7 +92,7 @@
    1. リポジトリで取り扱うトピックを決定し、`agent-input/topics.md` に記入する。
    2. `/topics.admin` を実行し、不要な情報を削除する。
    3. (Optional) `/suggest-scenario.admin` を実行し、シナリオ案を提案する。
-      - `agent-output/scenario[0-2].md` をレビューし、採用シナリオを決定する。
+      - `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` をレビューし、採用シナリオを決定する。
       - 採用シナリオのパスを `agent-input/topics.md` の末尾に追記する。
    4. `/plan.admin` を実行し、課題実施プランを作成する。
    5. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
