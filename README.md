@@ -14,6 +14,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   │   ├─ plan.admin.prompt.md           # 課題プラン作成
 │   │   ├─ readme.admin.prompt.md         # release/README.md 作成
 │   │   ├─ release.admin.prompt.md        # リリース準備
+│   │   ├─ suggest-scenario.admin.prompt.md # シナリオ案提案（Optional）
 │   │   ├─ topics.admin.prompt.md         # トピック整理
 │   │   ├─ tutorial.admin.prompt.md       # TUTORIAL.md 作成
 │   │   └─ verify.admin.prompt.md         # 包括的検証
@@ -21,7 +22,8 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 ├─ agent-input           # エージェント入力ファイル
 │   └─ topics.md        # 学習トピック定義
 ├─ agent-output          # エージェント出力ファイル
-│   └─ plan.md          # 課題実施プラン
+│   ├─ plan.md          # 課題実施プラン
+│   └─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
 ├─ release               # リリース用ファイル
 │   ├─ README.md        # 学生向けREADME
 │   └─ evac.AGENTS.md   # 学生向けAGENTS.md
@@ -31,6 +33,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 ├─ templates             # テンプレートファイル
 │   ├─ template.plan.md  # プランテンプレート
 │   ├─ template.README.md # README テンプレート
+│   ├─ template.scenario.md # シナリオ案テンプレート
 │   └─ template.TUTORIAL.md # TUTORIAL テンプレート
 ├─ tests                 # テストファイル
 │   ├─ stages           # ステージ別テスト
@@ -46,13 +49,14 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 1. 課題で取り扱うトピックを記入 -> [topics.md](agent-input/topics.md)
 2. トピックをクリーン -> `/topics.admin`
-3. 課題プランを作成 -> `/plan.admin`
-4. **教員によるレビュー** -> [plan.md](agent-output/plan.md)
-5. (Optional)チュートリアルの作成 -> `/tutorial.admin`
-6. READMEの作成 -> `/readme.admin`
-7. CIテストの実装と検証 -> `/implement-test.admin`
-8. 課題の整合性を包括的にチェック -> `/verify.admin`
-9. リリース用にファイルの整理 -> `/release.admin`
+3. (Optional) シナリオ案を提案 -> `/suggest-scenario.admin`
+4. 課題プランを作成 -> `/plan.admin`
+5. **教員によるレビュー** -> [plan.md](agent-output/plan.md)
+6. (Optional)チュートリアルの作成 -> `/tutorial.admin`
+7. READMEの作成 -> `/readme.admin`
+8. CIテストの実装と検証 -> `/implement-test.admin`
+9. 課題の整合性を包括的にチェック -> `/verify.admin`
+10. リリース用にファイルの整理 -> `/release.admin`
 
 ### 1. 課題テンプレートリポジトリの作成
 
@@ -78,6 +82,18 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 1. GitHub Copilot Chat で `/topics.admin` を実行
    - `agent-input/topics.md` から入力例やコメントを削除
    - クリーンなトピック定義を作成
+
+#### 2.2.1 シナリオ案の提案（Optional）
+
+1. GitHub Copilot Chat で `/suggest-scenario.admin` を実行
+   - トピックに基づいて3つのシナリオ案を自動生成
+   - `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力される
+2. 出力されたシナリオ案をレビューし、採用するシナリオを決定
+3. `agent-input/topics.md` の末尾に採用シナリオのパスを追記:
+   ```markdown
+   ## 採用シナリオ
+   agent-output/scenario{N}.md
+   ```
 
 #### 2.3 課題プランの作成
 
@@ -145,6 +161,11 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 - **`/topics.admin`** (`topics.admin.prompt.md`)
   - `agent-input/topics.md` の内容から入力例・コメントなどのノイズを削除
   - `/plan.admin` で利用できるクリーンなトピック定義を出力
+
+- **`/suggest-scenario.admin`** (`suggest-scenario.admin.prompt.md`)
+  - トピック定義を基に、課題のシナリオ案を3つ提案
+  - `agent-output/scenario[0-2].md` に出力し、教員のレビューを待つ
+  - `/topics.admin` と `/plan.admin` の間にオプションで実行
 
 - **`/plan.admin`** (`plan.admin.prompt.md`)
   - 課題で取り扱うトピックを基に課題実施手法を選定

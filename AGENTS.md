@@ -14,6 +14,7 @@
 │   │   ├─ plan.admin.prompt.md
 │   │   ├─ readme.admin.prompt.md
 │   │   ├─ release.admin.prompt.md
+│   │   ├─ suggest-scenario.admin.prompt.md
 │   │   ├─ topics.admin.prompt.md
 │   │   ├─ tutorial.admin.prompt.md
 │   │   └─ verify.admin.prompt.md
@@ -21,7 +22,8 @@
 ├─ agent-input
 │   └─ topics.md
 ├─ agent-output
-│   └─ plan.md
+│   ├─ plan.md
+│   └─ scenario0.md, scenario1.md, scenario2.md
 ├─ release
 │   ├─ README.md
 │   └─ evac.AGENTS.md
@@ -31,6 +33,7 @@
 ├─ templates
 │   ├─ template.plan.md
 │   ├─ template.README.md
+│   ├─ template.scenario.md
 │   └─ template.TUTORIAL.md
 ├─ tests
 │   ├─ stages
@@ -59,6 +62,10 @@
 - `plan.admin.prompt.md`
   - 課題で取り扱うトピックを基に課題実施手法を選定し、ユーザーストーリーやテストシナリオをドラフトします。
 
+- `suggest-scenario.admin.prompt.md`
+  - トピック定義を基に、課題のシナリオ案を3つ提案し、`agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力します。
+  - `/topics.admin` と `/plan.admin` の間にオプションで実行し、レビュー後に採用シナリオを `topics.md` に追記します。
+
 - `readme.admin.prompt.md`
   - release/README.md に記載する課題の説明文を作成します。
 
@@ -84,11 +91,14 @@
 1. 課題を実装する
    1. リポジトリで取り扱うトピックを決定し、`agent-input/topics.md` に記入する。
    2. `/topics.admin` を実行し、不要な情報を削除する。
-   3. `/plan.admin` を実行し、課題実施プランを作成する。
-   4. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
-   5. 必要に応じて `/tutorial.admin` を実行し、`TUTORIAL.md` を作成する（プラン内でチュートリアルが「必要」と判断された場合）
-   6. `/readme.admin` を実行し、`release/README.md` を作成する。
-   7. `/implement-test.admin` でテストを実装・検証する
+   3. (Optional) `/suggest-scenario.admin` を実行し、シナリオ案を提案する。
+      - `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` をレビューし、採用シナリオを決定する。
+      - 採用シナリオのパスを `agent-input/topics.md` の末尾に追記する。
+   4. `/plan.admin` を実行し、課題実施プランを作成する。
+   5. `agent-output/plan.md` を確認し、必要に応じて課題実施プランを修正する。
+   6. 必要に応じて `/tutorial.admin` を実行し、`TUTORIAL.md` を作成する（プラン内でチュートリアルが「必要」と判断された場合）
+   7. `/readme.admin` を実行し、`release/README.md` を作成する。
+   8. `/implement-test.admin` でテストを実装・検証する
 2. `/verify.admin` で課題の包括的チェックを行う
 3. `/release.admin` で課題リポジトリをリリース可能状態とする
 
