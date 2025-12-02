@@ -40,8 +40,9 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
    - 推奨される課題実施方式 → 選定した課題実施方式
 3. `templates/template.plan.md` を `agent-output/plan.md` にコピーします。
 4. `agent-output/plan.md` の `$` プレースホルダを埋める形で、課題実施プランを作成します。
-5. 変更内容を確認し、コミットメッセージ "add: output plan.md" で変更を保存してください。
-6. 最後に、リポジトリのルートディレクトリで `git push origin feature/make-a-plan` を実行し、変更をリモートリポジトリにプッシュしてください。
+5. 作成した `agent-output/plan.md` の内容を教員に提示し、レビューを依頼してください。教員の確認・修正指示を待ち、必要に応じて修正を行います。
+6. 教員の承認を得た後、変更内容を確認し、コミットメッセージ "add: output plan.md" で変更を保存してください。
+7. 最後に、リポジトリのルートディレクトリで `git push origin feature/make-a-plan` を実行し、変更をリモートリポジトリにプッシュしてください。
 
 ## 課題の実施方式
 
