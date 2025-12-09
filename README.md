@@ -132,11 +132,19 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 ### 4. リリースの準備
 
-1. GitHub Copilot Chat で `/release.admin` を実行
+1. **方法1: シェルスクリプトで自動実行（推奨）**
+   ```bash
+   ./scripts/release.sh
+   ```
    - 開発用ファイル（`.admin.prompt.md`、`agent-input/*`、`agent-output/*`、`templates/*`）を削除
    - `release/README.md` → `README.md` に移動
    - `release/evac.AGENTS.md` → `AGENTS.md` に移動
    - 学生向けの状態に整理
+   - 自動的にコミット・プッシュまで実行
+
+2. **方法2: GitHub Copilot Chat で実行**
+   - GitHub Copilot Chat で `/release.admin` を実行
+   - 上記と同様の処理をエージェントが実行
 
 ### 5. 課題の割り当て
 
