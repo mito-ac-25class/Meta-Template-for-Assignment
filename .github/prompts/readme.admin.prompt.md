@@ -12,8 +12,7 @@ description: "release/README.md に記載する課題の説明文を作成しま
 1. `agent-output/plan.md` を読み込みます。Markdownに記述されている以下項目を取得します。
    - 学習トピック一覧
 
-2. 以下のブランチ名で作業用の新しいブランチを作成してください。  
-   - `feature/make-readme`
+2. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/make-readme` を作成してください。
 
 3. `templates/template.readme.md` を `release/README.md` にコピーします。
 
@@ -21,6 +20,4 @@ description: "release/README.md に記載する課題の説明文を作成しま
 
 5. `release/README.md` 内のコメント（`<!-- ... -->`）を全て削除します。
   
-6. 変更内容を確認し、`feat:` プレフィックスのコミットメッセージを追加して変更を保存してください。
-
-7. 最後に、リポジトリのルートディレクトリで `git push origin feature/make-readme` を実行し、変更をリモートリポジトリにプッシュしてください。
+6. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。
