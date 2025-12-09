@@ -19,7 +19,7 @@ description: "課題リポジトリをリリース可能な状態とするため
 
 このスクリプトは以下の処理を自動的に行います:
 
-1. 作業用ブランチ `feature/remove-admin-prompts` を作成
+1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/remove-admin-prompts` を作成
 2. 管理者用プロンプトファイル (`.github/prompts/*.admin.prompt.md`) を削除
 3. `agent-input/*` ディレクトリを削除
 4. `agent-output/*` ディレクトリを削除
@@ -34,6 +34,8 @@ description: "課題リポジトリをリリース可能な状態とするため
 
 スクリプト実行後は、GitHub上でプルリクエストを作成し、レビュー後にmainブランチにマージしてください。
 
+詳細なワークフローについては、[共通ワークフロー](./WORKFLOW.md) を参照してください。
+
 ## 手動実行（スクリプトが使用できない場合）
 
 万が一スクリプトが実行できない場合は、以下の手順で手動実行してください:
@@ -41,8 +43,7 @@ description: "課題リポジトリをリリース可能な状態とするため
 <details>
 <summary>手動実行手順を表示</summary>
 
-1. 以下のブランチ名で作業用の新しいブランチを作成してください。  
-   - `feature/remove-admin-prompts`
+1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/remove-admin-prompts` を作成してください。
 
 2. 以下のファイルをリポジトリから削除してください。
    - `.github/prompts/*.admin.prompt.md` （管理者用プロンプトファイル）
@@ -60,8 +61,6 @@ description: "課題リポジトリをリリース可能な状態とするため
    - `release/evac.AGENTS.md` → `AGENTS.md` (リポジトリのルートディレクトリへ移動)
    - `release/README.md` → `README.md` (リポジトリのルートディレクトリへ移動)
 
-5. 変更内容を確認し、コミットメッセージ "fix: remove admin prompt files" で変更を保存してください。
-
-6. 最後に、リポジトリのルートディレクトリで `git push origin feature/remove-admin-prompts` を実行し、変更をリモートリポジトリにプッシュしてください。
+5. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（メッセージ: "fix: remove admin prompt files"）し、リモートリポジトリにプッシュしてください。
 
 </details>
