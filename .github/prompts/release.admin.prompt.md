@@ -10,6 +10,36 @@ description: "課題リポジトリをリリース可能な状態とするため
 リポジトリをリリース可能な状態とするために、学生にとって不要なファイルを削除し、退避中の必要なファイルを元の場所に戻す作業を行います。
 
 ## 手順
+
+リリース準備は、以下のシェルスクリプトを実行することで自動化されています:
+
+```bash
+./scripts/release.sh
+```
+
+このスクリプトは以下の処理を自動的に行います:
+
+1. 作業用ブランチ `feature/remove-admin-prompts` を作成
+2. 管理者用プロンプトファイル (`.github/prompts/*.admin.prompt.md`) を削除
+3. `agent-input/*` ディレクトリを削除
+4. `agent-output/*` ディレクトリを削除
+5. `templates/*` ディレクトリを削除
+6. 開発用 `AGENTS.md` と `README.md` を削除
+7. 空の `TUTORIAL.md` を削除（存在し、かつ空の場合のみ）
+8. `release/evac.AGENTS.md` → `AGENTS.md` に移動
+9. `release/README.md` → `README.md` に移動
+10. 変更をコミット (コミットメッセージ: "fix: remove admin prompt files")
+11. リモートリポジトリにプッシュ
+
+スクリプト実行後は、GitHub上でプルリクエストを作成し、レビュー後にmainブランチにマージしてください。
+
+## 手動実行（スクリプトが使用できない場合）
+
+万が一スクリプトが実行できない場合は、以下の手順で手動実行してください:
+
+<details>
+<summary>手動実行手順を表示</summary>
+
 1. 以下のブランチ名で作業用の新しいブランチを作成してください。  
    - `feature/remove-admin-prompts`
 
@@ -31,3 +61,5 @@ description: "課題リポジトリをリリース可能な状態とするため
 5. 変更内容を確認し、コミットメッセージ "fix: remove admin prompt files" で変更を保存してください。
 
 6. 最後に、リポジトリのルートディレクトリで `git push origin feature/remove-admin-prompts` を実行し、変更をリモートリポジトリにプッシュしてください。
+
+</details>
