@@ -43,6 +43,22 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 └─ TUTORIAL.md           # チュートリアルドキュメント
 ```
 
+## ローカル開発環境のセットアップ
+
+### 依存関係のインストール
+
+ローカル環境でテストを実行する場合は、事前に開発用の依存関係をインストールする必要があります。
+
+```bash
+pip install -r requirements-dev.txt
+```
+
+このコマンドにより、pytest などのテスト実行に必要なパッケージがインストールされます。
+
+### GitHub Codespaces / Dev Container を使用する場合
+
+GitHub Codespaces または Dev Container を使用している場合は、`.devcontainer/devcontainer.json` の設定により依存関係が自動的にインストールされるため、手動でのインストールは不要です。
+
 ## 教員向け: GitHub Classroom 課題作成手順
 
 ### 大まかなフロー
