@@ -20,7 +20,7 @@ cd "${REPO_ROOT}"
 echo -e "${GREEN}リポジトリをリリース可能な状態にします...${NC}"
 
 # 1. 作業用ブランチの作成
-echo -e "\n${YELLOW}[1/8] 作業用ブランチを作成中...${NC}"
+echo -e "\n${YELLOW}[1/9] 作業用ブランチを作成中...${NC}"
 BRANCH_NAME="feature/remove-admin-prompts"
 
 # 既に同名のブランチが存在する場合の処理
@@ -34,7 +34,7 @@ else
 fi
 
 # 2. 管理者用プロンプトファイルの削除
-echo -e "\n${YELLOW}[2/8] 管理者用プロンプトファイルを削除中...${NC}"
+echo -e "\n${YELLOW}[2/9] 管理者用プロンプトファイルを削除中...${NC}"
 if ls .github/prompts/*.admin.prompt.md 1> /dev/null 2>&1; then
     git rm .github/prompts/*.admin.prompt.md
     echo -e "${GREEN}管理者用プロンプトファイルを削除しました。${NC}"
@@ -43,7 +43,7 @@ else
 fi
 
 # 3. agent-input ディレクトリの削除
-echo -e "\n${YELLOW}[3/8] agent-input ディレクトリを削除中...${NC}"
+echo -e "\n${YELLOW}[3/9] agent-input ディレクトリを削除中...${NC}"
 if [ -d "agent-input" ]; then
     git rm -r agent-input
     echo -e "${GREEN}agent-input ディレクトリを削除しました。${NC}"
@@ -52,7 +52,7 @@ else
 fi
 
 # 4. agent-output ディレクトリの削除
-echo -e "\n${YELLOW}[4/8] agent-output ディレクトリを削除中...${NC}"
+echo -e "\n${YELLOW}[4/9] agent-output ディレクトリを削除中...${NC}"
 if [ -d "agent-output" ]; then
     git rm -r agent-output
     echo -e "${GREEN}agent-output ディレクトリを削除しました。${NC}"
@@ -61,7 +61,7 @@ else
 fi
 
 # 5. templates ディレクトリの削除
-echo -e "\n${YELLOW}[5/8] templates ディレクトリを削除中...${NC}"
+echo -e "\n${YELLOW}[5/9] templates ディレクトリを削除中...${NC}"
 if [ -d "templates" ]; then
     git rm -r templates
     echo -e "${GREEN}templates ディレクトリを削除しました。${NC}"
@@ -70,7 +70,7 @@ else
 fi
 
 # 6. 開発用 AGENTS.md と README.md の削除
-echo -e "\n${YELLOW}[6/8] 開発用 AGENTS.md と README.md を削除中...${NC}"
+echo -e "\n${YELLOW}[6/9] 開発用 AGENTS.md と README.md を削除中...${NC}"
 if [ -f "AGENTS.md" ]; then
     git rm AGENTS.md
     echo -e "${GREEN}AGENTS.md を削除しました。${NC}"
@@ -86,7 +86,7 @@ else
 fi
 
 # 7. 空の TUTORIAL.md の削除（存在し、かつ空の場合のみ）
-echo -e "\n${YELLOW}[7/8] 空の TUTORIAL.md を確認中...${NC}"
+echo -e "\n${YELLOW}[7/9] 空の TUTORIAL.md を確認中...${NC}"
 if [ -f "TUTORIAL.md" ]; then
     # ファイルサイズが0バイト、または空白文字のみの場合は削除
     if [ ! -s "TUTORIAL.md" ] || ! grep -q '[^[:space:]]' TUTORIAL.md; then
@@ -99,8 +99,17 @@ else
     echo -e "${YELLOW}TUTORIAL.md が見つかりません。スキップします。${NC}"
 fi
 
-# 8. リリース用ファイルの移動
-echo -e "\n${YELLOW}[8/8] リリース用ファイルを移動中...${NC}"
+# 8. tests/infrastructure ディレクトリの削除
+echo -e "\n${YELLOW}[8/9] tests/infrastructure ディレクトリを削除中...${NC}"
+if [ -d "tests/infrastructure" ]; then
+    git rm -r tests/infrastructure
+    echo -e "${GREEN}tests/infrastructure ディレクトリを削除しました。${NC}"
+else
+    echo -e "${YELLOW}tests/infrastructure ディレクトリが見つかりません。スキップします。${NC}"
+fi
+
+# 9. リリース用ファイルの移動
+echo -e "\n${YELLOW}[9/9] リリース用ファイルを移動中...${NC}"
 
 # release/evac.AGENTS.md → AGENTS.md
 if [ -f "release/evac.AGENTS.md" ]; then
@@ -120,12 +129,12 @@ else
     exit 1
 fi
 
-# 9. 変更をコミット
+# 10. 変更をコミット
 echo -e "\n${YELLOW}変更をコミット中...${NC}"
 git commit -m "fix: remove admin prompt files"
 echo -e "${GREEN}変更をコミットしました。${NC}"
 
-# 10. リモートリポジトリにプッシュ
+# 11. リモートリポジトリにプッシュ
 echo -e "\n${YELLOW}リモートリポジトリにプッシュ中...${NC}"
 git push origin ${BRANCH_NAME}
 echo -e "${GREEN}リモートリポジトリにプッシュしました。${NC}"

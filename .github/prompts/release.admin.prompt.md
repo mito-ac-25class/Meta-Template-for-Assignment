@@ -26,10 +26,11 @@ description: "課題リポジトリをリリース可能な状態とするため
 5. `templates/*` ディレクトリを削除
 6. 開発用 `AGENTS.md` と `README.md` を削除
 7. 空の `TUTORIAL.md` を削除（存在し、かつ空の場合のみ）
-8. `release/evac.AGENTS.md` → `AGENTS.md` に移動
-9. `release/README.md` → `README.md` に移動
-10. 変更をコミット (コミットメッセージ: "fix: remove admin prompt files")
-11. リモートリポジトリにプッシュ
+8. `tests/infrastructure/*` ディレクトリを削除
+9. `release/evac.AGENTS.md` → `AGENTS.md` に移動
+10. `release/README.md` → `README.md` に移動
+11. 変更をコミット (コミットメッセージ: "fix: remove admin prompt files")
+12. リモートリポジトリにプッシュ
 
 スクリプト実行後は、GitHub上でプルリクエストを作成し、レビュー後にmainブランチにマージしてください。
 
@@ -48,6 +49,7 @@ description: "課題リポジトリをリリース可能な状態とするため
    - `agent-input/*` （エージェント入力用ファイル群）
    - `agent-output/*` （エージェント出力用ファイル群）
    - `templates/*` （テンプレートファイル群）
+   - `tests/infrastructure/*` （インフラテスト用ファイル群）
    - `AGENTS.md` （エージェント動作制御ファイル）
    - `README.md`
 

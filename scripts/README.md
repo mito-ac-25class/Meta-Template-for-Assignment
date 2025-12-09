@@ -21,10 +21,11 @@
 5. `templates/*` ディレクトリを削除
 6. 開発用 `AGENTS.md` と `README.md` を削除
 7. 空の `TUTORIAL.md` を削除（存在し、かつ空の場合のみ）
-8. `release/evac.AGENTS.md` → `AGENTS.md` に移動
-9. `release/README.md` → `README.md` に移動
-10. 変更をコミット
-11. リモートリポジトリにプッシュ
+8. `tests/infrastructure/*` ディレクトリを削除
+9. `release/evac.AGENTS.md` → `AGENTS.md` に移動
+10. `release/README.md` → `README.md` に移動
+11. 変更をコミット
+12. リモートリポジトリにプッシュ
 
 ### 前提条件
 
