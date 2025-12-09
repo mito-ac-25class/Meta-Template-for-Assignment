@@ -20,7 +20,7 @@ cd "${REPO_ROOT}"
 echo -e "${GREEN}リポジトリをリリース可能な状態にします...${NC}"
 
 # 1. 作業用ブランチの作成
-echo -e "\n${YELLOW}[1/7] 作業用ブランチを作成中...${NC}"
+echo -e "\n${YELLOW}[1/8] 作業用ブランチを作成中...${NC}"
 BRANCH_NAME="feature/remove-admin-prompts"
 
 # 既に同名のブランチが存在する場合の処理
@@ -34,7 +34,7 @@ else
 fi
 
 # 2. 管理者用プロンプトファイルの削除
-echo -e "\n${YELLOW}[2/7] 管理者用プロンプトファイルを削除中...${NC}"
+echo -e "\n${YELLOW}[2/8] 管理者用プロンプトファイルを削除中...${NC}"
 if ls .github/prompts/*.admin.prompt.md 1> /dev/null 2>&1; then
     git rm .github/prompts/*.admin.prompt.md
     echo -e "${GREEN}管理者用プロンプトファイルを削除しました。${NC}"
@@ -43,7 +43,7 @@ else
 fi
 
 # 3. agent-input ディレクトリの削除
-echo -e "\n${YELLOW}[3/7] agent-input ディレクトリを削除中...${NC}"
+echo -e "\n${YELLOW}[3/8] agent-input ディレクトリを削除中...${NC}"
 if [ -d "agent-input" ]; then
     git rm -r agent-input
     echo -e "${GREEN}agent-input ディレクトリを削除しました。${NC}"
@@ -52,7 +52,7 @@ else
 fi
 
 # 4. agent-output ディレクトリの削除
-echo -e "\n${YELLOW}[4/7] agent-output ディレクトリを削除中...${NC}"
+echo -e "\n${YELLOW}[4/8] agent-output ディレクトリを削除中...${NC}"
 if [ -d "agent-output" ]; then
     git rm -r agent-output
     echo -e "${GREEN}agent-output ディレクトリを削除しました。${NC}"
@@ -61,7 +61,7 @@ else
 fi
 
 # 5. templates ディレクトリの削除
-echo -e "\n${YELLOW}[5/7] templates ディレクトリを削除中...${NC}"
+echo -e "\n${YELLOW}[5/8] templates ディレクトリを削除中...${NC}"
 if [ -d "templates" ]; then
     git rm -r templates
     echo -e "${GREEN}templates ディレクトリを削除しました。${NC}"
@@ -70,7 +70,7 @@ else
 fi
 
 # 6. 開発用 AGENTS.md と README.md の削除
-echo -e "\n${YELLOW}[6/7] 開発用 AGENTS.md と README.md を削除中...${NC}"
+echo -e "\n${YELLOW}[6/8] 開発用 AGENTS.md と README.md を削除中...${NC}"
 if [ -f "AGENTS.md" ]; then
     git rm AGENTS.md
     echo -e "${GREEN}AGENTS.md を削除しました。${NC}"
@@ -86,7 +86,7 @@ else
 fi
 
 # 7. 空の TUTORIAL.md の削除（存在し、かつ空の場合のみ）
-echo -e "\n${YELLOW}[7/7] 空の TUTORIAL.md を確認中...${NC}"
+echo -e "\n${YELLOW}[7/8] 空の TUTORIAL.md を確認中...${NC}"
 if [ -f "TUTORIAL.md" ]; then
     # ファイルサイズが0バイト、または空白文字のみの場合は削除
     if [ ! -s "TUTORIAL.md" ] || ! grep -q '[^[:space:]]' TUTORIAL.md; then
