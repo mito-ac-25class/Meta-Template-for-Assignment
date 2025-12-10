@@ -25,8 +25,8 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   ├─ plan.md          # 課題実施プラン
 │   └─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
 ├─ release               # リリース用ファイル
-│   ├─ README.md        # 学生向けREADME
-│   └─ evac.AGENTS.md   # 学生向けAGENTS.md
+│   ├─ README.md        # 学生向けREADME（リリース時にルートに移動）
+│   └─ student.AGENTS.md   # 学生向けAGENTS.md（リリース時にルートのAGENTS.mdに置き換わる）
 ├─ src
 │   ├─ kadai            # 課題実装用ディレクトリ
 │   └─ tutorial         # チュートリアル用ディレクトリ
@@ -154,7 +154,7 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
    ```
    - 開発用ファイル（`.admin.prompt.md`、`agent-input/*`、`agent-output/*`、`templates/*`）を削除
    - `release/README.md` → `README.md` に移動
-   - `release/evac.AGENTS.md` → `AGENTS.md` に移動
+   - `release/student.AGENTS.md` → `AGENTS.md` に移動（学生向けのAGENTS.mdに置き換え）
    - 学生向けの状態に整理
    - 自動的にコミット・プッシュまで実行
 
