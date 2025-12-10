@@ -109,14 +109,19 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
    - トピックに基づいて3つのシナリオ案を自動生成
    - `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力される
    - `agent-output/scenario-evaluation.md` に評価マトリクスが出力される
+
 2. 出力されたシナリオ案と評価マトリクスをレビューし、採用するシナリオを決定
-   - 評価マトリクスには、具体性、親しみやすさ、実現可能性、学習効果、拡張性の5つの観点から各シナリオを評価した結果が含まれます
-   - 総合スコアと推奨理由を参考に、最適なシナリオを選択してください
+   
+   **評価マトリクスの活用方法**:
+   - 5つの評価基準（具体性、親しみやすさ、実現可能性、学習効果、拡張性）から各シナリオを評価
+   - 総合スコアと推奨理由を参考に、最適なシナリオを選択
+   
 3. `agent-input/topics.md` の末尾に採用シナリオのパスを追記:
    ```markdown
    ## 採用シナリオ
    agent-output/scenario{N}.md
    ```
+   
    **注意**: パスは `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` のいずれかの相対パス形式で記述してください
 
 **シナリオの再生成について**:
