@@ -8,6 +8,9 @@ description: "トピック定義を基に、課題のシナリオ案を3つ提�
 `/topics.admin` で整理されたトピック定義を基に、課題として実装可能なシナリオ案を3つ提案します。  
 各シナリオは `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力され、教員のレビューを待ちます。
 
+## 前提条件
+- `/topics.admin` が実行済みで `agent-input/topics.md` がクリーン化され、mainブランチにコミット・プッシュされていること
+
 ## 入力
 - `agent-input/topics.md`（`/topics.admin` によってクリーン化されたMarkdown）
 
