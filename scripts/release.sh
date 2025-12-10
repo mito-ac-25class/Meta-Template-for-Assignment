@@ -61,9 +61,10 @@ fi
 echo -e "${GREEN}必須ファイルの確認が完了しました。${NC}"
 
 # 作業ツリーの状態確認
-if [ -n "$(git status --porcelain)" ]; then
+GIT_STATUS=$(git status --porcelain)
+if [ -n "$GIT_STATUS" ]; then
     echo -e "${YELLOW}警告: 未コミットの変更があります。${NC}"
-    git status --short
+    echo "$GIT_STATUS" | head -10
     echo -e ""
     read -p "未コミットの変更がありますが続行しますか？ (y/N): " -n 1 -r
     echo
@@ -222,11 +223,8 @@ fi
 
 # 10. 変更をコミット
 echo -e "\n${YELLOW}変更をコミット中...${NC}"
-if [ -z "$(git diff --cached --name-only)" ]; then
-    echo -e "${YELLOW}警告: コミットする変更がありません。${NC}"
-    echo -e "${YELLOW}スクリプトを中止します。${NC}"
-    exit 1
-fi
+# Note: At this point, git rm and git mv operations have already staged changes,
+# so we can proceed directly to commit
 git commit -m "fix: remove admin prompt files"
 echo -e "${GREEN}変更をコミットしました。${NC}"
 
