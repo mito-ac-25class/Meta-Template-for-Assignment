@@ -202,7 +202,7 @@ else
     echo -e "${RED}エラー: release/evac.AGENTS.md が見つかりません。${NC}"
     echo -e "${RED}リリース準備を中止します。${NC}"
     echo -e "${YELLOW}ロールバック方法：${NC}"
-    echo -e "  git reset --hard HEAD"
+    echo -e "  git reset --hard"
     echo -e "  git clean -fd"
     exit 1
 fi
@@ -215,14 +215,14 @@ else
     echo -e "${RED}エラー: release/README.md が見つかりません。${NC}"
     echo -e "${RED}リリース準備を中止します。${NC}"
     echo -e "${YELLOW}ロールバック方法：${NC}"
-    echo -e "  git reset --hard HEAD"
+    echo -e "  git reset --hard"
     echo -e "  git clean -fd"
     exit 1
 fi
 
 # 10. 変更をコミット
 echo -e "\n${YELLOW}変更をコミット中...${NC}"
-if git diff --cached --quiet; then
+if [ -z "$(git diff --cached --name-only)" ]; then
     echo -e "${YELLOW}警告: コミットする変更がありません。${NC}"
     echo -e "${YELLOW}スクリプトを中止します。${NC}"
     exit 1
