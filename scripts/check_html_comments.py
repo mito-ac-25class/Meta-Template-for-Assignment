@@ -21,7 +21,13 @@ CHECK_PATTERNS = [
 ]
 
 # HTMLコメントを検出する正規表現
+# NOTE: この正規表現は単純なHTMLコメント（<!-- ... -->）を検出します。
+# ネストしたコメントや特殊なケースには対応していませんが、
+# テンプレートファイルでは単純なコメントのみを使用しているため十分です。
 HTML_COMMENT_PATTERN = re.compile(r'<!--.*?-->', re.DOTALL)
+
+# コメントプレビューの最大文字数
+COMMENT_PREVIEW_LENGTH = 50
 
 
 def find_html_comments(file_path: Path) -> List[Tuple[int, str]]:
@@ -52,8 +58,10 @@ def find_html_comments(file_path: Path) -> List[Tuple[int, str]]:
         comment_text = match.group(0)
         # コメントの開始位置までの改行数を数えて行番号を取得
         line_num = content[:match.start()].count('\n') + 1
-        # コメントの最初の50文字を表示用に取得（長すぎる場合は省略）
-        preview = comment_text[:50] + ('...' if len(comment_text) > 50 else '')
+        # コメントの最初のN文字を表示用に取得（長すぎる場合は省略）
+        preview = comment_text[:COMMENT_PREVIEW_LENGTH] + (
+            '...' if len(comment_text) > COMMENT_PREVIEW_LENGTH else ''
+        )
         comments.append((line_num, preview))
     
     return comments
