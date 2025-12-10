@@ -30,6 +30,26 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
    agent-output/scenario0.md
    ```
    
+   **パス形式のバリデーション**:
+   - パスは相対パス形式でなければなりません
+   - パスは `agent-output/scenario0.md`, `agent-output/scenario1.md`, `agent-output/scenario2.md` のいずれかでなければなりません
+   - 上記以外のパスが指定されている場合はエラーメッセージを表示し、正しい形式を案内してください
+   
+   **エラーメッセージ例**:
+   ```
+   エラー: 採用シナリオのパス形式が正しくありません。
+   
+   指定されたパス: {実際のパス}
+   
+   正しい形式:
+   - agent-output/scenario0.md
+   - agent-output/scenario1.md
+   - agent-output/scenario2.md
+   
+   agent-input/topics.md の「## 採用シナリオ」セクションを確認し、
+   上記いずれかの相対パス形式で記述してください。
+   ```
+   
    採用シナリオに含まれる以下の情報を課題プランに反映してください:
    - シナリオタイトル → 課題タイトル
    - シチュエーション → ユーザーストーリー
