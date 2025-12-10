@@ -36,7 +36,7 @@ description: "agent-input/topics.md の内容から入力例・コメントな�
    git status
    git diff
    git add agent-input/topics.md
-   git commit -m "update: clean topics.md"
+   git commit -m "clean: remove examples and comments from topics.md"
    git push origin main
    ```
 

@@ -20,7 +20,7 @@ git checkout -b <ブランチ名>
 
 | プロンプト | ブランチ名 |
 |----------|-----------|
-| `/topics.admin` | _(ブランチ作成不要、mainで直接作業し、コミット・プッシュ)_ |
+| `/topics.admin` | _(mainブランチで直接作業)_ |
 | `/suggest-scenario.admin` | `feature/suggest-scenarios` |
 | `/plan.admin` | `feature/make-a-plan` |
 | `/readme.admin` | `feature/make-readme` |
@@ -40,7 +40,7 @@ git add .
 git commit -m "<コミットメッセージ>"
 ```
 
-**注意**: `/topics.admin` では、mainブランチに直接コミット・プッシュを行うため、次のステップ3のプッシュコマンドは `git push origin main` となります。
+**注意**: `/topics.admin` では、mainブランチに直接コミット・プッシュを行うため、プッシュコマンドは `git push origin main` となります。
 
 #### コミットメッセージのプレフィックス
 
