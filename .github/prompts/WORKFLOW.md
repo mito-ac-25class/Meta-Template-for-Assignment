@@ -10,6 +10,8 @@
 
 作業を開始する前に、各プロンプト専用のブランチを作成します。
 
+**注意**: `/topics.admin` のみ例外で、ブランチを作成せず、mainブランチで直接作業します。
+
 ```bash
 git checkout -b <ブランチ名>
 ```
@@ -18,7 +20,7 @@ git checkout -b <ブランチ名>
 
 | プロンプト | ブランチ名 |
 |----------|-----------|
-| `/topics.admin` | _(ブランチ作成不要、mainで直接作業)_ |
+| `/topics.admin` | _(ブランチ作成不要、mainで直接作業し、コミット・プッシュ)_ |
 | `/suggest-scenario.admin` | `feature/suggest-scenarios` |
 | `/plan.admin` | `feature/make-a-plan` |
 | `/readme.admin` | `feature/make-readme` |
@@ -37,6 +39,8 @@ git diff
 git add .
 git commit -m "<コミットメッセージ>"
 ```
+
+**注意**: `/topics.admin` では、mainブランチに直接コミット・プッシュを行うため、次のステップ3のプッシュコマンドは `git push origin main` となります。
 
 #### コミットメッセージのプレフィックス
 

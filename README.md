@@ -98,6 +98,7 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 1. GitHub Copilot Chat で `/topics.admin` を実行
    - `agent-input/topics.md` から入力例やコメントを削除
    - クリーンなトピック定義を作成
+   - 完了後、mainブランチに直接コミット・プッシュされます（このステップのみブランチ作成不要）
 
 #### 2.2.1 シナリオ案の提案（Optional）
 
