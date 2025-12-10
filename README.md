@@ -23,7 +23,9 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   └─ topics.md        # 学習トピック定義
 ├─ agent-output          # エージェント出力ファイル
 │   ├─ plan.md          # 課題実施プラン
-│   ├─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
+│   ├─ scenario0.md     # シナリオ案1（/suggest-scenario.admin 使用時）
+│   ├─ scenario1.md     # シナリオ案2（/suggest-scenario.admin 使用時）
+│   ├─ scenario2.md     # シナリオ案3（/suggest-scenario.admin 使用時）
 │   ├─ scenario-evaluation.md # シナリオ評価マトリクス（/suggest-scenario.admin 使用時）
 │   └─ scenarios-backup-YYYYMMDD-HHMMSS/ # シナリオ再生成時のバックアップ
 ├─ release               # リリース用ファイル
