@@ -20,7 +20,7 @@ description: "トピック定義を基に、課題のシナリオ案を3つ提�
 
 ## 手順
 
-1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/suggest-scenarios` を作成してください。
+1. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/suggest-scenarios` を作成してください。
 2. `agent-input/topics.md` を読み込み、以下の情報を把握します。
    - 学習トピック一覧
    - 事前知識レベル
@@ -34,7 +34,7 @@ description: "トピック定義を基に、課題のシナリオ案を3つ提�
    - 難易度や想定学習時間がトピック定義と整合するようにする
 4. `templates/template.scenario.md` をテンプレートとして、`agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` を作成します。
 5. 各ファイルの `$` プレースホルダを具体的な内容で置換し、シナリオ案を完成させます。
-6. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（メッセージ: "add: scenario proposals"）し、リモートリポジトリにプッシュしてください。
+6. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（メッセージ: "add: scenario proposals"）し、リモートリポジトリにプッシュしてください。
 
 ## シナリオ案の作成ガイドライン
 

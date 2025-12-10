@@ -24,7 +24,7 @@ description: "課題の前提知識をインプットするためのチュート
    - 「チュートリアル作成」が「必要」の場合：
      - 以下のステップ3以降を実行
 
-3. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/make-tutorial` を作成してください。
+3. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/make-tutorial` を作成してください。
 
 4. `templates/template.TUTORIAL.md` を `TUTORIAL.md` にコピーします。
 
@@ -44,7 +44,7 @@ description: "課題の前提知識をインプットするためのチュート
 
 6. `TUTORIAL.md` 内のコメント（`<!-- ... -->`）を全て削除します。
 
-7. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。
+7. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。
 
 ## チュートリアル作成のガイドライン
 

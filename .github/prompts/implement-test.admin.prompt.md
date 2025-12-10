@@ -13,7 +13,7 @@ description: "課題をCIで自動採点するためのテストコードを実�
 ## 手順
 1. `release/README.md` の内容を確認し、課題内容を理解してください。
 
-2. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/implement-tests` を作成してください。
+2. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/implement-tests` を作成してください。
 
 3. `tests/stages/stage-XX` 配下に、課題内容に対応するテストコードを実装してください。  
    - 各テストは `pytest` フレームワークを使用して実装してください。
@@ -63,4 +63,4 @@ description: "課題をCIで自動採点するためのテストコードを実�
    - `pytest.ini`: ステージごとのマーカー定義 `markers` に、実装した全てのステージマーカーを記述してください。
    - `.github/workflows/classroom.yml`: 実装した全てのステージに対応するジョブを追加し、`README.md` の課題内容に基づいた配点を設定してください。
 
-6. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（メッセージ: "feat: implement and verify tests for $課題名"）し、リモートリポジトリにプッシュしてください。
+6. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（メッセージ: "feat: implement and verify tests for $課題名"）し、リモートリポジトリにプッシュしてください。
