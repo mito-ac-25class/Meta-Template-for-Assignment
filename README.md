@@ -1,7 +1,49 @@
 # Python 課題テンプレート
 
 本リポジトリは、学生のプログラミング課題および課題採点用のCIを作成するための複数のプロンプトファイルを含むテンプレート・ツールキットです。  
-GitHub Copilot Agents を使用して、初学者の学生が最先端のコーディング技術を身に着けることが出来るような課題リポジトリを効率的に作成できます。
+GitHub Copilot Agents を使用して、初学者の学生が最先端のコーディング技術を身に付けることが出来るような課題リポジトリを効率的に作成できます。
+
+> **このファイルの位置づけ**: 本ファイルは教員向けの詳細なガイドです。リポジトリの構成、セットアップ手順、各プロンプトファイルの詳しい説明を記載しています。  
+>
+> **エージェント向け情報**: GitHub Copilot Agents の動作制御については **[AGENTS.md](AGENTS.md)** を参照してください。
+
+## クイックスタート
+
+テンプレートリポジトリを作成したら、以下の手順で課題作成を開始してください。
+
+### 初回セットアップチェックリスト
+
+- [ ] **テンプレートリポジトリの作成完了**
+  - GitHub で「Use this template」から新規リポジトリを作成
+  - Settings > General で「Template repository」を有効化
+
+- [ ] **開発環境の準備**
+  - GitHub Codespaces を起動、または
+  - ローカル環境で `pip install -r requirements-dev.txt` を実行
+
+- [ ] **課題トピックの定義**
+  - `agent-input/topics.md` を開く
+  - 以下の項目を記入：
+    - 学習トピック一覧
+    - 事前知識レベル
+    - 学習目標
+    - 難易度
+    - 想定学習時間
+    - 補足情報（任意）
+    - チュートリアルの必要性
+
+- [ ] **トピックのクリーンアップ**
+  - GitHub Copilot Chat で `/topics.admin` を実行
+  - `agent-input/topics.md` から入力例やコメントが削除されます
+
+### 次のステップ
+
+トピック定義が完了したら、以下のいずれかの方法で課題作成を進めてください：
+
+- **シナリオ案を自動生成したい場合** → `/suggest-scenario.admin` を実行（Optional）
+- **すぐに課題プランを作成したい場合** → `/plan.admin` を実行
+
+詳細な手順は「[教員向け: GitHub Classroom 課題作成手順](#教員向け-github-classroom-課題作成手順)」を参照してください。
 
 ## リポジトリ構成
 
@@ -23,10 +65,14 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   └─ topics.md        # 学習トピック定義
 ├─ agent-output          # エージェント出力ファイル
 │   ├─ plan.md          # 課題実施プラン
-│   └─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
+│   ├─ scenario0.md     # シナリオ案1（/suggest-scenario.admin 使用時）
+│   ├─ scenario1.md     # シナリオ案2（/suggest-scenario.admin 使用時）
+│   ├─ scenario2.md     # シナリオ案3（/suggest-scenario.admin 使用時）
+│   ├─ scenario-evaluation.md # シナリオ評価マトリクス（/suggest-scenario.admin 使用時）
+│   └─ scenarios-backup-YYYYMMDD-HHMMSS/ # シナリオ再生成時のバックアップ
 ├─ release               # リリース用ファイル
-│   ├─ README.md        # 学生向けREADME
-│   └─ evac.AGENTS.md   # 学生向けAGENTS.md
+│   ├─ README.md        # 学生向けREADME（リリース時にルートに移動）
+│   └─ student.AGENTS.md   # 学生向けAGENTS.md（リリース時にルートのAGENTS.mdに置き換わる）
 ├─ src
 │   ├─ kadai            # 課題実装用ディレクトリ
 │   └─ tutorial         # チュートリアル用ディレクトリ
@@ -63,6 +109,50 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 ### 大まかなフロー
 
+```mermaid
+flowchart TD
+    Start([開始]) --> Step1[1. トピック記入<br/>agent-input/topics.md<br/>⏱️ 15-30分]
+    Step1 --> Step2[2. トピッククリーン<br/>/topics.admin<br/>⏱️ 2-3分]
+    Step2 --> Optional1{シナリオ案<br/>必要?}
+    
+    Optional1 -->|はい| Step3[3. シナリオ案提案<br/>/suggest-scenario.admin<br/>⏱️ 3-5分]
+    Optional1 -->|いいえ| Step4
+    Step3 --> Step3Review[シナリオ選択と<br/>topics.md更新<br/>⏱️ 5-10分]
+    Step3Review --> Step4
+    
+    Step4[4. 課題プラン作成<br/>/plan.admin<br/>⏱️ 5-10分]
+    Step4 --> Step5[5. 教員レビュー<br/>plan.md確認・調整<br/>⏱️ 10-30分]
+    
+    Step5 --> Optional2{チュートリアル<br/>必要?}
+    Optional2 -->|はい| Step6[6. チュートリアル作成<br/>/tutorial.admin<br/>⏱️ 10-15分]
+    Optional2 -->|いいえ| Step7
+    Step6 --> Step7
+    
+    Step7[7. README作成<br/>/readme.admin<br/>⏱️ 3-5分]
+    Step7 --> Step8[8. CIテスト実装・検証<br/>/implement-test.admin<br/>⏱️ 15-30分]
+    Step8 --> Step9[9. 包括的チェック<br/>/verify.admin<br/>⏱️ 10-15分]
+    Step9 --> Step10[10. リリース準備<br/>/release.admin<br/>⏱️ 2-3分]
+    Step10 --> End([完了])
+    
+    classDef optionalStep fill:#fff3cd,stroke:#ff8c00,stroke-width:2px,color:#000
+    classDef requiredStep fill:#cfe2ff,stroke:#0d6efd,stroke-width:2px,color:#000
+    classDef reviewStep fill:#f8d7da,stroke:#dc3545,stroke-width:2px,color:#000
+    classDef decisionStep fill:#d1e7dd,stroke:#198754,stroke-width:2px,color:#000
+    
+    class Step3,Step6 optionalStep
+    class Step1,Step2,Step4,Step7,Step8,Step9,Step10 requiredStep
+    class Step5,Step3Review reviewStep
+    class Optional1,Optional2 decisionStep
+```
+
+**凡例:**
+- 🔵 青色: 必須ステップ
+- 🟡 黄色: オプショナルステップ
+- 🟢 緑色: 条件分岐
+- 🩷 ピンク色: レビュー・手動確認
+
+**詳細ステップ:**
+
 1. 課題で取り扱うトピックを記入 -> [topics.md](agent-input/topics.md)
 2. トピックをクリーン -> `/topics.admin`
 3. (Optional) シナリオ案を提案 -> `/suggest-scenario.admin`
@@ -95,21 +185,36 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 #### 2.2 トピックのクリーンアップ
 
-1. GitHub Copilot Chat で `/topics.admin` を実行
+1. 手動でブランチを作成（例: `feature/define-topics`）
+2. GitHub Copilot Chat で `/topics.admin` を実行
    - `agent-input/topics.md` から入力例やコメントを削除
    - クリーンなトピック定義を作成
+3. 変更をコミット・プッシュし、プルリクエストを作成
 
 #### 2.2.1 シナリオ案の提案（Optional）
 
 1. GitHub Copilot Chat で `/suggest-scenario.admin` を実行
    - トピックに基づいて3つのシナリオ案を自動生成
    - `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力される
-2. 出力されたシナリオ案をレビューし、採用するシナリオを決定
+   - `agent-output/scenario-evaluation.md` に評価マトリクスが出力される
+
+2. 出力されたシナリオ案と評価マトリクスをレビューし、採用するシナリオを決定
+   
+   **評価マトリクスの活用方法**:
+   - 5つの評価基準（具体性、親しみやすさ、実現可能性、学習効果、拡張性）から各シナリオを評価
+   - 総合スコアと推奨理由を参考に、最適なシナリオを選択
+   
 3. `agent-input/topics.md` の末尾に採用シナリオのパスを追記:
    ```markdown
    ## 採用シナリオ
    agent-output/scenario{N}.md
    ```
+   
+   **注意**: パスは `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` のいずれかの相対パス形式で記述してください
+
+**シナリオの再生成について**:
+- `/suggest-scenario.admin` を再実行する場合、既存のシナリオファイルは自動的に `agent-output/scenarios-backup-YYYYMMDD-HHMMSS/` にバックアップされます
+- 新しいシナリオを採用する場合は、`agent-input/topics.md` の採用シナリオセクションを更新してください
 
 #### 2.3 課題プランの作成
 
@@ -148,19 +253,35 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 ### 4. リリースの準備
 
-1. **方法1: シェルスクリプトで自動実行（推奨）**
+リリース準備は、シェルスクリプトによる自動実行を推奨します。
+
+1. **推奨: シェルスクリプトで自動実行**
    ```bash
    ./scripts/release.sh
    ```
+   
+   スクリプトは以下を自動的に実行します：
+   - 事前チェック（必須ファイルの存在確認、未コミット変更の警告）
    - 開発用ファイル（`.admin.prompt.md`、`agent-input/*`、`agent-output/*`、`templates/*`）を削除
    - `release/README.md` → `README.md` に移動
-   - `release/evac.AGENTS.md` → `AGENTS.md` に移動
+   - `release/student.AGENTS.md` → `AGENTS.md` に移動（学生向けのAGENTS.mdに置き換え）
    - 学生向けの状態に整理
    - 自動的にコミット・プッシュまで実行
+   
+   **スクリプトの特徴：**
+   - ✅ 実行前の確認プロンプトとバックアップ推奨
+   - ✅ 既存ブランチがある場合の対応（削除/切り替え/中止を選択可能）
+   - ✅ エラー時のロールバック手順を表示
+   - ✅ 各ステップでエラーハンドリング
 
-2. **方法2: GitHub Copilot Chat で実行**
+2. **代替: GitHub Copilot Chat で実行**
    - GitHub Copilot Chat で `/release.admin` を実行
-   - 上記と同様の処理をエージェントが実行
+   - エージェントが `./scripts/release.sh` を実行補助
+   - スクリプトが利用できない特殊な状況での手動手順も提供
+
+3. **実行後の手順**
+   - GitHub上でプルリクエストを作成
+   - レビュー後、main ブランチにマージ
 
 ### 5. 課題の割り当て
 
@@ -188,7 +309,9 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 - **`/suggest-scenario.admin`** (`suggest-scenario.admin.prompt.md`)
   - トピック定義を基に、課題のシナリオ案を3つ提案
-  - `agent-output/scenario[0-2].md` に出力し、教員のレビューを待つ
+  - `agent-output/scenario[0-2].md` および `scenario-evaluation.md` に出力
+  - 評価マトリクス（具体性、親しみやすさ、実現可能性、学習効果、拡張性）を提供
+  - 再実行時は既存ファイルを自動的にバックアップ
   - `/topics.admin` と `/plan.admin` の間にオプションで実行
 
 - **`/plan.admin`** (`plan.admin.prompt.md`)
@@ -217,29 +340,12 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 ## 課題実施方式
 
-本テンプレートでは、以下の実施方式から選択できます：
+本テンプレートでは、以下の4つの実施方式から選択できます。詳細は [.github/prompts/ASSIGNMENT_TYPES.md](.github/prompts/ASSIGNMENT_TYPES.md) を参照してください。
 
-### プログラム実装課題
-
-- 学生は `README.md` の仕様や `tests/` のREDテストを前提に、`src/kadai/` 配下にプログラムを実装
-- RED確認 → 1ステージGREEN → コミットのサイクルで進行
-- CI で自動採点
-
-### リファクタリング課題
-
-- 実装済みのプログラムをリファクタリング
-- GREEN状態のテストを維持しながら品質を改善
-- ASTによるコード品質チェックで採点
-
-### テスト実装課題
-
-- バグのあるプログラムに対してテストを記述
-- バグを検出できるかどうかで採点
-
-### テスト駆動開発課題
-
-- RED → GREEN → リファクタリングのサイクルで実装
-- 現状はCI採点なし
+- **プログラム実装課題**: 白紙またはスケルトンコードから実装し、REDテストをGREENにしていく（CI自動採点あり）
+- **リファクタリング課題**: 既存コードをGREENテストを維持しながら品質改善（ASTによるコード品質チェックで採点）
+- **テスト実装課題**: バグのあるコードに対してテストを記述してバグを検出（バグ検出で採点）
+- **テスト駆動開発課題**: RED→GREEN→リファクタリングのサイクルで実装（現状CI採点なし）
 
 ## 注意事項
 
