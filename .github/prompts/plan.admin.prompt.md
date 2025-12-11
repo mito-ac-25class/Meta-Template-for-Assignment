@@ -9,6 +9,9 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
 `/plan.admin` では、課題で取り扱うトピックを基に課題の実施方式を選定し、  
 ユーザーストーリーやテストシナリオを仮決めしドラフトとしてアウトプットします。
 
+## 前提条件
+- `/topics.admin` が実行済みで `agent-input/topics.md` がクリーン化され、コミット・プッシュされていること
+
 ## 手順
 1. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/make-a-plan` を作成してください。
 2. `agent-input/topics.md` を読み込みます。Markdownに記述されている以下項目を受け取り、トピックに合った課題の実施方式を決定します。

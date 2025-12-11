@@ -10,6 +10,8 @@
 
 作業を開始する前に、各プロンプト専用のブランチを作成します。
 
+**注意**: `/topics.admin` のみ、教員が `agent-input/topics.md` を手動で記入してからプロンプトを実行するため、ブランチの作成も手動で行います。
+
 ```bash
 git checkout -b <ブランチ名>
 ```
@@ -18,7 +20,7 @@ git checkout -b <ブランチ名>
 
 | プロンプト | ブランチ名 |
 |----------|-----------|
-| `/topics.admin` | _(ブランチ作成不要、mainで直接作業)_ |
+| `/topics.admin` | _(手動でブランチ作成、例: `feature/define-topics`)_ |
 | `/suggest-scenario.admin` | `feature/suggest-scenarios` |
 | `/plan.admin` | `feature/make-a-plan` |
 | `/readme.admin` | `feature/make-readme` |

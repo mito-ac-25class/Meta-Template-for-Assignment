@@ -103,9 +103,11 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 #### 2.2 トピックのクリーンアップ
 
-1. GitHub Copilot Chat で `/topics.admin` を実行
+1. 手動でブランチを作成（例: `feature/define-topics`）
+2. GitHub Copilot Chat で `/topics.admin` を実行
    - `agent-input/topics.md` から入力例やコメントを削除
    - クリーンなトピック定義を作成
+3. 変更をコミット・プッシュし、プルリクエストを作成
 
 #### 2.2.1 シナリオ案の提案（Optional）
 
