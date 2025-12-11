@@ -12,12 +12,13 @@ description: "release/README.md に記載する課題の説明文を作成しま
 1. `agent-output/plan.md` を読み込みます。Markdownに記述されている以下項目を取得します。
    - 学習トピック一覧
 
-2. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/make-readme` を作成してください。
+2. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/make-readme` を作成してください。
 
-3. `templates/template.readme.md` を `release/README.md` にコピーします。
+3. `templates/template.README.md` を `release/README.md` にコピーします。
 
 4. `release/README.md` の `$` プレースホルダを埋める形で、課題説明文を作成します。
+   - テンプレート内のコメント（`<!-- ... -->`）を参照し、各セクションの記載内容とガイドラインを確認してください。
 
 5. `release/README.md` 内のコメント（`<!-- ... -->`）を全て削除します。
   
-6. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。
+6. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。

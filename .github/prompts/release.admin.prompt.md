@@ -19,7 +19,7 @@ description: "課題リポジトリをリリース可能な状態とするため
 
 このスクリプトは以下の処理を自動的に行います:
 
-1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/remove-admin-prompts` を作成
+1. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/remove-admin-prompts` を作成
 2. 管理者用プロンプトファイル (`.github/prompts/*.admin.prompt.md`) を削除
 3. `agent-input/*` ディレクトリを削除
 4. `agent-output/*` ディレクトリを削除
@@ -27,14 +27,14 @@ description: "課題リポジトリをリリース可能な状態とするため
 6. 開発用 `AGENTS.md` と `README.md` を削除
 7. 空の `TUTORIAL.md` を削除（存在し、かつ空の場合のみ）
 8. `tests/infrastructure/*` ディレクトリを削除
-9. `release/evac.AGENTS.md` → `AGENTS.md` に移動
+9. `release/student.AGENTS.md` → `AGENTS.md` に移動
 10. `release/README.md` → `README.md` に移動
 11. 変更をコミット (コミットメッセージ: "fix: remove admin prompt files")
 12. リモートリポジトリにプッシュ
 
 スクリプト実行後は、GitHub上でプルリクエストを作成し、レビュー後にmainブランチにマージしてください。
 
-詳細なワークフローについては、[共通ワークフロー](./WORKFLOW.md) を参照してください。
+詳細なワークフローについては、[共通ワークフロー](.github/prompts/WORKFLOW.md) を参照してください。
 
 ## 手動実行（スクリプトが使用できない場合）
 
@@ -43,7 +43,7 @@ description: "課題リポジトリをリリース可能な状態とするため
 <details>
 <summary>手動実行手順を表示</summary>
 
-1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/remove-admin-prompts` を作成してください。
+1. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/remove-admin-prompts` を作成してください。
 
 2. 以下のファイルをリポジトリから削除してください。
    - `.github/prompts/*.admin.prompt.md` （管理者用プロンプトファイル）
@@ -58,9 +58,9 @@ description: "課題リポジトリをリリース可能な状態とするため
    - `TUTORIAL.md` （チュートリアル用ドキュメント）
 
 4. 以下のファイル名を変更してください。
-   - `release/evac.AGENTS.md` → `AGENTS.md` (リポジトリのルートディレクトリへ移動)
+   - `release/student.AGENTS.md` → `AGENTS.md` (リポジトリのルートディレクトリへ移動)
    - `release/README.md` → `README.md` (リポジトリのルートディレクトリへ移動)
 
-5. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（メッセージ: "fix: remove admin prompt files"）し、リモートリポジトリにプッシュしてください。
+5. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（メッセージ: "fix: remove admin prompt files"）し、リモートリポジトリにプッシュしてください。
 
 </details>

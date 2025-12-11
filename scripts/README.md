@@ -22,7 +22,7 @@
 6. 開発用 `AGENTS.md` と `README.md` を削除
 7. 空の `TUTORIAL.md` を削除（存在し、かつ空の場合のみ）
 8. `tests/infrastructure/*` ディレクトリを削除
-9. `release/evac.AGENTS.md` → `AGENTS.md` に移動
+9. `release/student.AGENTS.md` → `AGENTS.md` に移動
 10. `release/README.md` → `README.md` に移動
 11. 変更をコミット
 12. リモートリポジトリにプッシュ
@@ -30,13 +30,13 @@
 ### 前提条件
 
 - リポジトリがgit管理されていること
-- `release/evac.AGENTS.md` と `release/README.md` が存在すること
+- `release/student.AGENTS.md` と `release/README.md` が存在すること
 - リモートリポジトリへのプッシュ権限があること
 
 ### エラーハンドリング
 
 スクリプトは `set -e` を使用しており、エラーが発生した場合は即座に終了します。  
-必要なファイル（`release/evac.AGENTS.md`, `release/README.md`）が見つからない場合もエラーで終了します。
+必要なファイル（`release/student.AGENTS.md`, `release/README.md`）が見つからない場合もエラーで終了します。
 
 ### テスト
 

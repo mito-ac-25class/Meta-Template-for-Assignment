@@ -20,7 +20,7 @@ description: "トピック定義を基に、課題のシナリオ案を3つ提�
 
 ## 手順
 
-1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/suggest-scenarios` を作成してください。
+1. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/suggest-scenarios` を作成してください。
 2. **既存シナリオファイルの確認とバックアップ**
    - `agent-output/` ディレクトリに `scenario0.md`, `scenario1.md`, `scenario2.md` が既に存在するか確認します。
    - 既存ファイルが存在する場合:
@@ -43,7 +43,7 @@ description: "トピック定義を基に、課題のシナリオ案を3つ提�
 7. **シナリオ評価マトリクスの作成**
    - `agent-output/scenario-evaluation.md` を作成し、3つのシナリオの評価マトリクスを出力します。
    - 評価マトリクスの形式は下記「## シナリオ評価マトリクス」セクションを参照してください。
-8. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（メッセージ: "add: scenario proposals and evaluation matrix"）し、リモートリポジトリにプッシュしてください。
+8. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（メッセージ: "add: scenario proposals and evaluation matrix"）し、リモートリポジトリにプッシュしてください。
 
 ## シナリオ案の作成ガイドライン
 

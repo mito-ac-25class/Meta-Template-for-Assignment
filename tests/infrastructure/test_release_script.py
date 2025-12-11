@@ -51,7 +51,7 @@ def test_release_script_contains_required_operations():
         'agent-input',  # agent-input の削除
         'agent-output',  # agent-output の削除
         'templates',  # templates の削除
-        'release/evac.AGENTS.md',  # AGENTS.md の移動元
+        'release/student.AGENTS.md',  # AGENTS.md の移動元
         'release/README.md',  # README.md の移動元
         'git commit',  # コミット
         'git push',  # プッシュ
