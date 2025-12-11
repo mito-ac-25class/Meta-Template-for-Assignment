@@ -58,7 +58,7 @@ jobs:
         command: "pytest -m 'stage05'"
         timeout: 10
         max-score: 20
-       
+
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:
