@@ -1,7 +1,11 @@
 # Python 課題テンプレート
 
 本リポジトリは、学生のプログラミング課題および課題採点用のCIを作成するための複数のプロンプトファイルを含むテンプレート・ツールキットです。  
-GitHub Copilot Agents を使用して、初学者の学生が最先端のコーディング技術を身に着けることが出来るような課題リポジトリを効率的に作成できます。
+GitHub Copilot Agents を使用して、初学者の学生が最先端のコーディング技術を身に付けることが出来るような課題リポジトリを効率的に作成できます。
+
+> **このファイルの位置づけ**: 本ファイルは教員向けの詳細なガイドです。リポジトリの構成、セットアップ手順、各プロンプトファイルの詳しい説明を記載しています。  
+>
+> **エージェント向け情報**: GitHub Copilot Agents の動作制御については **[AGENTS.md](AGENTS.md)** を参照してください。
 
 ## リポジトリ構成
 
@@ -25,8 +29,8 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   ├─ plan.md          # 課題実施プラン
 │   └─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
 ├─ release               # リリース用ファイル
-│   ├─ README.md        # 学生向けREADME
-│   └─ evac.AGENTS.md   # 学生向けAGENTS.md
+│   ├─ README.md        # 学生向けREADME（リリース時にルートに移動）
+│   └─ student.AGENTS.md   # 学生向けAGENTS.md（リリース時にルートのAGENTS.mdに置き換わる）
 ├─ src
 │   ├─ kadai            # 課題実装用ディレクトリ
 │   └─ tutorial         # チュートリアル用ディレクトリ
@@ -154,7 +158,7 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
    ```
    - 開発用ファイル（`.admin.prompt.md`、`agent-input/*`、`agent-output/*`、`templates/*`）を削除
    - `release/README.md` → `README.md` に移動
-   - `release/evac.AGENTS.md` → `AGENTS.md` に移動
+   - `release/student.AGENTS.md` → `AGENTS.md` に移動（学生向けのAGENTS.mdに置き換え）
    - 学生向けの状態に整理
    - 自動的にコミット・プッシュまで実行
 
@@ -217,29 +221,12 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 ## 課題実施方式
 
-本テンプレートでは、以下の実施方式から選択できます：
+本テンプレートでは、以下の4つの実施方式から選択できます。詳細は [.github/prompts/ASSIGNMENT_TYPES.md](.github/prompts/ASSIGNMENT_TYPES.md) を参照してください。
 
-### プログラム実装課題
-
-- 学生は `README.md` の仕様や `tests/` のREDテストを前提に、`src/kadai/` 配下にプログラムを実装
-- RED確認 → 1ステージGREEN → コミットのサイクルで進行
-- CI で自動採点
-
-### リファクタリング課題
-
-- 実装済みのプログラムをリファクタリング
-- GREEN状態のテストを維持しながら品質を改善
-- ASTによるコード品質チェックで採点
-
-### テスト実装課題
-
-- バグのあるプログラムに対してテストを記述
-- バグを検出できるかどうかで採点
-
-### テスト駆動開発課題
-
-- RED → GREEN → リファクタリングのサイクルで実装
-- 現状はCI採点なし
+- **プログラム実装課題**: 白紙またはスケルトンコードから実装し、REDテストをGREENにしていく（CI自動採点あり）
+- **リファクタリング課題**: 既存コードをGREENテストを維持しながら品質改善（ASTによるコード品質チェックで採点）
+- **テスト実装課題**: バグのあるコードに対してテストを記述してバグを検出（バグ検出で採点）
+- **テスト駆動開発課題**: RED→GREEN→リファクタリングのサイクルで実装（現状CI採点なし）
 
 ## 注意事項
 
