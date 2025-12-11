@@ -1,8 +1,3 @@
-# テンプレート状態の注意事項:
-# - このワークフローはテンプレート状態では各ステージのテストがスキップされます
-# - `/implement-test.admin` を実行して実際のテストを実装する必要があります
-# - テスト実装前は全てのテストがスキップされるため、CI は成功しますが採点は行われません
-
 name: Autograding Tests
 'on':
   - push
@@ -63,7 +58,7 @@ jobs:
         command: "pytest -m 'stage05'"
         timeout: 10
         max-score: 20
-       
+
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:

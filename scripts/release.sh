@@ -195,12 +195,12 @@ fi
 # 9. リリース用ファイルの移動
 echo -e "\n${YELLOW}[9/9] リリース用ファイルを移動中...${NC}"
 
-# release/evac.AGENTS.md → AGENTS.md
-if [ -f "release/evac.AGENTS.md" ]; then
-    git mv release/evac.AGENTS.md AGENTS.md
-    echo -e "${GREEN}release/evac.AGENTS.md を AGENTS.md に移動しました。${NC}"
+# release/student.AGENTS.md → AGENTS.md
+if [ -f "release/student.AGENTS.md" ]; then
+    git mv release/student.AGENTS.md AGENTS.md
+    echo -e "${GREEN}release/student.AGENTS.md を AGENTS.md に移動しました。${NC}"
 else
-    echo -e "${RED}エラー: release/evac.AGENTS.md が見つかりません。${NC}"
+    echo -e "${RED}エラー: release/student.AGENTS.md が見つかりません。${NC}"
     echo -e "${RED}リリース準備を中止します。${NC}"
     echo -e "${YELLOW}ロールバック方法：${NC}"
     echo -e "  git reset --hard"
