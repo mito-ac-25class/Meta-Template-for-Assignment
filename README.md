@@ -88,10 +88,10 @@ flowchart TD
     Step9 --> Step10[10. リリース準備<br/>/release.admin<br/>⏱️ 2-3分]
     Step10 --> End([完了])
     
-    classDef optionalStep fill:#ffd700,stroke:#ff8c00,stroke-width:2px
-    classDef requiredStep fill:#87ceeb,stroke:#4682b4,stroke-width:2px
-    classDef reviewStep fill:#ffb6c1,stroke:#ff69b4,stroke-width:2px
-    classDef decisionStep fill:#98fb98,stroke:#228b22,stroke-width:2px
+    classDef optionalStep fill:#fff3cd,stroke:#ff8c00,stroke-width:2px,color:#000
+    classDef requiredStep fill:#cfe2ff,stroke:#0d6efd,stroke-width:2px,color:#000
+    classDef reviewStep fill:#f8d7da,stroke:#dc3545,stroke-width:2px,color:#000
+    classDef decisionStep fill:#d1e7dd,stroke:#198754,stroke-width:2px,color:#000
     
     class Step3,Step6 optionalStep
     class Step1,Step2,Step4,Step7,Step8,Step9,Step10 requiredStep
