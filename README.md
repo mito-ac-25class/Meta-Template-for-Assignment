@@ -27,7 +27,11 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   └─ topics.md        # 学習トピック定義
 ├─ agent-output          # エージェント出力ファイル
 │   ├─ plan.md          # 課題実施プラン
-│   └─ scenario0.md, scenario1.md, scenario2.md # シナリオ案（/suggest-scenario.admin 使用時）
+│   ├─ scenario0.md     # シナリオ案1（/suggest-scenario.admin 使用時）
+│   ├─ scenario1.md     # シナリオ案2（/suggest-scenario.admin 使用時）
+│   ├─ scenario2.md     # シナリオ案3（/suggest-scenario.admin 使用時）
+│   ├─ scenario-evaluation.md # シナリオ評価マトリクス（/suggest-scenario.admin 使用時）
+│   └─ scenarios-backup-YYYYMMDD-HHMMSS/ # シナリオ再生成時のバックアップ
 ├─ release               # リリース用ファイル
 │   ├─ README.md        # 学生向けREADME（リリース時にルートに移動）
 │   └─ student.AGENTS.md   # 学生向けAGENTS.md（リリース時にルートのAGENTS.mdに置き換わる）
@@ -108,12 +112,25 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 1. GitHub Copilot Chat で `/suggest-scenario.admin` を実行
    - トピックに基づいて3つのシナリオ案を自動生成
    - `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` に出力される
-2. 出力されたシナリオ案をレビューし、採用するシナリオを決定
+   - `agent-output/scenario-evaluation.md` に評価マトリクスが出力される
+
+2. 出力されたシナリオ案と評価マトリクスをレビューし、採用するシナリオを決定
+   
+   **評価マトリクスの活用方法**:
+   - 5つの評価基準（具体性、親しみやすさ、実現可能性、学習効果、拡張性）から各シナリオを評価
+   - 総合スコアと推奨理由を参考に、最適なシナリオを選択
+   
 3. `agent-input/topics.md` の末尾に採用シナリオのパスを追記:
    ```markdown
    ## 採用シナリオ
    agent-output/scenario{N}.md
    ```
+   
+   **注意**: パスは `agent-output/scenario0.md`, `scenario1.md`, `scenario2.md` のいずれかの相対パス形式で記述してください
+
+**シナリオの再生成について**:
+- `/suggest-scenario.admin` を再実行する場合、既存のシナリオファイルは自動的に `agent-output/scenarios-backup-YYYYMMDD-HHMMSS/` にバックアップされます
+- 新しいシナリオを採用する場合は、`agent-input/topics.md` の採用シナリオセクションを更新してください
 
 #### 2.3 課題プランの作成
 
@@ -192,7 +209,9 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 - **`/suggest-scenario.admin`** (`suggest-scenario.admin.prompt.md`)
   - トピック定義を基に、課題のシナリオ案を3つ提案
-  - `agent-output/scenario[0-2].md` に出力し、教員のレビューを待つ
+  - `agent-output/scenario[0-2].md` および `scenario-evaluation.md` に出力
+  - 評価マトリクス（具体性、親しみやすさ、実現可能性、学習効果、拡張性）を提供
+  - 再実行時は既存ファイルを自動的にバックアップ
   - `/topics.admin` と `/plan.admin` の間にオプションで実行
 
 - **`/plan.admin`** (`plan.admin.prompt.md`)
