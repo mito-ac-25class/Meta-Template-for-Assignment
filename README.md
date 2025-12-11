@@ -7,6 +7,44 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 >
 > **エージェント向け情報**: GitHub Copilot Agents の動作制御については **[AGENTS.md](AGENTS.md)** を参照してください。
 
+## クイックスタート
+
+テンプレートリポジトリを作成したら、以下の手順で課題作成を開始してください。
+
+### 初回セットアップチェックリスト
+
+- [ ] **テンプレートリポジトリの作成完了**
+  - GitHub で「Use this template」から新規リポジトリを作成
+  - Settings > General で「Template repository」を有効化
+
+- [ ] **開発環境の準備**
+  - GitHub Codespaces を起動、または
+  - ローカル環境で `pip install -r requirements-dev.txt` を実行
+
+- [ ] **課題トピックの定義**
+  - `agent-input/topics.md` を開く
+  - 以下の項目を記入：
+    - 学習トピック一覧
+    - 事前知識レベル
+    - 学習目標
+    - 難易度
+    - 想定学習時間
+    - 補足情報（任意）
+    - チュートリアルの必要性
+
+- [ ] **トピックのクリーンアップ**
+  - GitHub Copilot Chat で `/topics.admin` を実行
+  - `agent-input/topics.md` から入力例やコメントが削除されます
+
+### 次のステップ
+
+トピック定義が完了したら、以下のいずれかの方法で課題作成を進めてください：
+
+- **シナリオ案を自動生成したい場合** → `/suggest-scenario.admin` を実行（Optional）
+- **すぐに課題プランを作成したい場合** → `/plan.admin` を実行
+
+詳細な手順は「[教員向け: GitHub Classroom 課題作成手順](#教員向け-github-classroom-課題作成手順)」を参照してください。
+
 ## リポジトリ構成
 
 ```text
