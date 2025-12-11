@@ -10,10 +10,13 @@ description: "課題をCIで自動採点するためのテストコードを実�
 学生が実装すべき機能に対応するテストコードを `tests/stages/stage-XX` 配下に実装し、  
 実際にテストを実行することで課題内容との整合性を検証します。
 
+## 前提条件
+- `/readme.admin` が実行済みで `release/README.md` が作成されていること
+
 ## 手順
 1. `release/README.md` の内容を確認し、課題内容を理解してください。
 
-2. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/implement-tests` を作成してください。
+2. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/implement-tests` を作成してください。
 
 3. `tests/stages/stage-XX` 配下に、課題内容に対応するテストコードを実装してください。  
    - 各テストは `pytest` フレームワークを使用して実装してください。
@@ -61,6 +64,7 @@ description: "課題をCIで自動採点するためのテストコードを実�
    - `src/kadai/`: 全ステージをクリアするために必要な実装を含むファイルを模範解答として `agent-output/` 配下にコピーしてください。  
      その後、元の `src/kadai/` 配下の実装済みファイルは全て空ファイルの状態に戻してください。
    - `pytest.ini`: ステージごとのマーカー定義 `markers` に、実装した全てのステージマーカーを記述してください。
-   - `.github/workflows/classroom.yml`: 実装した全てのステージに対応するジョブを追加し、`README.md` の課題内容に基づいた配点を設定してください。
+   - `.github/workflows/classroom.yml`: `templates/template.classroom.yml` をベースとして、実装した全てのステージに対応するジョブを追加し、`README.md` の課題内容に基づいた配点を設定してください。  
+     テンプレートファイルには5ステージ分のジョブ定義が含まれているため、必要に応じてステージ数を調整し、各ステージの配点（`max-score`）を課題内容に合わせて更新してください。
 
-6. [共通ワークフロー](./WORKFLOW.md) に従い、変更をコミット（メッセージ: "feat: implement and verify tests for $課題名"）し、リモートリポジトリにプッシュしてください。
+6. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（メッセージ: "feat: implement and verify tests for $課題名"）し、リモートリポジトリにプッシュしてください。
