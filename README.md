@@ -109,6 +109,50 @@ GitHub Codespaces または Dev Container を使用している場合は、`.dev
 
 ### 大まかなフロー
 
+```mermaid
+flowchart TD
+    Start([開始]) --> Step1[1. トピック記入<br/>agent-input/topics.md<br/>⏱️ 15-30分]
+    Step1 --> Step2[2. トピッククリーン<br/>/topics.admin<br/>⏱️ 2-3分]
+    Step2 --> Optional1{シナリオ案<br/>必要?}
+    
+    Optional1 -->|はい| Step3[3. シナリオ案提案<br/>/suggest-scenario.admin<br/>⏱️ 3-5分]
+    Optional1 -->|いいえ| Step4
+    Step3 --> Step3Review[シナリオ選択と<br/>topics.md更新<br/>⏱️ 5-10分]
+    Step3Review --> Step4
+    
+    Step4[4. 課題プラン作成<br/>/plan.admin<br/>⏱️ 5-10分]
+    Step4 --> Step5[5. 教員レビュー<br/>plan.md確認・調整<br/>⏱️ 10-30分]
+    
+    Step5 --> Optional2{チュートリアル<br/>必要?}
+    Optional2 -->|はい| Step6[6. チュートリアル作成<br/>/tutorial.admin<br/>⏱️ 10-15分]
+    Optional2 -->|いいえ| Step7
+    Step6 --> Step7
+    
+    Step7[7. README作成<br/>/readme.admin<br/>⏱️ 3-5分]
+    Step7 --> Step8[8. CIテスト実装・検証<br/>/implement-test.admin<br/>⏱️ 15-30分]
+    Step8 --> Step9[9. 包括的チェック<br/>/verify.admin<br/>⏱️ 10-15分]
+    Step9 --> Step10[10. リリース準備<br/>/release.admin<br/>⏱️ 2-3分]
+    Step10 --> End([完了])
+    
+    classDef optionalStep fill:#fff3cd,stroke:#ff8c00,stroke-width:2px,color:#000
+    classDef requiredStep fill:#cfe2ff,stroke:#0d6efd,stroke-width:2px,color:#000
+    classDef reviewStep fill:#f8d7da,stroke:#dc3545,stroke-width:2px,color:#000
+    classDef decisionStep fill:#d1e7dd,stroke:#198754,stroke-width:2px,color:#000
+    
+    class Step3,Step6 optionalStep
+    class Step1,Step2,Step4,Step7,Step8,Step9,Step10 requiredStep
+    class Step5,Step3Review reviewStep
+    class Optional1,Optional2 decisionStep
+```
+
+**凡例:**
+- 🔵 青色: 必須ステップ
+- 🟡 黄色: オプショナルステップ
+- 🟢 緑色: 条件分岐
+- 🩷 ピンク色: レビュー・手動確認
+
+**詳細ステップ:**
+
 1. 課題で取り扱うトピックを記入 -> [topics.md](agent-input/topics.md)
 2. トピックをクリーン -> `/topics.admin`
 3. (Optional) シナリオ案を提案 -> `/suggest-scenario.admin`
