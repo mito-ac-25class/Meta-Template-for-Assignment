@@ -10,7 +10,7 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
 ユーザーストーリーやテストシナリオを仮決めしドラフトとしてアウトプットします。
 
 ## 前提条件
-- `/topics.admin` が実行済みで `agent-input/topics.md` がクリーン化され、mainブランチにコミット・プッシュされていること
+- `/topics.admin` が実行済みで `agent-input/topics.md` がクリーン化され、コミット・プッシュされていること
 
 ## 手順
 1. [共通ワークフロー](./WORKFLOW.md) に従い、ブランチ `feature/make-a-plan` を作成してください。
