@@ -28,7 +28,7 @@ echo -e "このスクリプトは多数のファイルを削除・移動しま�
 echo -e "実行前に以下を確認してください："
 echo -e "  1. すべての変更がコミット済みであること"
 echo -e "  2. 必要に応じてバックアップを取得していること"
-echo -e "  3. release/evac.AGENTS.md と release/README.md が存在すること"
+echo -e "  3. release/student.AGENTS.md と release/README.md が存在すること"
 echo -e ""
 read -p "続行しますか？ (y/N): " -n 1 -r
 echo
@@ -43,8 +43,8 @@ echo -e "\n${GREEN}リポジトリをリリース可能な状態にします...$
 echo -e "\n${YELLOW}[事前チェック] 必須ファイルの確認中...${NC}"
 MISSING_FILES=0
 
-if [ ! -f "release/evac.AGENTS.md" ]; then
-    echo -e "${RED}エラー: release/evac.AGENTS.md が見つかりません。${NC}"
+if [ ! -f "release/student.AGENTS.md" ]; then
+    echo -e "${RED}エラー: release/student.AGENTS.md が見つかりません。${NC}"
     MISSING_FILES=1
 fi
 
