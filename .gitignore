@@ -16,9 +16,5 @@ venv/
 # VS Code
 .vscode/
 
-# Copilot logs
-copilot.log
-
 # Temporary files
 *.tmp
-*.log
