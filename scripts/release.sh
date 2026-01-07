@@ -29,6 +29,7 @@ echo -e "実行前に以下を確認してください："
 echo -e "  1. すべての変更がコミット済みであること"
 echo -e "  2. 必要に応じてバックアップを取得していること"
 echo -e "  3. release/student.AGENTS.md と release/README.md が存在すること"
+echo -e "  4. release/student.CLAUDE.md が存在すること（Claude Code 使用時）"
 echo -e ""
 read -p "続行しますか？ (y/N): " -n 1 -r
 echo
@@ -75,7 +76,7 @@ if [ -n "$GIT_STATUS" ]; then
 fi
 
 # 1. 作業用ブランチの作成
-echo -e "\n${YELLOW}[1/13] 作業用ブランチを作成中...${NC}"
+echo -e "\n${YELLOW}[1/16] 作業用ブランチを作成中...${NC}"
 BRANCH_NAME="feature/remove-admin-prompts"
 
 # 既に同名のブランチが存在する場合の処理
@@ -118,7 +119,7 @@ else
 fi
 
 # 2. 管理者用プロンプトファイルの削除
-echo -e "\n${YELLOW}[2/13] 管理者用プロンプトファイルを削除中...${NC}"
+echo -e "\n${YELLOW}[2/16] 管理者用プロンプトファイルを削除中...${NC}"
 if ls .github/prompts/*.admin.prompt.md 1> /dev/null 2>&1; then
     git rm .github/prompts/*.admin.prompt.md
     echo -e "${GREEN}管理者用プロンプトファイルを削除しました。${NC}"
@@ -126,8 +127,24 @@ else
     echo -e "${YELLOW}管理者用プロンプトファイルが見つかりません。スキップします。${NC}"
 fi
 
-# 3. 教員向けドキュメントファイルの削除
-echo -e "\n${YELLOW}[3/13] .github/prompts/ 内の教員向けドキュメントを削除中...${NC}"
+# 3. Claude Code コマンド・スキルの削除
+echo -e "\n${YELLOW}[3/16] Claude Code コマンド・スキルを削除中...${NC}"
+if [ -d ".claude/commands" ]; then
+    git rm -r .claude/commands
+    echo -e "${GREEN}.claude/commands ディレクトリを削除しました。${NC}"
+else
+    echo -e "${YELLOW}.claude/commands ディレクトリが見つかりません。スキップします。${NC}"
+fi
+
+if [ -d ".claude/skills" ]; then
+    git rm -r .claude/skills
+    echo -e "${GREEN}.claude/skills ディレクトリを削除しました。${NC}"
+else
+    echo -e "${YELLOW}.claude/skills ディレクトリが見つかりません。スキップします。${NC}"
+fi
+
+# 4. 教員向けドキュメントファイルの削除
+echo -e "\n${YELLOW}[4/16] .github/prompts/ 内の教員向けドキュメントを削除中...${NC}"
 if [ -f ".github/prompts/WORKFLOW.md" ]; then
     git rm .github/prompts/WORKFLOW.md
     echo -e "${GREEN}WORKFLOW.md を削除しました。${NC}"
@@ -142,8 +159,8 @@ else
     echo -e "${YELLOW}ASSIGNMENT_TYPES.md が見つかりません。スキップします。${NC}"
 fi
 
-# 4. agent-input ディレクトリの削除
-echo -e "\n${YELLOW}[4/13] agent-input ディレクトリを削除中...${NC}"
+# 5. agent-input ディレクトリの削除
+echo -e "\n${YELLOW}[5/16] agent-input ディレクトリを削除中...${NC}"
 if [ -d "agent-input" ]; then
     git rm -r agent-input
     echo -e "${GREEN}agent-input ディレクトリを削除しました。${NC}"
@@ -151,8 +168,8 @@ else
     echo -e "${YELLOW}agent-input ディレクトリが見つかりません。スキップします。${NC}"
 fi
 
-# 5. agent-output ディレクトリの削除
-echo -e "\n${YELLOW}[5/13] agent-output ディレクトリを削除中...${NC}"
+# 6. agent-output ディレクトリの削除
+echo -e "\n${YELLOW}[6/16] agent-output ディレクトリを削除中...${NC}"
 if [ -d "agent-output" ]; then
     git rm -r agent-output
     echo -e "${GREEN}agent-output ディレクトリを削除しました。${NC}"
@@ -160,8 +177,8 @@ else
     echo -e "${YELLOW}agent-output ディレクトリが見つかりません。スキップします。${NC}"
 fi
 
-# 6. templates ディレクトリの削除
-echo -e "\n${YELLOW}[6/13] templates ディレクトリを削除中...${NC}"
+# 7. templates ディレクトリの削除
+echo -e "\n${YELLOW}[7/16] templates ディレクトリを削除中...${NC}"
 if [ -d "templates" ]; then
     git rm -r templates
     echo -e "${GREEN}templates ディレクトリを削除しました。${NC}"
@@ -169,13 +186,20 @@ else
     echo -e "${YELLOW}templates ディレクトリが見つかりません。スキップします。${NC}"
 fi
 
-# 7. 開発用 AGENTS.md と README.md の削除
-echo -e "\n${YELLOW}[7/13] 開発用 AGENTS.md と README.md を削除中...${NC}"
+# 8. 開発用 AGENTS.md, CLAUDE.md, README.md の削除
+echo -e "\n${YELLOW}[8/16] 開発用 AGENTS.md, CLAUDE.md, README.md を削除中...${NC}"
 if [ -f "AGENTS.md" ]; then
     git rm AGENTS.md
     echo -e "${GREEN}AGENTS.md を削除しました。${NC}"
 else
     echo -e "${YELLOW}AGENTS.md が見つかりません。スキップします。${NC}"
+fi
+
+if [ -f "CLAUDE.md" ]; then
+    git rm CLAUDE.md
+    echo -e "${GREEN}CLAUDE.md を削除しました。${NC}"
+else
+    echo -e "${YELLOW}CLAUDE.md が見つかりません。スキップします。${NC}"
 fi
 
 if [ -f "README.md" ]; then
@@ -185,8 +209,8 @@ else
     echo -e "${YELLOW}README.md が見つかりません。スキップします。${NC}"
 fi
 
-# 8. 空の TUTORIAL.md の削除（存在し、かつ空の場合のみ）
-echo -e "\n${YELLOW}[8/13] 空の TUTORIAL.md を確認中...${NC}"
+# 9. 空の TUTORIAL.md の削除（存在し、かつ空の場合のみ）
+echo -e "\n${YELLOW}[9/16] 空の TUTORIAL.md を確認中...${NC}"
 if [ -f "TUTORIAL.md" ]; then
     # ファイルサイズが0バイト、または空白文字のみの場合は削除
     if [ ! -s "TUTORIAL.md" ] || ! grep -q '[^[:space:]]' TUTORIAL.md; then
@@ -199,8 +223,8 @@ else
     echo -e "${YELLOW}TUTORIAL.md が見つかりません。スキップします。${NC}"
 fi
 
-# 9. tests/infrastructure ディレクトリの削除
-echo -e "\n${YELLOW}[9/13] tests/infrastructure ディレクトリを削除中...${NC}"
+# 10. tests/infrastructure ディレクトリの削除
+echo -e "\n${YELLOW}[10/16] tests/infrastructure ディレクトリを削除中...${NC}"
 if [ -d "tests/infrastructure" ]; then
     git rm -r tests/infrastructure
     echo -e "${GREEN}tests/infrastructure ディレクトリを削除しました。${NC}"
@@ -208,8 +232,8 @@ else
     echo -e "${YELLOW}tests/infrastructure ディレクトリが見つかりません。スキップします。${NC}"
 fi
 
-# 10. REVIEW_FLOW.md の削除
-echo -e "\n${YELLOW}[10/13] REVIEW_FLOW.md を削除中...${NC}"
+# 11. REVIEW_FLOW.md の削除
+echo -e "\n${YELLOW}[11/16] REVIEW_FLOW.md を削除中...${NC}"
 if [ -f "REVIEW_FLOW.md" ]; then
     git rm REVIEW_FLOW.md
     echo -e "${GREEN}REVIEW_FLOW.md を削除しました。${NC}"
@@ -217,8 +241,8 @@ else
     echo -e "${YELLOW}REVIEW_FLOW.md が見つかりません。スキップします。${NC}"
 fi
 
-# 11. scripts/ ディレクトリ全体の削除
-echo -e "\n${YELLOW}[11/13] scripts/ ディレクトリを削除中...${NC}"
+# 12. scripts/ ディレクトリ全体の削除
+echo -e "\n${YELLOW}[12/16] scripts/ ディレクトリを削除中...${NC}"
 if [ -d "scripts" ]; then
     git rm -r scripts
     echo -e "${GREEN}scripts/ ディレクトリを削除しました。${NC}"
@@ -226,8 +250,8 @@ else
     echo -e "${YELLOW}scripts/ ディレクトリが見つかりません。スキップします。${NC}"
 fi
 
-# 12. リリース用ファイルの移動
-echo -e "\n${YELLOW}[12/13] リリース用ファイルを移動中...${NC}"
+# 13. リリース用ファイルの移動
+echo -e "\n${YELLOW}[13/16] リリース用ファイルを移動中...${NC}"
 
 # release/student.AGENTS.md → AGENTS.md
 if [ -f "release/student.AGENTS.md" ]; then
@@ -240,6 +264,14 @@ else
     echo -e "  git reset --hard"
     echo -e "  git clean -fd"
     exit 1
+fi
+
+# release/student.CLAUDE.md → CLAUDE.md（存在する場合）
+if [ -f "release/student.CLAUDE.md" ]; then
+    git mv release/student.CLAUDE.md CLAUDE.md
+    echo -e "${GREEN}release/student.CLAUDE.md を CLAUDE.md に移動しました。${NC}"
+else
+    echo -e "${YELLOW}release/student.CLAUDE.md が見つかりません。スキップします。${NC}"
 fi
 
 # release/README.md → README.md
@@ -255,8 +287,8 @@ else
     exit 1
 fi
 
-# 13. 空の release/ ディレクトリの削除
-echo -e "\n${YELLOW}[13/13] 空の release/ ディレクトリを削除中...${NC}"
+# 14. 空の release/ ディレクトリの削除
+echo -e "\n${YELLOW}[14/16] 空の release/ ディレクトリを削除中...${NC}"
 if [ -d "release" ]; then
     # ディレクトリが空かどうかを確認
     if [ -z "$(ls -A release)" ]; then
@@ -270,15 +302,15 @@ else
     echo -e "${YELLOW}release/ ディレクトリが見つかりません。スキップします。${NC}"
 fi
 
-# 14. 変更をコミット
-echo -e "\n${YELLOW}変更をコミット中...${NC}"
+# 15. 変更をコミット
+echo -e "\n${YELLOW}[15/16] 変更をコミット中...${NC}"
 # Note: At this point, git rm and git mv operations have already staged changes,
 # so we can proceed directly to commit
 git commit -m "fix: remove admin prompt files and documentation"
 echo -e "${GREEN}変更をコミットしました。${NC}"
 
-# 15. リモートリポジトリにプッシュ
-echo -e "\n${YELLOW}リモートリポジトリにプッシュ中...${NC}"
+# 16. リモートリポジトリにプッシュ
+echo -e "\n${YELLOW}[16/16] リモートリポジトリにプッシュ中...${NC}"
 if git push origin ${BRANCH_NAME}; then
     echo -e "${GREEN}リモートリポジトリにプッシュしました。${NC}"
 else
