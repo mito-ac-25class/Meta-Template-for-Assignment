@@ -97,8 +97,16 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   ├─ kadai            # 課題実装用ディレクトリ
 │   └─ tutorial         # チュートリアル用ディレクトリ
 ├─ templates             # テンプレートファイル
+│   ├─ devcontainer/     # DevContainerテンプレート（言語別）
+│   │   ├─ template.devcontainer.json  # 汎用テンプレート
+│   │   ├─ python.devcontainer.json    # Python用
+│   │   ├─ java.devcontainer.json      # Java用
+│   │   └─ javascript.devcontainer.json # JavaScript用
+│   ├─ workflows/        # CIワークフローテンプレート
+│   │   └─ template.classroom.yml  # 汎用ワークフローテンプレート
 │   ├─ template.plan.md  # プランテンプレート
 │   ├─ template.README.md # README テンプレート
+│   ├─ template.classroom.yml # classroom.yml テンプレート（後方互換）
 │   ├─ template.scenario.md # シナリオ案テンプレート
 │   └─ template.TUTORIAL.md # TUTORIAL テンプレート
 ├─ tests                 # テストファイル

@@ -1,0 +1,20 @@
+{
+  "name": "Java 21 Assignment",
+  "image": "mcr.microsoft.com/devcontainers/java:21",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "java.test.config": {},
+        "chat.useAgentsMdFile": true
+      },
+      "extensions": [
+        "vscjava.vscode-java-pack",
+        "vscjava.vscode-java-debug",
+        "vscjava.vscode-java-test",
+        "Anthropic.claude-code"
+      ]
+    }
+  },
+  "postCreateCommand": "mvn dependency:resolve",
+  "remoteUser": "vscode"
+}

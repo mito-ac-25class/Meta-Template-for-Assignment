@@ -1,0 +1,12 @@
+{
+  "name": "$DISPLAY_NAME Assignment",
+  "image": "$DEVCONTAINER_IMAGE",
+  "customizations": {
+    "vscode": {
+      "settings": $VSCODE_SETTINGS,
+      "extensions": $VSCODE_EXTENSIONS
+    }
+  },
+  "postCreateCommand": "$POST_CREATE_COMMAND",
+  "remoteUser": "vscode"
+}

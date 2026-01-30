@@ -1,0 +1,21 @@
+{
+  "name": "Node.js 20 Assignment",
+  "image": "mcr.microsoft.com/devcontainers/javascript-node:20",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "editor.formatOnSave": true,
+        "editor.defaultFormatter": "esbenp.prettier-vscode",
+        "chat.useAgentsMdFile": true
+      },
+      "extensions": [
+        "dbaeumer.vscode-eslint",
+        "esbenp.prettier-vscode",
+        "Orta.vscode-jest",
+        "Anthropic.claude-code"
+      ]
+    }
+  },
+  "postCreateCommand": "npm install",
+  "remoteUser": "vscode"
+}
