@@ -35,6 +35,7 @@ description: "課題リポジトリをリリース可能な状態とするため
    - `agent-input/*` ディレクトリ
    - `agent-output/*` ディレクトリ
    - `templates/*` ディレクトリ
+   - `lang-profiles/*` ディレクトリ（言語プロファイル定義）
    - 開発用 `AGENTS.md` と `README.md`
    - 空の `TUTORIAL.md`（存在し、かつ空の場合のみ）
    - `tests/infrastructure/*` ディレクトリ
@@ -110,6 +111,7 @@ git branch -D feature/remove-admin-prompts
    git rm -r agent-input
    git rm -r agent-output
    git rm -r templates
+   git rm -r lang-profiles
    git rm -r tests/infrastructure
    git rm AGENTS.md
    git rm README.md

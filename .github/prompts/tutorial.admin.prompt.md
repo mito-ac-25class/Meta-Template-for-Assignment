@@ -13,28 +13,60 @@ description: "課題の前提知識をインプットするためのチュート
 - `/plan.admin` が実行済みで `agent-output/plan.md` が作成されていること
 
 ## 手順
-1. 以下のファイルを読み込みます：
-   - `agent-input/topics.md`：学習トピック、事前知識レベル、チュートリアル必要性の判断情報を取得
-   - `agent-output/plan.md`：課題実施プラン、チュートリアル内容案を取得
 
-2. `agent-output/plan.md` の「## 8. チュートリアルの必要性」セクションを確認します：
-   - 「チュートリアル作成」が「不要」の場合：
-     - 処理を中断し、「チュートリアル作成は不要と判断されています」というメッセージを表示
-     - 既存の `TUTORIAL.md` がある場合は削除を提案
-   - 「チュートリアル作成」が「必要」の場合：
-     - 以下のステップ3以降を実行
+### 1. ファイル読み込み
 
-3. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/make-tutorial` を作成してください。
+以下のファイルを読み込みます：
+- `agent-input/topics.md`：学習トピック、事前知識レベル、チュートリアル必要性の判断情報を取得
+- `agent-output/plan.md`：課題実施プラン、チュートリアル内容案、言語プロファイル情報を取得
 
-4. `templates/template.TUTORIAL.md` を `TUTORIAL.md` にコピーします。
+### 2. 言語プロファイルの確認
 
-5. `TUTORIAL.md` の `$` プレースホルダを埋める形で、チュートリアル内容を作成します。
-   - テンプレート内のコメント（`<!-- ... -->`）を参照し、各セクションの記載内容を確認してください。
-   - チュートリアル作成のガイドライン（下記参照）に従って、段階的学習・具体例重視・hands-on形式を意識してください。
+`agent-output/plan.md` のセクション2「使用言語/フレームワーク」から言語プロファイル名を取得し、
+`lang-profiles/{プロファイル名}.yml` を読み込んで以下の情報を確認します：
+- `language`: プログラミング言語名
+- `source.file_extension`: ソースファイル拡張子
+- `test_implementation.example`: テストコード例（参考）
+- `test_implementation.import_location`: インポート位置の慣習
 
-6. `TUTORIAL.md` 内のコメント（`<!-- ... -->`）を全て削除します。
+### 3. チュートリアル必要性の確認
 
-7. [共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。
+`agent-output/plan.md` の「## 9. チュートリアルの必要性」セクションを確認します：
+- 「チュートリアル作成」が「不要」の場合：
+  - 処理を中断し、「チュートリアル作成は不要と判断されています」というメッセージを表示
+  - 既存の `TUTORIAL.md` がある場合は削除を提案
+- 「チュートリアル作成」が「必要」の場合：
+  - 以下のステップ4以降を実行
+
+### 4. ブランチ作成
+
+[共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、ブランチ `feature/make-tutorial` を作成してください。
+
+### 5. テンプレートのコピー
+
+`templates/template.TUTORIAL.md` を `TUTORIAL.md` にコピーします。
+
+### 6. チュートリアル内容の作成
+
+`TUTORIAL.md` の `$` プレースホルダを埋める形で、チュートリアル内容を作成します。
+- テンプレート内のコメント（`<!-- ... -->`）を参照し、各セクションの記載内容を確認してください。
+- チュートリアル作成のガイドライン（下記参照）に従って、段階的学習・具体例重視・hands-on形式を意識してください。
+
+**言語固有の対応**:
+- コードブロックの言語指定は使用言語に合わせて設定（例: `python`, `java`, `javascript`）
+- コード例は使用言語の構文・規約に従って記述
+- 実行方法は言語に応じて適切なコマンドを記載
+  - Python: `python script.py`
+  - Java: `javac Script.java && java Script` または Maven/Gradle
+  - JavaScript: `node script.js` または `npm run`
+
+### 7. コメントの削除
+
+`TUTORIAL.md` 内のコメント（`<!-- ... -->`）を全て削除します。
+
+### 8. コミット・プッシュ
+
+[共通ワークフロー](.github/prompts/WORKFLOW.md) に従い、変更をコミット（`feat:` プレフィックス）し、リモートリポジトリにプッシュしてください。
 
 ## チュートリアル作成のガイドライン
 
@@ -49,6 +81,50 @@ description: "課題の前提知識をインプットするためのチュート
 - **実行可能**: そのままコピー＆ペーストで動作するコードを提供
 - **コメント付き**: 重要な部分には適切なコメントを追加
 - **エラー例も含む**: よくある間違いとその修正方法も示す
+- **言語の慣習に従う**: 使用言語の命名規則やスタイルガイドに準拠
+
+### 言語別コード例のポイント
+
+**Python**:
+```python
+# クラス定義の例
+class Example:
+    def __init__(self, value):
+        self.value = value
+    
+    def get_value(self):
+        return self.value
+```
+
+**Java**:
+```java
+// クラス定義の例
+public class Example {
+    private int value;
+    
+    public Example(int value) {
+        this.value = value;
+    }
+    
+    public int getValue() {
+        return this.value;
+    }
+}
+```
+
+**JavaScript**:
+```javascript
+// クラス定義の例
+class Example {
+    constructor(value) {
+        this.value = value;
+    }
+    
+    getValue() {
+        return this.value;
+    }
+}
+```
 
 ### 練習問題の設計
 - **段階的難易度**: セクションの内容を理解していれば解ける問題から始める
@@ -66,6 +142,6 @@ description: "課題の前提知識をインプットするためのチュート
 - [ ] `TUTORIAL.md` が作成されている
 - [ ] 全てのプレースホルダ（`$`で始まる部分）が適切な内容で置き換えられている
 - [ ] コメント（`<!-- ... -->`）が全て削除されている
-- [ ] コード例が実行可能である
+- [ ] コード例が使用言語で記述され、実行可能である
 - [ ] 想定学習時間内に完了可能な分量である
 - [ ] 課題の解答を直接示していない
