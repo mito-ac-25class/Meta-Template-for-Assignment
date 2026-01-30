@@ -17,9 +17,30 @@
 | `.github/prompts/` | GitHub Copilot 用プロンプトファイル（`.admin.prompt.md`） |
 | `agent-input/` | エージェント入力ファイル（`topics.md` など） |
 | `agent-output/` | エージェント出力ファイル（`plan.md`、シナリオ案など） |
-| `src/kadai/` | 課題実装用ディレクトリ |
-| `tests/stages/` | ステージ別テストファイル |
+| `lang-profiles/` | 言語プロファイル定義（言語/テストフレームワーク設定） |
+| `templates/` | テンプレートファイル（DevContainer, CI, 依存関係など） |
+| `src/kadai/` | 課題実装用ディレクトリ（デフォルト、プロファイルで変更可） |
+| `tests/stages/` | ステージ別テストファイル（デフォルト、プロファイルで変更可） |
 | `release/` | リリース用ファイル（学生向け README など） |
+
+## 言語プロファイル
+
+本テンプレートは複数の言語/テストフレームワークに対応しています：
+
+| プロファイル | 言語 | テストフレームワーク |
+|-------------|-----|-------------------|
+| `python-pytest` | Python 3.12 | pytest |
+| `java-junit` | Java 21 | JUnit 5 |
+| `javascript-jest` | Node.js 20 | Jest |
+| `go-testing` | Go 1.21 | testing |
+
+### プロファイルの参照方法
+
+1. **`agent-input/topics.md`** の「使用言語/フレームワーク」セクションでプロファイル名を確認
+2. **`lang-profiles/{プロファイル名}.yml`** を読み込み、設定を取得
+3. 取得した設定を使用して、テスト実装、CI設定、DevContainer設定を生成
+
+詳細は [lang-profiles/README.md](lang-profiles/README.md) を参照してください。
 
 ## 標準ワークフロー
 

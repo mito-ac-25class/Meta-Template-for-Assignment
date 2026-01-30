@@ -44,78 +44,165 @@ python-pytest
 - CI ワークフロー
 - テスト実装ガイド
 
-## 新規プロファイル作成ガイド
+---
+
+## スキーマ詳細
 
 ### 必須フィールド
 
-新しい言語/フレームワークをサポートするには、以下のフィールドを定義する必要があります：
+#### プロファイル識別情報
 
-```yaml
-# プロファイル識別情報
-name: string              # プロファイル識別子（例: python-pytest）
-display_name: string      # 表示名（例: Python 3.12 + pytest）
-language: string          # 言語名
-version: string           # 言語バージョン
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `name` | string | プロファイル識別子（ファイル名と一致） | `python-pytest` |
+| `display_name` | string | 人間が読みやすい表示名 | `Python 3.12 + pytest` |
+| `language` | string | プログラミング言語名 | `python`, `java`, `javascript`, `go` |
+| `version` | string | 言語バージョン | `3.12`, `21`, `20`, `1.21` |
 
-# 開発環境設定
-devcontainer:
-  image: string           # Docker イメージ
-  extensions: list        # VS Code 拡張機能
-  settings: object        # VS Code 設定
+#### 開発環境設定（devcontainer）
 
-# テスト設定
-testing:
-  framework: string       # テストフレームワーク名
-  install_command: string # インストールコマンド
-  run_command: string     # 実行コマンド（{marker} プレースホルダ使用）
-  marker_format: string   # マーカー形式（{num:02d} で2桁ゼロ埋め）
-  test_file_pattern: string
-  test_directory: string
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `devcontainer.image` | string | DevContainer用Dockerイメージ | `mcr.microsoft.com/devcontainers/python:3.12` |
+| `devcontainer.extensions` | list | VS Code拡張機能 | `["ms-python.python"]` |
+| `devcontainer.settings` | object | VS Code設定 | `{python.testing.pytestEnabled: true}` |
+| `devcontainer.post_create_command` | string | コンテナ起動後の実行コマンド | `pip install -r requirements.txt` |
 
-# 依存関係管理
-dependencies:
-  file: string
-  dev_file: string|null
-  install_command: string
+#### テスト設定（testing）
 
-# ソースコード構成
-source:
-  directory: string
-  file_extension: string
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `testing.framework` | string | テストフレームワーク名 | `pytest`, `junit`, `jest`, `testing` |
+| `testing.install_command` | string\|null | テストフレームワークのインストールコマンド | `pip install pytest` |
+| `testing.run_command` | string | テスト実行コマンド（`{marker}` プレースホルダ使用） | `pytest -m '{marker}' -v` |
+| `testing.marker_format` | string | ステージマーカー形式（`{num:02d}` で2桁ゼロ埋め） | `stage{num:02d}` → `stage01` |
+| `testing.test_file_pattern` | string | テストファイル名パターン | `test_*.py`, `*Test.java` |
+| `testing.test_directory` | string | テストファイル格納ディレクトリ | `tests/stages` |
+| `testing.stage_directory_format` | string | ステージディレクトリ形式 | `stage-{num:02d}` |
 
-# CI設定
-ci:
-  setup_commands: list
-  timeout_default: number
+#### 依存関係管理（dependencies）
 
-# テスト実装ガイド
-test_implementation:
-  example: string         # コード例
-  marker_decorator: string
-  import_location: string # inside_function | top_of_file
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `dependencies.file` | string | 依存関係定義ファイル | `requirements.txt`, `pom.xml`, `package.json` |
+| `dependencies.dev_file` | string\|null | 開発用依存関係ファイル | `requirements-dev.txt` |
+| `dependencies.install_command` | string | 依存関係インストールコマンド | `pip install -r requirements.txt` |
+
+#### ソースコード構成（source）
+
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `source.directory` | string | ソースコード格納ディレクトリ | `src/kadai` |
+| `source.file_extension` | string | ソースファイル拡張子 | `.py`, `.java`, `.js`, `.go` |
+| `source.import_format` | string | インポート文形式 | `from kadai.{module} import {class}` |
+
+#### CI/CD設定（ci）
+
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `ci.setup_commands` | list | CIでのセットアップコマンド | `["pip install pytest"]` |
+| `ci.timeout_default` | number | テストタイムアウト（秒） | `10` |
+| `ci.default_score_per_stage` | number | ステージ当たりのデフォルト配点 | `20` |
+
+#### テスト実装ガイド（test_implementation）
+
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `test_implementation.example` | string | テストコード例（Markdownコードブロック） | （下記参照） |
+| `test_implementation.marker_decorator` | string | マーカーデコレータ形式 | `@pytest.mark.{marker}` |
+| `test_implementation.import_location` | string | インポート位置 | `inside_function`, `top_of_file` |
+| `test_implementation.function_naming` | string | テスト関数命名規則 | `test_{description}` |
+
+### オプションフィールド（additional）
+
+| フィールド | 型 | 説明 | 例 |
+|-----------|---|------|-----|
+| `additional.lint_command` | string | Lintコマンド | `flake8 src/` |
+| `additional.format_command` | string | フォーマットコマンド | `black src/` |
+| `additional.build_command` | string | ビルドコマンド | `mvn compile` |
+| `additional.coverage_command` | string | カバレッジ取得コマンド | `pytest --cov` |
+
+---
+
+## 新規プロファイル作成ガイド
+
+### ステップ1: テンプレートをコピー
+
+```bash
+cp lang-profiles/python-pytest.yml lang-profiles/{new-lang}-{framework}.yml
 ```
 
-### プロファイル作成手順
+### ステップ2: 各フィールドを言語に合わせて修正
 
-1. **テンプレートをコピー**
-   ```bash
-   cp lang-profiles/python-pytest.yml lang-profiles/{new-lang}.yml
-   ```
+必須フィールドをすべて適切な値に変更します。特に以下に注意：
 
-2. **各フィールドを言語に合わせて修正**
+- **`testing.run_command`**: `{marker}` プレースホルダを適切に配置
+- **`testing.marker_format`**: ステージ番号の形式を定義
+- **`test_implementation.example`**: 実際に動作するテストコード例を記述
 
-3. **DevContainer テンプレートを作成**（必要に応じて）
-   ```bash
-   cp templates/devcontainer/python.devcontainer.json templates/devcontainer/{new-lang}.devcontainer.json
-   ```
+### ステップ3: DevContainer テンプレートを作成
 
-4. **動作確認**
-   - `topics.md` で新プロファイルを指定
-   - `/plan.admin` を実行して設定が正しく読み込まれることを確認
-   - `/implement-test.admin` でテストが正しく生成されることを確認
+```bash
+cp templates/devcontainer/python.devcontainer.json templates/devcontainer/{new-lang}.devcontainer.json
+```
+
+DevContainerテンプレートを言語に合わせて編集します。
+
+### ステップ4: 依存関係テンプレートを作成（必要に応じて）
+
+```bash
+# 例: Ruby/RSpec の場合
+touch templates/dependencies/Gemfile.template
+```
+
+### ステップ5: 動作確認
+
+1. `agent-input/topics.md` で新プロファイルを指定
+2. `/plan.admin` を実行して設定が正しく読み込まれることを確認
+3. `/implement-test.admin` でテストが正しく生成されることを確認
+4. CIワークフローが正しく動作することを確認
+
+### ステップ6: lang-profile-schema.yml を更新
+
+新しい言語を `language` フィールドの `enum` に追加します。
+
+---
+
+## プレースホルダ
+
+プロファイル内で使用できるプレースホルダ：
+
+| プレースホルダ | 説明 | 例 |
+|---------------|------|-----|
+| `{marker}` | ステージマーカー（`marker_format` で定義された形式） | `stage01`, `Stage01` |
+| `{num:02d}` | 2桁ゼロ埋めのステージ番号 | `01`, `02`, ... |
+| `{module}` | モジュール名（ソースファイル名から拡張子を除いたもの） | `example` |
+| `{class}` / `{class_name}` | クラス名 | `ExampleClass` |
+| `{description}` | テストの説明（テスト関数名に使用） | `example_class_exists` |
+
+---
 
 ## スキーマバージョン
 
 現在のスキーマバージョン: **1.0**
 
 スキーマの詳細定義は `lang-profile-schema.yml` を参照してください。
+
+---
+
+## トラブルシューティング
+
+### プロファイルが読み込まれない
+
+1. `agent-input/topics.md` の「使用言語/フレームワーク」セクションにプロファイル名が正しく記載されているか確認
+2. プロファイル名と `lang-profiles/` 内のファイル名が一致しているか確認（例: `python-pytest` → `python-pytest.yml`）
+
+### テストが実行されない
+
+1. `testing.run_command` のコマンドが正しいか確認
+2. `testing.marker_format` のマーカー形式がテストコードと一致しているか確認
+
+### DevContainerが起動しない
+
+1. `devcontainer.image` のDockerイメージが存在するか確認
+2. `devcontainer.post_create_command` のコマンドが正しいか確認
