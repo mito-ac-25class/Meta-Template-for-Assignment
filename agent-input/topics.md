@@ -25,6 +25,31 @@
 
 ---
 
+## 使用言語/フレームワーク
+<!-- 
+    課題で使用するプログラミング言語とテストフレームワークを指定します。
+    利用可能なプロファイル一覧は lang-profiles/ ディレクトリを参照してください。
+    
+    対応プロファイル:
+    - python-pytest: Python 3.12 + pytest（デフォルト）
+    - java-junit: Java 21 + JUnit 5
+    - javascript-jest: Node.js 20 + Jest
+    
+    未指定の場合は python-pytest がデフォルトで適用されます。
+-->
+
+<details>
+<summary>記入例</summary>
+
+python-pytest
+</details>
+
+**使用するプロファイル:**
+
+{{ プロファイル名（例: python-pytest, java-junit, javascript-jest）}}
+
+---
+
 ## 学習トピック一覧
 <!-- 
     この課題で扱う主要なプログラミング概念やトピックを箇条書きで記述します。

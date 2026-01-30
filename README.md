@@ -1,7 +1,20 @@
-# Python 課題テンプレート
+# 課題メタテンプレート
 
 本リポジトリは、学生のプログラミング課題および課題採点用のCIを作成するための複数のプロンプトファイルを含むテンプレート・ツールキットです。  
 GitHub Copilot Agents を使用して、初学者の学生が最先端のコーディング技術を身に付けることが出来るような課題リポジトリを効率的に作成できます。
+
+## 対応言語/フレームワーク
+
+本テンプレートは以下の言語/テストフレームワークに対応しています（拡張可能）：
+
+| プロファイル | 言語 | テストフレームワーク | 状態 |
+|-------------|-----|-------------------|------|
+| `python-pytest` | Python 3.12 | pytest | ✅ 利用可能 |
+| `java-junit` | Java 21 | JUnit 5 | 📋 計画中 |
+| `javascript-jest` | Node.js 20 | Jest | 📋 計画中 |
+
+新しい言語/フレームワークを追加する場合は、`lang-profiles/` ディレクトリにプロファイルを作成してください。
+詳細は [lang-profiles/README.md](lang-profiles/README.md) を参照してください。
 
 > **このファイルの位置づけ**: 本ファイルは教員向けの詳細なガイドです。リポジトリの構成、セットアップ手順、各プロンプトファイルの詳しい説明を記載しています。  
 >
@@ -19,11 +32,12 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 
 - [ ] **開発環境の準備**
   - GitHub Codespaces を起動、または
-  - ローカル環境で `pip install -r requirements-dev.txt` を実行
+  - ローカル環境で依存関係をインストール（デフォルト: `pip install -r requirements-dev.txt`）
 
 - [ ] **課題トピックの定義**
   - `agent-input/topics.md` を開く
   - 以下の項目を記入：
+    - **使用言語/フレームワーク**（プロファイル選択）
     - 学習トピック一覧
     - 事前知識レベル
     - 学習目標
@@ -62,7 +76,7 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   │   └─ verify.admin.prompt.md         # 包括的検証
 │   └─ workflows         # GitHub Actions 設定
 ├─ agent-input           # エージェント入力ファイル
-│   └─ topics.md        # 学習トピック定義
+│   └─ topics.md        # 学習トピック定義（言語選択含む）
 ├─ agent-output          # エージェント出力ファイル
 │   ├─ plan.md          # 課題実施プラン
 │   ├─ scenario0.md     # シナリオ案1（/suggest-scenario.admin 使用時）
@@ -70,6 +84,12 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   ├─ scenario2.md     # シナリオ案3（/suggest-scenario.admin 使用時）
 │   ├─ scenario-evaluation.md # シナリオ評価マトリクス（/suggest-scenario.admin 使用時）
 │   └─ scenarios-backup-YYYYMMDD-HHMMSS/ # シナリオ再生成時のバックアップ
+├─ lang-profiles         # 言語プロファイル定義
+│   ├─ README.md        # プロファイル作成ガイド
+│   ├─ lang-profile-schema.yml  # プロファイルスキーマ定義
+│   ├─ python-pytest.yml # Python/pytest プロファイル
+│   ├─ java-junit.yml    # Java/JUnit プロファイル（計画中）
+│   └─ javascript-jest.yml # JavaScript/Jest プロファイル（計画中）
 ├─ release               # リリース用ファイル
 │   ├─ README.md        # 学生向けREADME（リリース時にルートに移動）
 │   └─ student.AGENTS.md   # 学生向けAGENTS.md（リリース時にルートのAGENTS.mdに置き換わる）

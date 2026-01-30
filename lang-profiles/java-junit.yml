@@ -1,0 +1,139 @@
+# Java/JUnit 言語プロファイル
+# 本プロファイルはJava 21 + JUnit 5を使用した課題作成の設定を定義します
+# 
+# 注意: このプロファイルは参考実装です。実際の使用前に検証が必要です。
+
+name: java-junit
+display_name: "Java 21 + JUnit 5"
+language: java
+version: "21"
+
+# ============================================
+# 開発環境設定（DevContainer）
+# ============================================
+devcontainer:
+  image: "mcr.microsoft.com/devcontainers/java:21"
+  extensions:
+    - "vscjava.vscode-java-pack"
+    - "vscjava.vscode-java-debug"
+    - "vscjava.vscode-java-test"
+    - "Anthropic.claude-code"
+  settings:
+    java.test.config: {}
+    chat.useAgentsMdFile: true
+  post_create_command: "mvn dependency:resolve"
+
+# ============================================
+# テスト設定
+# ============================================
+testing:
+  framework: junit
+  install_command: "mvn dependency:resolve"
+  # {marker} はステージタグに置換される（例: Stage01）
+  run_command: "mvn test -Dgroups='{marker}'"
+  # JUnitでは @Tag アノテーションを使用
+  marker_format: "Stage{num:02d}"
+  test_file_pattern: "*Test.java"
+  test_directory: "src/test/java/kadai"
+  
+  # ステージディレクトリ構成（Javaではパッケージベース）
+  stage_directory_format: "stage{num:02d}"  # stage01, stage02, ...
+  
+  # Maven設定ファイル
+  config_file: "pom.xml"
+
+# ============================================
+# 依存関係管理
+# ============================================
+dependencies:
+  file: "pom.xml"
+  dev_file: null
+  install_command: "mvn install -DskipTests"
+  
+  # pom.xml に含めるべき依存関係
+  default_dependencies:
+    - groupId: "org.junit.jupiter"
+      artifactId: "junit-jupiter"
+      version: "5.10.0"
+      scope: "test"
+
+# ============================================
+# ソースコード構成
+# ============================================
+source:
+  directory: "src/main/java/kadai"
+  file_extension: ".java"
+  # インポートパス形式
+  import_format: "import kadai.{class_name};"
+  
+  # Javaパッケージ構成
+  package_name: "kadai"
+
+# ============================================
+# CI/CD設定
+# ============================================
+ci:
+  setup_commands:
+    - "mvn dependency:resolve"
+  timeout_default: 30
+  default_score_per_stage: 20
+
+# ============================================
+# テスト実装ガイド（プロンプト用）
+# ============================================
+test_implementation:
+  example: |
+    ```java
+    // src/test/java/kadai/stage01/ExampleTest.java
+    package kadai.stage01;
+
+    import org.junit.jupiter.api.Test;
+    import org.junit.jupiter.api.Tag;
+    import static org.junit.jupiter.api.Assertions.*;
+
+    import kadai.Example;
+
+    @Tag("Stage01")
+    class ExampleTest {
+
+        @Test
+        void testExampleClassExists() {
+            // Exampleクラスが存在することを確認
+            assertNotNull(Example.class);
+        }
+
+        @Test
+        void testExampleMethodReturnsExpected() {
+            Example instance = new Example();
+            
+            // メソッドが期待通りの値を返すことを確認
+            assertEquals("expected", instance.getValue());
+        }
+    }
+    ```
+  
+  # マーカーアノテーションの形式
+  marker_decorator: "@Tag(\"{marker}\")"
+  
+  # インポート位置
+  import_location: top_of_file
+  
+  # テストクラス/メソッドの命名規則
+  class_naming: "{ClassName}Test"
+  method_naming: "test{Description}"
+  
+  require_comment_before_assertion: true
+  comment_language: "ja"
+
+# ============================================
+# 追加設定（オプション）
+# ============================================
+additional:
+  # ビルドコマンド
+  build_command: "mvn compile"
+  
+  # パッケージコマンド
+  package_command: "mvn package"
+  
+  # テストカバレッジ
+  coverage_command: "mvn jacoco:report"

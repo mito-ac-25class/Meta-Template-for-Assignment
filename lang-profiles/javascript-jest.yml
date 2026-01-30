@@ -1,0 +1,134 @@
+# JavaScript/Jest 言語プロファイル
+# 本プロファイルはNode.js + Jestを使用した課題作成の設定を定義します
+#
+# 注意: このプロファイルは参考実装です。実際の使用前に検証が必要です。
+
+name: javascript-jest
+display_name: "Node.js 20 + Jest"
+language: javascript
+version: "20"
+
+# ============================================
+# 開発環境設定（DevContainer）
+# ============================================
+devcontainer:
+  image: "mcr.microsoft.com/devcontainers/javascript-node:20"
+  extensions:
+    - "dbaeumer.vscode-eslint"
+    - "esbenp.prettier-vscode"
+    - "Orta.vscode-jest"
+    - "Anthropic.claude-code"
+  settings:
+    editor.formatOnSave: true
+    editor.defaultFormatter: "esbenp.prettier-vscode"
+    chat.useAgentsMdFile: true
+  post_create_command: "npm install"
+
+# ============================================
+# テスト設定
+# ============================================
+testing:
+  framework: jest
+  install_command: "npm install jest --save-dev"
+  # {marker} はテストグループ名に置換される（例: stage01）
+  run_command: "npm test -- --testPathPattern='stage-{marker}'"
+  marker_format: "{num:02d}"  # 01, 02, ...
+  test_file_pattern: "*.test.js"
+  test_directory: "tests/stages"
+  
+  # ステージディレクトリ構成
+  stage_directory_format: "stage-{num:02d}"
+  
+  # Jest設定ファイル
+  config_file: "jest.config.js"
+  config_template: |
+    module.exports = {
+      testEnvironment: 'node',
+      testMatch: ['**/tests/**/*.test.js'],
+      moduleNameMapper: {
+        '^@kadai/(.*)$': '<rootDir>/src/kadai/$1'
+      }
+    };
+
+# ============================================
+# 依存関係管理
+# ============================================
+dependencies:
+  file: "package.json"
+  dev_file: null  # package.json の devDependencies に含まれる
+  install_command: "npm install"
+  
+  default_dev_dependencies:
+    - "jest"
+
+# ============================================
+# ソースコード構成
+# ============================================
+source:
+  directory: "src/kadai"
+  file_extension: ".js"
+  # インポート形式
+  import_format: "const { {export} } = require('./kadai/{module}');"
+  # ES Modules形式
+  import_format_esm: "import { {export} } from './kadai/{module}.js';"
+
+# ============================================
+# CI/CD設定
+# ============================================
+ci:
+  setup_commands:
+    - "npm ci"
+  timeout_default: 15
+  default_score_per_stage: 20
+
+# ============================================
+# テスト実装ガイド（プロンプト用）
+# ============================================
+test_implementation:
+  example: |
+    ```javascript
+    // tests/stages/stage-01/example.test.js
+    
+    describe('Stage01: Example', () => {
+      test('Exampleクラスが存在すること', () => {
+        const { Example } = require('../../../src/kadai/example');
+        
+        // Exampleクラスが存在することを確認
+        expect(Example).toBeDefined();
+      });
+
+      test('メソッドが期待通りの値を返すこと', () => {
+        const { Example } = require('../../../src/kadai/example');
+        const instance = new Example();
+        
+        // メソッドが期待通りの値を返すことを確認
+        expect(instance.getValue()).toBe('expected');
+      });
+    });
+    ```
+  
+  # Jest ではdescribe/testブロックで分類
+  marker_decorator: "describe('Stage{num:02d}: {description}', () => { ... })"
+  
+  # インポート位置
+  import_location: inside_function
+  
+  # テスト命名規則
+  describe_naming: "Stage{num:02d}: {Feature}"
+  test_naming: "{description}"
+  
+  require_comment_before_assertion: true
+  comment_language: "ja"
+
+# ============================================
+# 追加設定（オプション）
+# ============================================
+additional:
+  lint_command: "npm run lint"
+  format_command: "npm run format"
+  
+  # package.json scripts 設定例
+  package_scripts:
+    test: "jest"
+    lint: "eslint src/"
+    format: "prettier --write src/"

@@ -1,0 +1,142 @@
+# Python/pytest 言語プロファイル
+# 本プロファイルはPython 3.12 + pytestを使用した課題作成の設定を定義します
+
+name: python-pytest
+display_name: "Python 3.12 + pytest"
+language: python
+version: "3.12"
+
+# ============================================
+# 開発環境設定（DevContainer）
+# ============================================
+devcontainer:
+  image: "mcr.microsoft.com/devcontainers/python:3.12"
+  extensions:
+    - "ms-python.python"
+    - "ms-python.vscode-pylance"
+    - "Anthropic.claude-code"
+  settings:
+    python.defaultInterpreterPath: "/usr/local/bin/python"
+    python.testing.pytestArgs:
+      - "tests"
+    python.testing.unittestEnabled: false
+    python.testing.pytestEnabled: true
+    chat.useAgentsMdFile: true
+  post_create_command: "pip install -r requirements.txt -r requirements-dev.txt"
+
+# ============================================
+# テスト設定
+# ============================================
+testing:
+  framework: pytest
+  install_command: "pip install pytest"
+  # {marker} はステージマーカーに置換される（例: stage01）
+  run_command: "pytest -m '{marker}' -v"
+  # {num:02d} は2桁ゼロ埋めのステージ番号に置換される（例: 01, 02）
+  marker_format: "stage{num:02d}"
+  test_file_pattern: "test_*.py"
+  test_directory: "tests/stages"
+  
+  # ステージディレクトリ構成
+  stage_directory_format: "stage-{num:02d}"  # stage-01, stage-02, ...
+  
+  # pytest.ini 設定
+  config_file: "pytest.ini"
+  config_template: |
+    [pytest]
+    minversion = 7.0
+    addopts = -q
+    pythonpath = src
+    markers =
+        {markers}
+
+# ============================================
+# 依存関係管理
+# ============================================
+dependencies:
+  file: "requirements.txt"
+  dev_file: "requirements-dev.txt"
+  install_command: "pip install -r requirements.txt"
+  dev_install_command: "pip install -r requirements-dev.txt"
+  
+  # デフォルト依存関係
+  default_dev_dependencies:
+    - "pytest>=7.0"
+
+# ============================================
+# ソースコード構成
+# ============================================
+source:
+  directory: "src/kadai"
+  file_extension: ".py"
+  # インポートパス形式（テストからの参照方法）
+  import_format: "from kadai.{module} import {class_or_function}"
+
+# ============================================
+# CI/CD設定
+# ============================================
+ci:
+  # GitHub Actions での環境セットアップコマンド
+  setup_commands:
+    - "pip install pytest"
+  
+  # ステージ別テストのデフォルトタイムアウト（秒）
+  timeout_default: 10
+  
+  # ステージ別テストのデフォルト配点
+  default_score_per_stage: 20
+
+# ============================================
+# テスト実装ガイド（プロンプト用）
+# ============================================
+test_implementation:
+  # テストコード例
+  example: |
+    ```python
+    # tests/stages/stage-01/test_example.py
+    import pytest
+
+    @pytest.mark.stage01
+    def test_example_class_exists():
+        from kadai.example import ExampleClass
+
+        # ExampleClassが存在することを確認
+        assert ExampleClass is not None
+
+    @pytest.mark.stage01
+    def test_example_method_returns_expected():
+        from kadai.example import ExampleClass
+
+        instance = ExampleClass()
+        
+        # メソッドが期待通りの値を返すことを確認
+        assert instance.get_value() == "expected"
+    ```
+  
+  # マーカーデコレータの形式
+  marker_decorator: "@pytest.mark.{marker}"
+  
+  # インポート位置
+  # inside_function: テスト関数内でインポート（pytest推奨）
+  # top_of_file: ファイル先頭でインポート
+  import_location: inside_function
+  
+  # テスト関数の命名規則
+  function_naming: "test_{description}"
+  
+  # アサーション前のコメント要否
+  require_comment_before_assertion: true
+  comment_language: "ja"  # 日本語コメント
+
+# ============================================
+# 追加設定（オプション）
+# ============================================
+additional:
+  # Lintコマンド（オプション）
+  lint_command: "flake8 src/"
+  
+  # フォーマットコマンド（オプション）
+  format_command: "black src/"
+  
+  # 型チェックコマンド（オプション）
+  type_check_command: "mypy src/"
