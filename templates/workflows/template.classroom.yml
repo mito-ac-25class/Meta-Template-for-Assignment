@@ -53,7 +53,7 @@ jobs:
     # - max-score: 配点（plan.md のステージ構成から）
     
     $STAGE_TESTS
-       
+    
     - name: Autograding Reporter
       uses: classroom-resources/autograding-grading-reporter@v1
       env:

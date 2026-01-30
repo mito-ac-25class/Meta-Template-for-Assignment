@@ -103,10 +103,10 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   │   ├─ java.devcontainer.json      # Java用
 │   │   └─ javascript.devcontainer.json # JavaScript用
 │   ├─ workflows/        # CIワークフローテンプレート
-│   │   └─ template.classroom.yml  # 汎用ワークフローテンプレート
+│   │   └─ template.classroom.yml  # 汎用ワークフローテンプレート（変数化）
 │   ├─ template.plan.md  # プランテンプレート
 │   ├─ template.README.md # README テンプレート
-│   ├─ template.classroom.yml # classroom.yml テンプレート（後方互換）
+│   ├─ template.classroom.yml # classroom.yml テンプレート（Python/pytest用、既存）
 │   ├─ template.scenario.md # シナリオ案テンプレート
 │   └─ template.TUTORIAL.md # TUTORIAL テンプレート
 ├─ tests                 # テストファイル
