@@ -10,8 +10,11 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 | プロファイル | 言語 | テストフレームワーク | 状態 |
 |-------------|-----|-------------------|------|
 | `python-pytest` | Python 3.12 | pytest | ✅ 利用可能 |
-| `java-junit` | Java 21 | JUnit 5 | 📋 計画中 |
-| `javascript-jest` | Node.js 20 | Jest | 📋 計画中 |
+| `java-junit` | Java 21 | JUnit 5 | 🔧 参考実装 |
+| `javascript-jest` | Node.js 20 | Jest | 🔧 参考実装 |
+| `go-testing` | Go 1.21 | testing | 🔧 参考実装 |
+
+> **凡例**: ✅ 利用可能 = 本番運用可能 / 🔧 参考実装 = テンプレートとして利用可能だが要検証
 
 新しい言語/フレームワークを追加する場合は、`lang-profiles/` ディレクトリにプロファイルを作成してください。
 詳細は [lang-profiles/README.md](lang-profiles/README.md) を参照してください。
@@ -101,7 +104,12 @@ GitHub Copilot Agents を使用して、初学者の学生が最先端のコー�
 │   │   ├─ template.devcontainer.json  # 汎用テンプレート
 │   │   ├─ python.devcontainer.json    # Python用
 │   │   ├─ java.devcontainer.json      # Java用
-│   │   └─ javascript.devcontainer.json # JavaScript用
+│   │   ├─ javascript.devcontainer.json # JavaScript用
+│   │   └─ go.devcontainer.json        # Go用
+│   ├─ dependencies/     # 依存関係テンプレート（言語別）
+│   │   ├─ pom.xml.template           # Java/Maven用
+│   │   ├─ package.json.template      # JavaScript/npm用
+│   │   └─ go.mod.template            # Go用
 │   ├─ workflows/        # CIワークフローテンプレート
 │   │   └─ template.classroom.yml  # 汎用ワークフローテンプレート（変数化）
 │   ├─ template.plan.md  # プランテンプレート

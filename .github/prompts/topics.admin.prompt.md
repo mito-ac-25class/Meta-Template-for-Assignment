@@ -54,6 +54,7 @@ description: "agent-input/topics.md の内容から入力例・コメントな�
   - `python-pytest`: Python 3.12 + pytest
   - `java-junit`: Java 21 + JUnit 5
   - `javascript-jest`: Node.js 20 + Jest
+  - `go-testing`: Go 1.21 + testing
   - 未指定の場合は `python-pytest` をデフォルトとしてドラフト
   - 指定されたプロファイル名が `lang-profiles/` に存在しない場合はエラー
 - **難易度**: `初級`、`初中級`、`中級`、`中上級`、`上級` の5段階から選ばれていること

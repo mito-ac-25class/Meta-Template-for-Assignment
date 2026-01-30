@@ -1,0 +1,19 @@
+{
+  "name": "Go 1.21 Assignment",
+  "image": "mcr.microsoft.com/devcontainers/go:1.21",
+  "customizations": {
+    "vscode": {
+      "settings": {
+        "go.useLanguageServer": true,
+        "go.lintTool": "golangci-lint",
+        "chat.useAgentsMdFile": true
+      },
+      "extensions": [
+        "golang.go",
+        "Anthropic.claude-code"
+      ]
+    }
+  },
+  "postCreateCommand": "go mod download",
+  "remoteUser": "vscode"
+}

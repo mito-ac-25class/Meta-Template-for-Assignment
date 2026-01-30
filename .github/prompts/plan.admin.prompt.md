@@ -44,6 +44,7 @@ description: "課題で取り扱うトピックを基に課題実施手法を選
    - python-pytest: Python 3.12 + pytest
    - java-junit: Java 21 + JUnit 5
    - javascript-jest: Node.js 20 + Jest
+   - go-testing: Go 1.21 + testing
    
    agent-input/topics.md の「使用言語/フレームワーク」セクションを確認し、
    上記いずれかのプロファイル名を記述してください。

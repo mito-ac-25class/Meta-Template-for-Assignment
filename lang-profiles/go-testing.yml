@@ -1,0 +1,131 @@
+# Go/testing 言語プロファイル
+# 本プロファイルはGo 1.21 + 標準testingパッケージを使用した課題作成の設定を定義します
+#
+# 注意: このプロファイルは参考実装です。実際の使用前に検証が必要です。
+
+name: go-testing
+display_name: "Go 1.21 + testing"
+language: go
+version: "1.21"
+
+# ============================================
+# 開発環境設定（DevContainer）
+# ============================================
+devcontainer:
+  image: "mcr.microsoft.com/devcontainers/go:1.21"
+  extensions:
+    - "golang.go"
+    - "Anthropic.claude-code"
+  settings:
+    go.useLanguageServer: true
+    go.lintTool: "golangci-lint"
+    chat.useAgentsMdFile: true
+  post_create_command: "go mod download"
+
+# ============================================
+# テスト設定
+# ============================================
+testing:
+  framework: testing
+  install_command: null  # Go標準ライブラリのため不要
+  # {marker} はテスト関数名パターンに置換される（例: Stage01）
+  run_command: "go test -v -run '{marker}' ./..."
+  # Goではテスト関数名でフィルタリング
+  marker_format: "Stage{num:02d}"
+  test_file_pattern: "*_test.go"
+  test_directory: "kadai"
+  
+  # ステージディレクトリ構成（Goではパッケージベース）
+  stage_directory_format: null  # 単一パッケージ内でテスト関数名で分類
+
+# ============================================
+# 依存関係管理
+# ============================================
+dependencies:
+  file: "go.mod"
+  dev_file: null
+  install_command: "go mod download"
+  
+  default_dependencies: []  # 標準ライブラリのみ
+
+# ============================================
+# ソースコード構成
+# ============================================
+source:
+  directory: "kadai"
+  file_extension: ".go"
+  # インポートパス形式
+  import_format: "import \"{module}/kadai\""
+  
+  # Goパッケージ構成
+  package_name: "kadai"
+
+# ============================================
+# CI/CD設定
+# ============================================
+ci:
+  setup_commands:
+    - "go mod download"
+  timeout_default: 15
+  default_score_per_stage: 20
+
+# ============================================
+# テスト実装ガイド（プロンプト用）
+# ============================================
+test_implementation:
+  example: |
+    ```go
+    // kadai/example_test.go
+    package kadai
+
+    import "testing"
+
+    func TestStage01_ExampleExists(t *testing.T) {
+        // Example型が存在することを確認
+        var _ Example
+    }
+
+    func TestStage01_ExampleMethodReturnsExpected(t *testing.T) {
+        instance := NewExample("test")
+        
+        // メソッドが期待通りの値を返すことを確認
+        got := instance.GetValue()
+        want := "test"
+        if got != want {
+            t.Errorf("GetValue() = %q, want %q", got, want)
+        }
+    }
+
+    func TestStage02_AnotherFeature(t *testing.T) {
+        // Stage02のテスト
+        // ...
+    }
+    ```
+  
+  # テスト関数名にステージを含める（例: TestStage01_Description）
+  marker_decorator: "func Test{Marker}_{Description}(t *testing.T)"
+  
+  # インポート位置
+  import_location: top_of_file
+  
+  # テスト関数の命名規則
+  function_naming: "Test{Marker}_{Description}"
+  
+  require_comment_before_assertion: true
+  comment_language: "ja"
+
+# ============================================
+# 追加設定（オプション）
+# ============================================
+additional:
+  # ビルドコマンド
+  build_command: "go build ./..."
+  
+  # Lintコマンド
+  lint_command: "golangci-lint run"
+  
+  # フォーマットコマンド
+  format_command: "go fmt ./..."
+  
+  # テストカバレッジ
+  coverage_command: "go test -cover ./..."

@@ -126,6 +126,24 @@ class Example {
 }
 ```
 
+**Go**:
+```go
+// 構造体と関数の例
+package kadai
+
+type Example struct {
+    value string
+}
+
+func NewExample(value string) *Example {
+    return &Example{value: value}
+}
+
+func (e *Example) GetValue() string {
+    return e.value
+}
+```
+
 ### 練習問題の設計
 - **段階的難易度**: セクションの内容を理解していれば解ける問題から始める
 - **即座に検証可能**: 学生が自分で正解を確認できる問題にする

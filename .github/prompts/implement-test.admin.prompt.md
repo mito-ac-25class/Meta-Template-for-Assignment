@@ -99,6 +99,30 @@ describe('Stage01: Example', () => {
 });
 ```
 
+**Go/testing の場合:**
+```go
+// kadai/example_test.go
+package kadai
+
+import "testing"
+
+func TestStage01_ExampleExists(t *testing.T) {
+    // Example型が存在することを確認
+    var _ Example
+}
+
+func TestStage01_ExampleMethodReturnsExpected(t *testing.T) {
+    instance := NewExample("test")
+    
+    // メソッドが期待通りの値を返すことを確認
+    got := instance.GetValue()
+    want := "test"
+    if got != want {
+        t.Errorf("GetValue() = %q, want %q", got, want)
+    }
+}
+```
+
 ### 4. テストの検証
 
 実際に生徒が課題を実施する手順を想定して、以下のフローでテストを検証してください。
@@ -119,6 +143,7 @@ pwd
 - Python/pytest: `pytest -m stage01 -v`
 - Java/JUnit: `mvn test -Dgroups='Stage01'`
 - JavaScript/Jest: `npm test -- --testPathPattern='stage-01'`
+- Go/testing: `go test -v -run 'Stage01' ./...`
 
 > **Note:** この時点でテストが失敗するのは正常です。学生は空の実装ファイルから始めるため、必要なモジュールやクラスがまだ存在しません。
 

@@ -16,9 +16,13 @@
 | プロファイル | 言語 | テストフレームワーク | 状態 |
 |-------------|-----|-------------------|------|
 | `python-pytest.yml` | Python 3.12 | pytest | ✅ 利用可能 |
-| `java-junit.yml` | Java 21 | JUnit 5 | 📋 計画中 |
-| `javascript-jest.yml` | JavaScript/Node.js | Jest | 📋 計画中 |
-| `go-testing.yml` | Go | testing | 📋 計画中 |
+| `java-junit.yml` | Java 21 | JUnit 5 | 🔧 参考実装 |
+| `javascript-jest.yml` | JavaScript/Node.js 20 | Jest | 🔧 参考実装 |
+| `go-testing.yml` | Go 1.21 | testing | 🔧 参考実装 |
+
+> **凡例**
+> - ✅ 利用可能: 本番運用可能な状態
+> - 🔧 参考実装: テンプレートとして利用可能だが、実際の使用前に検証が必要
 
 ## プロファイルの使用方法
 

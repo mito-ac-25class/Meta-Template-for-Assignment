@@ -1,0 +1,22 @@
+{
+  "name": "$パッケージ名",
+  "version": "1.0.0",
+  "description": "$課題説明",
+  "main": "src/kadai/index.js",
+  "scripts": {
+    "test": "jest",
+    "test:stage01": "jest --testPathPattern='stage-01'",
+    "test:stage02": "jest --testPathPattern='stage-02'",
+    "test:stage03": "jest --testPathPattern='stage-03'",
+    "test:stage04": "jest --testPathPattern='stage-04'",
+    "test:stage05": "jest --testPathPattern='stage-05'",
+    "lint": "eslint src/",
+    "format": "prettier --write src/"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "jest": "^29.7.0"
+  }
+}
