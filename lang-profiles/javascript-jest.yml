@@ -30,14 +30,15 @@ devcontainer:
 testing:
   framework: jest
   install_command: "npm install jest --save-dev"
-  # {marker} はテストグループ名に置換される（例: stage01）
+  # {marker} はステージ番号（2桁ゼロ埋め）に置換される（例: 01, 02）
+  # ディレクトリ構成は stage-01, stage-02 形式
   run_command: "npm test -- --testPathPattern='stage-{marker}'"
-  marker_format: "{num:02d}"  # 01, 02, ...
+  marker_format: "{num:02d}"  # 01, 02, ...（ディレクトリ名のstage-と組み合わせて使用）
   test_file_pattern: "*.test.js"
   test_directory: "tests/stages"
   
   # ステージディレクトリ構成
-  stage_directory_format: "stage-{num:02d}"
+  stage_directory_format: "stage-{num:02d}"  # stage-01, stage-02
   
   # Jest設定ファイル
   config_file: "jest.config.js"

@@ -1,4 +1,4 @@
-# 言語プロファイル スキーマ定義 v1.0
+# 言語プロファイルスキーマ定義 v1.0
 # 
 # このファイルは言語プロファイルのスキーマを定義します。
 # 新しい言語プロファイルを作成する際は、このスキーマに従ってください。
@@ -17,7 +17,7 @@ schema:
     name:
       type: string
       description: "プロファイル識別子（例: python-pytest, java-junit）"
-      pattern: "^[a-z]+-[a-z]+$"
+      pattern: "^[a-z][a-z0-9-]*[a-z0-9]$"  # 先頭は小文字、末尾は英数字、中間はハイフン可
       
     display_name:
       type: string
@@ -34,7 +34,7 @@ schema:
         - go
         - csharp
         - ruby
-        - rust
+        # 注: 新しい言語はプロファイル実装と共に追加
         
     version:
       type: string
@@ -126,10 +126,13 @@ schema:
           description: "依存関係インストールコマンド"
         dev_install_command:
           type: string
-          description: "開発用依存関係インストールコマンド"
+          description: "開発用依存関係インストールコマンド（オプション）"
+        default_dependencies:
+          type: array
+          description: "デフォルトで含める依存関係（オプション）"
         default_dev_dependencies:
           type: array
-          description: "デフォルトで含める開発用依存関係"
+          description: "デフォルトで含める開発用依存関係（オプション）"
 
   # --------------------------------------------
   # 必須フィールド: ソースコード構成
@@ -149,6 +152,12 @@ schema:
         import_format:
           type: string
           description: "インポート文の形式"
+        import_format_esm:
+          type: string
+          description: "ES Modules形式のインポート文（JavaScript用、オプション）"
+        package_name:
+          type: string
+          description: "パッケージ名（Java等のパッケージベース言語用、オプション）"
 
   # --------------------------------------------
   # 必須フィールド: CI/CD設定
@@ -192,13 +201,25 @@ schema:
           enum:
             - inside_function
             - top_of_file
-          description: "インポート文を書く場所"
+          description: |
+            インポート文を書く場所:
+            - inside_function: テスト関数内でインポート（pytest推奨、遅延評価）
+            - top_of_file: ファイル先頭でインポート（Java, JavaScript等）
         function_naming:
           type: string
-          description: "テスト関数の命名規則"
+          description: "テスト関数の命名規則（例: test_{description}）"
+        method_naming:
+          type: string
+          description: "テストメソッドの命名規則（function_namingの代替、Java等用）"
         class_naming:
           type: string
           description: "テストクラスの命名規則（該当言語のみ）"
+        describe_naming:
+          type: string
+          description: "describeブロックの命名規則（Jest等用、オプション）"
+        test_naming:
+          type: string
+          description: "testブロックの命名規則（Jest等用、オプション）"
         require_comment_before_assertion:
           type: boolean
           description: "アサーション前のコメント必須フラグ"
@@ -215,6 +236,9 @@ schema:
   optional:
     additional:
       type: object
+      description: |
+        言語/フレームワーク固有の追加設定。
+        以下は一般的なフィールドの例。他にも言語固有のフィールドを自由に追加可能。
       properties:
         lint_command:
           type: string
@@ -231,17 +255,28 @@ schema:
         coverage_command:
           type: string
           description: "カバレッジ測定コマンド"
+        package_command:
+          type: string
+          description: "パッケージ/ビルドコマンド（Maven package等）"
+        package_scripts:
+          type: object
+          description: "package.jsonのscriptsセクション設定例（JavaScript用）"
+      additionalProperties: true  # 言語固有の追加フィールドを許可
 
 # ============================================
 # プレースホルダ仕様
 # ============================================
+# 注意: これらのプレースホルダはエージェントが解釈し、
+# 実際のテンプレート生成時に適切な値に置換されます。
+# Python形式の {num:02d} 記法は概念的な仕様であり、
+# 実装時に各言語のテンプレートシステムに合わせて変換されます。
 placeholders:
   "{marker}":
     description: "ステージマーカー文字列に置換される"
     example: "stage01, Stage01"
     
   "{num:02d}":
-    description: "2桁ゼロ埋めのステージ番号に置換される"
+    description: "2桁ゼロ埋めのステージ番号に置換される（概念的表記）"
     example: "01, 02, 03"
     
   "{num}":
