@@ -1,0 +1,151 @@
+# JSON Schema (YAML format) for agent-input/topics.yaml
+# Used by scripts/validate.py to validate teacher input
+
+$schema: "https://json-schema.org/draft/2020-12/schema"
+title: "Assignment Topics Definition"
+description: "課題トピック定義のスキーマ。教員が記入し、エージェントが参照する。"
+type: object
+
+required:
+  - title
+  - language
+  - topics
+  - prerequisites
+  - learning_goals
+  - difficulty
+  - estimated_time
+  - tutorial_required
+  - stages
+
+properties:
+  title:
+    type: string
+    minLength: 1
+    description: "課題タイトル"
+
+  language:
+    type: string
+    enum: ["python"]
+    description: "プログラミング言語"
+
+  topics:
+    type: array
+    items:
+      type: string
+      minLength: 1
+    minItems: 1
+    description: "学習トピック一覧"
+
+  prerequisites:
+    type: array
+    items:
+      type: string
+      minLength: 1
+    minItems: 1
+    description: "事前知識レベル"
+
+  learning_goals:
+    type: array
+    items:
+      type: string
+      minLength: 1
+      pattern: "できる$"
+    minItems: 1
+    description: "学習目標（「～できる」で終わること）"
+
+  difficulty:
+    type: string
+    enum: ["初級", "初中級", "中級", "中上級", "上級"]
+    description: "難易度"
+
+  estimated_time:
+    type: object
+    required:
+      - tutorial_minutes
+      - implementation_minutes
+      - total_minutes
+    properties:
+      tutorial_minutes:
+        type: integer
+        minimum: 0
+      implementation_minutes:
+        type: integer
+        minimum: 1
+      total_minutes:
+        type: integer
+        minimum: 1
+    additionalProperties: false
+    description: "想定学習時間（分）"
+
+  tutorial_required:
+    type: boolean
+    description: "チュートリアルの必要性"
+
+  tutorial_reason:
+    type: string
+    description: "チュートリアルが必要な理由"
+
+  tutorial_topics:
+    type: array
+    items:
+      type: string
+    description: "チュートリアルで扱うトピック"
+
+  assignment_type:
+    type: string
+    enum:
+      - "プログラム実装課題"
+      - "リファクタリング課題"
+      - "テスト実装課題"
+      - "テスト駆動開発課題"
+    description: "課題実施方式（/design で選定）"
+
+  scenario:
+    type: object
+    properties:
+      title:
+        type: string
+      situation:
+        type: string
+      implementation_file:
+        type: string
+      initial_state:
+        type: string
+    description: "シナリオ情報（/design で設定）"
+
+  stages:
+    type: array
+    minItems: 1
+    maxItems: 10
+    items:
+      type: object
+      required:
+        - name
+        - feature
+        - acceptance_criteria
+        - score
+      properties:
+        name:
+          type: string
+          pattern: "^stage[0-9]{2}$"
+          description: "ステージ名（stage01, stage02, ...）"
+        feature:
+          type: string
+          minLength: 1
+          description: "機能名"
+        acceptance_criteria:
+          type: string
+          minLength: 1
+          description: "受け入れ条件（テスト観点）"
+        score:
+          type: integer
+          minimum: 0
+          description: "配点"
+      additionalProperties: false
+    description: "ステージ構成"
+
+  notes:
+    type: string
+    description: "補足情報"
+
+additionalProperties: false

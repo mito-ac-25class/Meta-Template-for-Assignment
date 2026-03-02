@@ -1,0 +1,48 @@
+# 課題トピック定義
+# このファイルを記入し、/design コマンドで課題プランを生成します。
+# スキーマ: schema/topics.schema.yaml
+# バリデーション: python scripts/validate.py
+
+# --- 基本情報 ---
+
+title: ""              # 課題タイトル (例: "銀行口座クラスの実装")
+language: python        # プログラミング言語
+
+# --- 学習内容 ---
+
+# 扱う主要なプログラミング概念
+topics:
+  - ""                 # 例: "クラスの定義とインスタンス化"
+
+# 学生に求められる前提知識
+prerequisites:
+  - ""                 # 例: "Python の基本文法（変数、データ型、演算子）"
+
+# 達成すべき学習目標（「～できる」で終わること）
+learning_goals:
+  - ""                 # 例: "クラスを使ってデータと振る舞いをカプセル化できる"
+
+# --- 難易度・時間 ---
+
+difficulty: ""          # 初級 / 初中級 / 中級 / 中上級 / 上級
+
+estimated_time:
+  tutorial_minutes: 0   # チュートリアル学習時間
+  implementation_minutes: 0  # 課題実装時間
+  total_minutes: 0      # 合計時間
+
+# --- チュートリアル ---
+
+tutorial_required: false
+tutorial_reason: ""     # 必要な場合の理由
+tutorial_topics: []     # チュートリアルで扱うトピック
+
+# --- ステージ構成 ---
+# /design コマンドで自動設定されますが、手動で記入することも可能です。
+# name は stage01, stage02, ... の形式で、score の合計は 100 にしてください。
+
+stages:
+  - name: stage01
+    feature: ""
+    acceptance_criteria: ""
+    score: 0
