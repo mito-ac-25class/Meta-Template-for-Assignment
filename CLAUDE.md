@@ -1,7 +1,7 @@
 # エージェント向け指示書（Claude Code）
 
 > **このファイルの位置づけ**: 本ファイルは Claude Code が課題リポジトリ作成を支援する際の動作制御用ドキュメントです。
-> **教員向け詳細情報**: リポジトリの詳細な構成、セットアップ手順、各プロンプトファイルの詳しい説明については、**[README.md](README.md)** を参照してください。
+> **教員向け詳細情報**: リポジトリの詳細な構成、セットアップ手順については **[README.md](README.md)** を参照してください。
 
 ## エージェントの役割
 
@@ -12,30 +12,30 @@
 
 | ディレクトリ | 用途 |
 |------------|------|
-| `.claude/commands/` | Claude Code 用スラッシュコマンド |
-| `.claude/skills/` | Claude Code 用スキル（知識ベース） |
-| `.github/prompts/` | GitHub Copilot 用プロンプトファイル（`.admin.prompt.md`） |
-| `agent-input/` | エージェント入力ファイル（`topics.md` など） |
+| `prompts/` | プロンプトの正本（`_shared/` に共通定義） |
+| `.claude/commands/` | Claude Code 用スラッシュコマンド（`build_prompts.py` で自動生成） |
+| `.claude/skills/` | Claude Code 用スキル（`build_prompts.py` で自動生成） |
+| `.github/prompts/` | GitHub Copilot 用プロンプト（`build_prompts.py` で自動生成） |
+| `schema/` | 入力スキーマ定義（`topics.schema.yaml`） |
+| `agent-input/` | エージェント入力ファイル（`topics.yaml`） |
 | `agent-output/` | エージェント出力ファイル（`plan.md`、シナリオ案など） |
+| `templates/` | Jinja2 テンプレート |
+| `scripts/` | ビルド・検証・生成スクリプト |
+| `plugins/` | 言語プラグイン |
 | `src/kadai/` | 課題実装用ディレクトリ |
 | `tests/stages/` | ステージ別テストファイル |
-| `release/` | リリース用ファイル（学生向け README など） |
+| `release/` | リリース用ファイル（学生向けポリシーなど） |
 
 ## 標準ワークフロー
 
-各コマンドは以下の順序で実行されます：
+3フェーズで課題リポジトリを作成します：
 
-1. `/topics` - トピック定義のクリーンアップ
-2. `/suggest-scenario` *(Optional)* - シナリオ案の提案
-3. `/plan` - 課題プラン作成
-4. `/tutorial` - チュートリアル作成
-5. `/readme` - 学生向け README 作成
-6. `/implement-test` - テスト実装・検証
-7. `/verify` - 包括的検証
-8. `/release` - リリース準備
+1. `/design` — トピック検証 + シナリオ提案（任意） + 課題プラン作成
+2. `/build` — README・チュートリアル・テスト・CI を生成し動作検証
+3. `/release` — 包括的検証 + 開発用ファイル削除でリリース準備
 
-- フローは各ステップごとに教員が慎重に確認し、修正や続行の判断を下します。エージェントはフローの範囲を超えた作業や提案をしてはいけません。
-- 各ステップのレビューフロー、修正プロセス、問題発生時の対処方法については [REVIEW_FLOW.md](REVIEW_FLOW.md) を参照してください。
+- フローは各フェーズごとに教員が慎重に確認し、修正や続行の判断を下します。エージェントはフローの範囲を超えた作業や提案をしてはいけません。
+- レビュープロセスの詳細は `prompts/_shared/review-process.md` を参照してください。
 
 ## スキル（自動参照される知識ベース）
 
@@ -44,11 +44,19 @@
 - **git-workflow**: Git ブランチ・コミット・プッシュの標準手順
 - **assignment-types**: 4つの課題実施方式の定義
 
+## プロンプトの管理
+
+プロンプトの正本は `prompts/` ディレクトリにあります。`.claude/commands/` と `.github/prompts/` のファイルは `scripts/build_prompts.py` で自動生成されるため、**直接編集しないでください**。
+
+```bash
+python scripts/build_prompts.py  # プロンプトの再生成
+```
+
 ## 併用について
 
 このリポジトリは GitHub Copilot と Claude Code の両方で使用できます：
 
-| ツール | コマンド/プロンプト |
-|-------|-------------------|
-| Claude Code | `/topics`, `/plan`, `/readme` など |
-| GitHub Copilot | `/topics.admin`, `/plan.admin`, `/readme.admin` など |
+| ツール | コマンド |
+|-------|--------|
+| Claude Code | `/design`, `/build`, `/release` |
+| GitHub Copilot | `/design.admin`, `/build.admin`, `/release.admin` |
