@@ -16,6 +16,7 @@ import sys
 from pathlib import Path
 
 import yaml
+from jinja2 import Environment, FileSystemLoader
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
@@ -37,36 +38,65 @@ def load_topics(path: Path) -> dict:
         return yaml.safe_load(f) or {}
 
 
-def render_template(template_name: str, context: dict) -> str:
-    """Render a Jinja2 template with the given context."""
-    from jinja2 import Environment, FileSystemLoader
+def build_context(topics: dict) -> dict:
+    """Build template context with defaults for all expected fields."""
+    defaults = {
+        "title": "",
+        "language": "python",
+        "topics": [],
+        "prerequisites": [],
+        "learning_goals": [],
+        "difficulty": "",
+        "estimated_time": {
+            "tutorial_minutes": 0,
+            "implementation_minutes": 0,
+            "total_minutes": 0,
+        },
+        "tutorial_required": False,
+        "tutorial_reason": "",
+        "tutorial_topics": [],
+        "stages": [],
+    }
+    defaults.update(topics)
+    return defaults
 
-    env = Environment(
+
+def create_env() -> Environment:
+    """Create Jinja2 environment."""
+    return Environment(
         loader=FileSystemLoader(str(TEMPLATES_DIR)),
         keep_trailing_newline=True,
     )
+
+
+def render_template(env: Environment, template_name: str, context: dict) -> str:
+    """Render a Jinja2 template with the given context."""
     template = env.get_template(template_name)
     return template.render(**context)
 
 
-def generate_target(name: str, topics: dict) -> None:
+def generate_target(env: Environment, name: str, context: dict) -> None:
     """Generate a single target file."""
     if name not in TARGETS:
         print(f"Unknown target: {name}", file=sys.stderr)
         sys.exit(1)
+
+    # Skip tutorial if not required
+    if name == "tutorial" and not context.get("tutorial_required", False):
+        print("Tutorial not required, skipping.")
+        return
 
     template_name, output_rel = TARGETS[name]
     template_path = TEMPLATES_DIR / template_name
 
     if not template_path.exists():
         print(f"Template not found: {template_path}", file=sys.stderr)
-        print("(Templates will be created in Phase 3)", file=sys.stderr)
         return
 
     output_path = REPO_ROOT / output_rel
     output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    content = render_template(template_name, topics)
+    content = render_template(env, template_name, context)
     output_path.write_text(content, encoding="utf-8")
     print(f"Generated: {output_rel}")
 
@@ -76,11 +106,11 @@ def main():
     parser.add_argument(
         "targets", nargs="+",
         choices=list(TARGETS.keys()) + ["all"],
-        help="Targets to generate"
+        help="Targets to generate",
     )
     parser.add_argument(
         "--topics", type=Path, default=TOPICS_PATH,
-        help="Path to topics.yaml"
+        help="Path to topics.yaml",
     )
     args = parser.parse_args()
 
@@ -89,10 +119,12 @@ def main():
         sys.exit(1)
 
     topics = load_topics(args.topics)
+    context = build_context(topics)
+    env = create_env()
 
     targets = list(TARGETS.keys()) if "all" in args.targets else args.targets
     for target in targets:
-        generate_target(target, topics)
+        generate_target(env, target, context)
 
 
 if __name__ == "__main__":
