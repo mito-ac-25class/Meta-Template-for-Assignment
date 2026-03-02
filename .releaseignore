@@ -1,0 +1,25 @@
+# リリース時に削除するファイル・ディレクトリ
+# gitignore 形式のパターンで指定
+
+# プロンプト関連
+prompts/
+.claude/commands/
+.claude/skills/
+.github/prompts/*.admin.prompt.md
+
+# 開発ツール
+schema/
+scripts/
+plugins/
+templates/
+
+# エージェント作業ファイル
+agent-input/
+agent-output/
+
+# テストインフラ
+tests/infrastructure/
+tests/conftest.py
+
+# 自身
+.releaseignore

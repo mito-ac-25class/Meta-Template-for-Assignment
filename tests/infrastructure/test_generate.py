@@ -1,0 +1,93 @@
+"""generate.py のテスト"""
+import sys
+from pathlib import Path
+
+import pytest
+
+sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
+
+from generate import build_context, create_env, render_template, TEMPLATES_DIR
+
+
+@pytest.fixture
+def sample_context():
+    return build_context({
+        "title": "テスト課題",
+        "language": "python",
+        "topics": ["変数"],
+        "prerequisites": ["基本文法"],
+        "learning_goals": ["変数を使えることができる"],
+        "stages": [
+            {"name": "stage01", "feature": "変数定義", "acceptance_criteria": "変数が定義できる", "score": 60},
+            {"name": "stage02", "feature": "変数出力", "acceptance_criteria": "変数を出力できる", "score": 40},
+        ],
+        "tutorial_required": False,
+    })
+
+
+@pytest.fixture
+def env():
+    return create_env()
+
+
+def test_build_context_defaults():
+    """空の入力でもデフォルト値が設定されることを確認"""
+    ctx = build_context({})
+    assert ctx["title"] == ""
+    assert ctx["language"] == "python"
+    assert ctx["stages"] == []
+    assert ctx["tutorial_required"] is False
+
+
+def test_build_context_override():
+    """入力値がデフォルトを上書きすることを確認"""
+    ctx = build_context({"title": "my title", "language": "java"})
+    assert ctx["title"] == "my title"
+    assert ctx["language"] == "java"
+
+
+def test_classroom_template_renders(env, sample_context):
+    """classroom.yml.j2 が正常にレンダリングされることを確認"""
+    content = render_template(env, "classroom.yml.j2", sample_context)
+    # ステージ名が含まれること
+    assert "stage01" in content
+    assert "stage02" in content
+    # スコアが含まれること
+    assert "max-score: 60" in content
+    assert "max-score: 40" in content
+    # GitHub Actions 式が正しくエスケープされること
+    assert "${{steps.stage01.outputs.result}}" in content
+    # runners が正しいこと
+    assert "runners: stage01,stage02" in content
+
+
+def test_plan_template_renders(env, sample_context):
+    """plan.md.j2 が正常にレンダリングされることを確認"""
+    content = render_template(env, "plan.md.j2", sample_context)
+    assert "テスト課題" in content
+    assert "変数" in content
+    assert "変数定義" in content
+
+
+def test_readme_template_renders(env, sample_context):
+    """README.md.j2 が正常にレンダリングされることを確認"""
+    content = render_template(env, "README.md.j2", sample_context)
+    assert "テスト課題" in content
+    assert "stage01" not in content  # マーカー名ではなくステージ番号
+    assert "| 1 |" in content
+
+
+def test_tutorial_template_renders(env, sample_context):
+    """TUTORIAL.md.j2 が正常にレンダリングされることを確認"""
+    sample_context["tutorial_required"] = True
+    content = render_template(env, "TUTORIAL.md.j2", sample_context)
+    assert "テスト課題" in content
+    assert "基本文法" in content
+
+
+def test_classroom_template_with_no_stages(env):
+    """ステージなしで classroom.yml.j2 がエラーにならないことを確認"""
+    ctx = build_context({"stages": []})
+    content = render_template(env, "classroom.yml.j2", ctx)
+    assert "Autograding Tests" in content
+    assert "runners: " in content
