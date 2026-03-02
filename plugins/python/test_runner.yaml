@@ -1,0 +1,28 @@
+# Python テストランナー設定リファレンス
+# pyproject.toml の [tool.pytest.ini_options] に反映される設定
+
+framework: pytest
+min_version: "7.0"
+
+# pytest 設定
+config:
+  addopts: "-q"
+  pythonpath: ["src"]
+  # markers は tests/conftest.py で topics.yaml から動的登録
+
+# テスト実行コマンド
+commands:
+  # 全テスト実行
+  all: "pytest tests/stages/ -v"
+  # ステージ単体
+  stage: "pytest -m stageXX -v"
+  # デバッグ
+  debug: "pytest -m stageXX -vv --tb=long -s"
+  # キーワード検索
+  keyword: "pytest -k 'keyword' -v"
+
+# CI での実行
+ci:
+  install: "pip install pytest"
+  command: "pytest -m 'stageXX'"
+  timeout: 10
