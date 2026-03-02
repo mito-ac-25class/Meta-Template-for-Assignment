@@ -71,6 +71,8 @@ README に含める内容:
 
 #### テスト実装ルール
 
+`plugins/python/conventions.md` のテスト規約に従います。主なルール:
+
 1. テストファイルの配置: `tests/stages/stage-XX/test_<モジュール名>.py`
 2. 全テスト関数に `@pytest.mark.stageXX` デコレータを付与
 3. import はテスト関数内で行う（`pythonpath = src` 設定による制約）
