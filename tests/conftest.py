@@ -30,13 +30,11 @@ def pytest_configure(config):
     # django-react スタックの場合、Django 設定を自動構成
     stack = topics.get("stack", "python")
     if stack == "django-react":
+        import os
         settings = topics.get("scenario", {}).get(
             "django_settings", "config.settings"
         )
-        config.addinivalue_line(
-            "ini",
-            f"DJANGO_SETTINGS_MODULE = {settings}",
-        )
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings)
 
 
 @pytest.fixture

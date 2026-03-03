@@ -44,7 +44,7 @@ jobs:
       with:
         test-name: {{ stage.name }}
 {% if stack == "django-react" %}
-        command: "pytest -m '{{ stage.name }}' && npx jest tests/stages/{{ stage.name }}/ --passWithNoTests"
+        command: "pytest -m '{{ stage.name }}' && npx --prefix src/kadai/frontend jest tests/stages/{{ stage.name }}/ --passWithNoTests"
         timeout: 30
 {% else %}
         command: "pytest -m '{{ stage.name }}'"
