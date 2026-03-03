@@ -85,6 +85,31 @@ def test_tutorial_template_renders(env, sample_context):
     assert "基本文法" in content
 
 
+def test_classroom_template_django_react(env):
+    """django-react スタックで classroom.yml.j2 が正しくレンダリングされることを確認"""
+    ctx = build_context({
+        "title": "Django React 課題",
+        "stack": "django-react",
+        "stages": [
+            {"name": "stage01", "feature": "API実装", "acceptance_criteria": "APIが動作する", "score": 50},
+            {"name": "stage02", "feature": "UI実装", "acceptance_criteria": "UIが動作する", "score": 50},
+        ],
+    })
+    content = render_template(env, "classroom.yml.j2", ctx)
+    # Python と Node.js のセットアップが含まれること
+    assert "setup-python" in content
+    assert "setup-node" in content
+    # バックエンド・フロントエンドの依存インストールが含まれること
+    assert "pip install" in content
+    assert "npm ci" in content
+    # Jest コマンドが --prefix 付きで正しく構成されていること
+    assert "npx --prefix src/kadai/frontend jest tests/stages/stage01/ --passWithNoTests" in content
+    # ステージ名とスコアが含まれること
+    assert "stage01" in content
+    assert "stage02" in content
+    assert "max-score: 50" in content
+
+
 def test_classroom_template_with_no_stages(env):
     """ステージなしで classroom.yml.j2 がエラーにならないことを確認"""
     ctx = build_context({"stages": []})

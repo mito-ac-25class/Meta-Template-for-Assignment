@@ -1,4 +1,5 @@
 """Dynamic pytest configuration from topics.yaml."""
+import os
 from pathlib import Path
 
 import pytest
@@ -33,10 +34,7 @@ def pytest_configure(config):
         settings = topics.get("scenario", {}).get(
             "django_settings", "config.settings"
         )
-        config.addinivalue_line(
-            "ini",
-            f"DJANGO_SETTINGS_MODULE = {settings}",
-        )
+        os.environ.setdefault("DJANGO_SETTINGS_MODULE", settings)
 
 
 @pytest.fixture
