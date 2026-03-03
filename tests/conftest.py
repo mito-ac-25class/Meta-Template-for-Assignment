@@ -1,4 +1,5 @@
 """Dynamic pytest configuration from topics.yaml."""
+import os
 from pathlib import Path
 
 import pytest
@@ -30,7 +31,6 @@ def pytest_configure(config):
     # django-react スタックの場合、Django 設定を自動構成
     stack = topics.get("stack", "python")
     if stack == "django-react":
-        import os
         settings = topics.get("scenario", {}).get(
             "django_settings", "config.settings"
         )

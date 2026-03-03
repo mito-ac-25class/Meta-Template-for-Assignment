@@ -102,8 +102,8 @@ def test_classroom_template_django_react(env):
     # バックエンド・フロントエンドの依存インストールが含まれること
     assert "pip install" in content
     assert "npm ci" in content
-    # Jest コマンドが --prefix 付きで含まれること
-    assert "npx --prefix src/kadai/frontend jest" in content
+    # Jest コマンドが --prefix 付きで正しく構成されていること
+    assert "npx --prefix src/kadai/frontend jest tests/stages/stage01/ --passWithNoTests" in content
     # ステージ名とスコアが含まれること
     assert "stage01" in content
     assert "stage02" in content
