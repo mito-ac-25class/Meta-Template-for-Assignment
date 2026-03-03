@@ -16,7 +16,7 @@ allowed-tools: Read, Edit, Write, Bash, Glob, Grep
 
 - `release/README.md`（学生向け課題説明）
 - `TUTORIAL.md`（チュートリアル、必要な場合のみ）
-- `tests/stages/stage-XX/test_*.py`（ステージ別テスト）
+- `tests/stages/stageXX/test_*.py`（ステージ別テスト）
 - `.github/workflows/classroom.yml`（CI設定）
 - `agent-output/` 内に模範解答のバックアップ
 
@@ -80,7 +80,7 @@ README に含める内容:
 
 **Python（stack: python）の主なルール:**
 
-1. テストファイルの配置: `tests/stages/stage-XX/test_<モジュール名>.py`
+1. テストファイルの配置: `tests/stages/stageXX/test_<モジュール名>.py`
 2. 全テスト関数に `@pytest.mark.stageXX` デコレータを付与
 3. import はテスト関数内で行う（`pythonpath = src` 設定による制約）
 4. 各アサーションの前に日本語コメントで検証内容を説明
@@ -88,8 +88,8 @@ README に含める内容:
 
 **Django + React（stack: django-react）の主なルール:**
 
-1. バックエンドテスト: `tests/stages/stage-XX/test_backend_<モジュール名>.py`（pytest + pytest-django）
-2. フロントエンドテスト: `tests/stages/stage-XX/test_frontend_<コンポーネント名>.test.ts`（Jest）
+1. バックエンドテスト: `tests/stages/stageXX/test_backend_<モジュール名>.py`（pytest + pytest-django）
+2. フロントエンドテスト: `tests/stages/stageXX/test_frontend_<コンポーネント名>.test.ts`（Jest）
 3. バックエンドは `@pytest.mark.stageXX` デコレータ、フロントエンドは `describe("StageXX: ...")` で分類
 4. 詳細は `plugins/django-react/conventions.md` を参照
 
