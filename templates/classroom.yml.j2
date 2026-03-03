@@ -37,6 +37,8 @@ jobs:
       uses: actions/setup-node@v4
       with:
         node-version: "20"
+        cache: "npm"
+        cache-dependency-path: "src/kadai/package-lock.json"
 
     - name: Install dependencies
       run: |
@@ -57,7 +59,7 @@ jobs:
         command: "pytest -m '{{ stage.name }}' && npx --prefix src/kadai/frontend jest tests/stages/{{ stage.name }}/ --passWithNoTests"
         timeout: 30
 {% elif stack == "javascript" %}
-        command: "cd src/kadai && npx jest ../../tests/stages/{{ stage.name }}/ --passWithNoTests"
+        command: "cd src/kadai && npx jest --ci ../../tests/stages/{{ stage.name }}/ --passWithNoTests"
         timeout: 10
 {% else %}
         command: "pytest -m '{{ stage.name }}'"
