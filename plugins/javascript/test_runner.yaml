@@ -6,22 +6,22 @@ min_version: "29.0"
 
 # Jest 設定
 config:
-  testMatch: ["**/tests/stages/**/test_*.test.js"]
-  rootDir: "."
+  rootDir: "../.."
+  testMatch: ["<rootDir>/tests/stages/**/test_*.test.js"]
 
 # テスト実行コマンド
 commands:
   # 全テスト実行
-  all: "npx --prefix src/kadai jest tests/stages/ --verbose"
+  all: "npx jest --config src/kadai/package.json tests/stages/ --verbose"
   # ステージ単体
-  stage: "npx --prefix src/kadai jest tests/stages/stageXX/ --verbose"
+  stage: "npx jest --config src/kadai/package.json tests/stages/stageXX/ --verbose"
   # デバッグ
-  debug: "npx --prefix src/kadai jest tests/stages/stageXX/ --verbose --detectOpenHandles"
+  debug: "npx jest --config src/kadai/package.json tests/stages/stageXX/ --verbose --detectOpenHandles"
   # キーワード検索
-  keyword: "npx --prefix src/kadai jest -t 'keyword' --verbose"
+  keyword: "npx jest --config src/kadai/package.json -t 'keyword' --verbose"
 
 # CI での実行
 ci:
   install: "cd src/kadai && npm ci"
-  command: "npx --prefix src/kadai jest tests/stages/stageXX/ --passWithNoTests"
+  command: "npx jest --config src/kadai/package.json tests/stages/stageXX/ --passWithNoTests"
   timeout: 10

@@ -29,13 +29,14 @@ tests/
   "name": "kadai",
   "private": true,
   "scripts": {
-    "test": "jest tests/stages/ --verbose"
+    "test": "jest --config package.json tests/stages/ --verbose"
   },
   "devDependencies": {
     "jest": "^29.0.0"
   },
   "jest": {
-    "testMatch": ["**/tests/stages/**/test_*.test.js"]
+    "rootDir": "../..",
+    "testMatch": ["<rootDir>/tests/stages/**/test_*.test.js"]
   }
 }
 ```
@@ -43,11 +44,11 @@ tests/
 ## テスト実行
 
 ```bash
-# 全テスト
-npx --prefix src/kadai jest tests/stages/ --verbose
+# 全テスト（リポジトリルートから実行）
+npx jest --config src/kadai/package.json tests/stages/ --verbose
 
-# ステージ別
-npx --prefix src/kadai jest tests/stages/stage01/ --verbose
+# ステージ別（リポジトリルートから実行）
+npx jest --config src/kadai/package.json tests/stages/stage01/ --verbose
 ```
 
 ## CI（GitHub Classroom）

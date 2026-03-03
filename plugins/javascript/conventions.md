@@ -23,6 +23,7 @@ tests/
 
 - `const { ... } = require("../../../src/kadai/<module>");` （CommonJS）
 - テストファイルのトップレベルで require する
+- 被テスト側モジュールも CommonJS 形式で `module.exports = { ... }` または `exports.foo = ...` としてエクスポートすること（ESM の `export` は使用しない）
 
 ### アサーション
 
@@ -55,5 +56,6 @@ describe("Stage01: 基本的な四則演算", () => {
 
 ## Jest 設定
 
-- Jest の設定は `src/kadai/package.json` 内に記述
-- `testMatch` で `tests/stages/` 配下のテストファイルを対象にする
+- Jest の設定は `src/kadai/package.json` 内に記述する
+- CI/ローカルともに「リポジトリルート」をカレントディレクトリとして `npx jest --config src/kadai/package.json` を実行する前提とする
+- Jest の設定では `rootDir` をリポジトリルートを指すように設定し（例: `"rootDir": "../.."`）、`testMatch` で `<rootDir>/tests/stages/**/test_*.test.js` を対象にする
