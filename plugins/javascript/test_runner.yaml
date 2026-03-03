@@ -23,5 +23,5 @@ commands:
 # CI での実行
 ci:
   install: "cd src/kadai && npm ci"
-  command: "cd src/kadai && npx jest ../../tests/stages/stageXX/ --passWithNoTests"
+  command: "cd src/kadai && npx jest --ci ../../tests/stages/stageXX/ --passWithNoTests"
   timeout: 10
