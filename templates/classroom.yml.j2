@@ -57,7 +57,7 @@ jobs:
         command: "pytest -m '{{ stage.name }}' && npx --prefix src/kadai/frontend jest tests/stages/{{ stage.name }}/ --passWithNoTests"
         timeout: 30
 {% elif stack == "javascript" %}
-        command: "npx --prefix src/kadai jest tests/stages/{{ stage.name }}/ --passWithNoTests"
+        command: "npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/{{ stage.name }}/ --passWithNoTests"
         timeout: 10
 {% else %}
         command: "pytest -m '{{ stage.name }}'"
