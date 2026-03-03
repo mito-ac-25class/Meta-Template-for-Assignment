@@ -21,7 +21,7 @@
 | `agent-output/` | エージェント出力ファイル（`plan.md`、シナリオ案など） |
 | `templates/` | Jinja2 テンプレート |
 | `scripts/` | ビルド・検証・生成スクリプト |
-| `plugins/` | 言語プラグイン |
+| `plugins/` | 技術スタック別プラグイン（`python/`, `django-react/` 等） |
 | `src/kadai/` | 課題実装用ディレクトリ |
 | `tests/stages/` | ステージ別テストファイル |
 | `release/` | リリース用ファイル（学生向けポリシーなど） |

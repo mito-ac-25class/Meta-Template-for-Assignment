@@ -22,7 +22,7 @@ def schema():
 def valid_topics():
     return {
         "title": "テスト課題",
-        "language": "python",
+        "stack": "python",
         "topics": ["変数"],
         "prerequisites": ["基本文法"],
         "learning_goals": ["変数を使えるようになれることができる"],

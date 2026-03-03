@@ -14,6 +14,11 @@ dev = [
     "jsonschema>=4.0",
     "jinja2>=3.0",
 ]
+django-react = [
+    "django>=4.2",
+    "djangorestframework>=3.14",
+    "pytest-django>=4.5",
+]
 
 [tool.pytest.ini_options]
 minversion = "7.0"

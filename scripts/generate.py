@@ -42,7 +42,7 @@ def build_context(topics: dict) -> dict:
     """Build template context with defaults for all expected fields."""
     defaults = {
         "title": "",
-        "language": "python",
+        "stack": "python",
         "topics": [],
         "prerequisites": [],
         "learning_goals": [],

@@ -14,17 +14,42 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+{% if stack == "django-react" %}
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.12"
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+
+    - name: Install backend dependencies
+      run: pip install pytest pytest-django django djangorestframework
+
+    - name: Install frontend dependencies
+      run: |
+        cd src/kadai/frontend
+        npm ci
+{% else %}
     - name: Setup environment
       run: |
         pip install pytest
+{% endif %}
 {% for stage in stages %}
     - name: {{ stage.name }}
       id: {{ stage.name }}
       uses: classroom-resources/autograding-command-grader@v1
       with:
         test-name: {{ stage.name }}
+{% if stack == "django-react" %}
+        command: "pytest -m '{{ stage.name }}' && npx jest tests/stages/{{ stage.name }}/ --passWithNoTests"
+        timeout: 30
+{% else %}
         command: "pytest -m '{{ stage.name }}'"
         timeout: 10
+{% endif %}
         max-score: {{ stage.score }}
 {% endfor %}
     - name: Autograding Reporter

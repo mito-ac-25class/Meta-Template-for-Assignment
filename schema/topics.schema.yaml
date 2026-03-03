@@ -8,7 +8,7 @@ type: object
 
 required:
   - title
-  - language
+  - stack
   - topics
   - prerequisites
   - learning_goals
@@ -23,10 +23,10 @@ properties:
     minLength: 1
     description: "課題タイトル"
 
-  language:
+  stack:
     type: string
-    enum: ["python"]
-    description: "プログラミング言語"
+    enum: ["python", "django-react"]
+    description: "技術スタック（plugins/ ディレクトリ名と一致）"
 
   topics:
     type: array

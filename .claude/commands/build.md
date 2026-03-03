@@ -71,7 +71,14 @@ README に含める内容:
 
 #### テスト実装ルール
 
-`plugins/python/conventions.md` のテスト規約に従います。主なルール:
+`agent-input/topics.yaml` の `stack` フィールドに対応するプラグインのテスト規約に従います。
+
+- `stack: python` → `plugins/python/conventions.md`
+- `stack: django-react` → `plugins/django-react/conventions.md`
+
+対応するプラグインの `conventions.md` を必ず読み、記載されたルールに従ってテストを実装してください。
+
+**Python（stack: python）の主なルール:**
 
 1. テストファイルの配置: `tests/stages/stage-XX/test_<モジュール名>.py`
 2. 全テスト関数に `@pytest.mark.stageXX` デコレータを付与
@@ -79,7 +86,14 @@ README に含める内容:
 4. 各アサーションの前に日本語コメントで検証内容を説明
 5. 1テスト関数につき1アサーション（推奨）
 
-#### テストコード例
+**Django + React（stack: django-react）の主なルール:**
+
+1. バックエンドテスト: `tests/stages/stage-XX/test_backend_<モジュール名>.py`（pytest + pytest-django）
+2. フロントエンドテスト: `tests/stages/stage-XX/test_frontend_<コンポーネント名>.test.ts`（Jest）
+3. バックエンドは `@pytest.mark.stageXX` デコレータ、フロントエンドは `describe("StageXX: ...")` で分類
+4. 詳細は `plugins/django-react/conventions.md` を参照
+
+#### テストコード例（stack: python）
 
 ```python
 import pytest

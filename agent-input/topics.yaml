@@ -6,7 +6,7 @@
 # --- 基本情報 ---
 
 title: ""              # 課題タイトル (例: "銀行口座クラスの実装")
-language: python        # プログラミング言語
+stack: python            # 技術スタック (python / django-react)
 
 # --- 学習内容 ---
 

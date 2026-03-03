@@ -13,7 +13,7 @@ from generate import build_context, create_env, render_template, TEMPLATES_DIR
 def sample_context():
     return build_context({
         "title": "テスト課題",
-        "language": "python",
+        "stack": "python",
         "topics": ["変数"],
         "prerequisites": ["基本文法"],
         "learning_goals": ["変数を使えることができる"],
@@ -34,16 +34,16 @@ def test_build_context_defaults():
     """空の入力でもデフォルト値が設定されることを確認"""
     ctx = build_context({})
     assert ctx["title"] == ""
-    assert ctx["language"] == "python"
+    assert ctx["stack"] == "python"
     assert ctx["stages"] == []
     assert ctx["tutorial_required"] is False
 
 
 def test_build_context_override():
     """入力値がデフォルトを上書きすることを確認"""
-    ctx = build_context({"title": "my title", "language": "java"})
+    ctx = build_context({"title": "my title", "stack": "java"})
     assert ctx["title"] == "my title"
-    assert ctx["language"] == "java"
+    assert ctx["stack"] == "java"
 
 
 def test_classroom_template_renders(env, sample_context):
