@@ -44,8 +44,8 @@ tests/
 ## テスト実行
 
 ```bash
-# 全テスト（リポジトリルートで cd してから npm test）
-cd src/kadai && npm test
+# 全テスト（リポジトリルートから実行）
+cd src/kadai && npx jest ../../tests/stages/ --verbose
 
 # ステージ別（リポジトリルートから実行）
 cd src/kadai && npx jest ../../tests/stages/stage01/ --verbose
