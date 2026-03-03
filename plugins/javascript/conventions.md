@@ -57,5 +57,5 @@ describe("Stage01: 基本的な四則演算", () => {
 ## Jest 設定
 
 - Jest の設定は `src/kadai/package.json` 内に記述する
-- CI/ローカルともに `cd src/kadai && npx jest` を実行する前提とする（ステージ指定時は `npx jest ../../tests/stages/...` のようにテストパスを明示する）
+- CI/ローカルともに `cd src/kadai && npx jest` を実行する前提とする（ステージ指定時は `src/kadai` ディレクトリ内で `npx jest ../../tests/stages/...` のようにテストパスを明示する）
 - Jest の設定では `rootDir` をリポジトリルートを指すように設定し（例: `"rootDir": "../.."`）、`testMatch` で `<rootDir>/tests/stages/**/test_*.test.js` を対象にする
