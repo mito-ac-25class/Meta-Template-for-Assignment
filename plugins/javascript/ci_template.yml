@@ -1,0 +1,26 @@
+# JavaScript CI セットアップ参照
+# classroom.yml.j2 テンプレートが使用する CI 設定の参考
+
+# 環境セットアップ
+setup:
+  runs-on: ubuntu-latest
+  steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+
+    - name: Install dependencies
+      run: |
+        cd src/kadai
+        npm ci
+
+# 自動採点
+autograding:
+  grader: classroom-resources/autograding-command-grader@v1
+  reporter: classroom-resources/autograding-grading-reporter@v1
+  # 各ステージは topics.yaml の stages から自動生成
+  # python scripts/generate.py classroom で classroom.yml を生成

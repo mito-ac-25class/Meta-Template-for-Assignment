@@ -1,0 +1,55 @@
+# JavaScript プロジェクト構成
+
+## ディレクトリ構成
+
+```
+src/kadai/
+├── package.json         # 依存関係 + Jest 設定
+├── <module>.js          # 学生が実装するモジュール
+└── ...
+
+tests/
+└── stages/
+    ├── stage01/
+    │   └── test_<module>.test.js
+    ├── stage02/
+    │   └── test_<module>.test.js
+    └── ...
+```
+
+## 技術スタック
+
+- Node.js 20+
+- Jest 29+（テストフレームワーク）
+
+## package.json 最小構成
+
+```json
+{
+  "name": "kadai",
+  "private": true,
+  "scripts": {
+    "test": "jest tests/stages/ --verbose"
+  },
+  "devDependencies": {
+    "jest": "^29.0.0"
+  },
+  "jest": {
+    "testMatch": ["**/tests/stages/**/test_*.test.js"]
+  }
+}
+```
+
+## テスト実行
+
+```bash
+# 全テスト
+npx --prefix src/kadai jest tests/stages/ --verbose
+
+# ステージ別
+npx --prefix src/kadai jest tests/stages/stage01/ --verbose
+```
+
+## CI（GitHub Classroom）
+
+各ステージで Jest を実行し、全テストが通過した場合にステージクリアとする。

@@ -25,7 +25,7 @@ properties:
 
   stack:
     type: string
-    enum: ["python", "django-react"]
+    enum: ["python", "django-react", "javascript"]
     description: "技術スタック（plugins/ ディレクトリ名と一致）"
 
   topics:
