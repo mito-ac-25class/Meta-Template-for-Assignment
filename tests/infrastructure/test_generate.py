@@ -13,7 +13,7 @@ from generate import build_context, create_env, render_template, TEMPLATES_DIR
 def sample_context():
     return build_context({
         "title": "テスト課題",
-        "language": "python",
+        "stack": "python",
         "topics": ["変数"],
         "prerequisites": ["基本文法"],
         "learning_goals": ["変数を使えることができる"],
@@ -34,16 +34,16 @@ def test_build_context_defaults():
     """空の入力でもデフォルト値が設定されることを確認"""
     ctx = build_context({})
     assert ctx["title"] == ""
-    assert ctx["language"] == "python"
+    assert ctx["stack"] == "python"
     assert ctx["stages"] == []
     assert ctx["tutorial_required"] is False
 
 
 def test_build_context_override():
     """入力値がデフォルトを上書きすることを確認"""
-    ctx = build_context({"title": "my title", "language": "java"})
+    ctx = build_context({"title": "my title", "stack": "java"})
     assert ctx["title"] == "my title"
-    assert ctx["language"] == "java"
+    assert ctx["stack"] == "java"
 
 
 def test_classroom_template_renders(env, sample_context):
@@ -83,6 +83,31 @@ def test_tutorial_template_renders(env, sample_context):
     content = render_template(env, "TUTORIAL.md.j2", sample_context)
     assert "テスト課題" in content
     assert "基本文法" in content
+
+
+def test_classroom_template_django_react(env):
+    """django-react スタックで classroom.yml.j2 が正しくレンダリングされることを確認"""
+    ctx = build_context({
+        "title": "Django React 課題",
+        "stack": "django-react",
+        "stages": [
+            {"name": "stage01", "feature": "API実装", "acceptance_criteria": "APIが動作する", "score": 50},
+            {"name": "stage02", "feature": "UI実装", "acceptance_criteria": "UIが動作する", "score": 50},
+        ],
+    })
+    content = render_template(env, "classroom.yml.j2", ctx)
+    # Python と Node.js のセットアップが含まれること
+    assert "setup-python" in content
+    assert "setup-node" in content
+    # バックエンド・フロントエンドの依存インストールが含まれること
+    assert "pip install" in content
+    assert "npm ci" in content
+    # Jest コマンドが --prefix 付きで正しく構成されていること
+    assert "npx --prefix src/kadai/frontend jest tests/stages/stage01/ --passWithNoTests" in content
+    # ステージ名とスコアが含まれること
+    assert "stage01" in content
+    assert "stage02" in content
+    assert "max-score: 50" in content
 
 
 def test_classroom_template_with_no_stages(env):

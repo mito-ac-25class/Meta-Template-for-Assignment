@@ -1,0 +1,44 @@
+# Django + React テストランナー設定リファレンス
+# バックエンド: pyproject.toml の [tool.pytest.ini_options] に反映
+# フロントエンド: jest.config.ts に反映
+
+backend:
+  framework: pytest
+  min_version: "7.0"
+  plugins:
+    - pytest-django
+
+  config:
+    addopts: "-q"
+    pythonpath: ["src"]
+    # markers は tests/conftest.py で topics.yaml から動的登録
+    # DJANGO_SETTINGS_MODULE は conftest.py で設定
+
+  commands:
+    all: "pytest tests/stages/ -v -k 'backend'"
+    stage: "pytest -m stageXX -v"
+    debug: "pytest -m stageXX -vv --tb=long -s"
+
+  ci:
+    install: "pip install pytest pytest-django django djangorestframework"
+    command: "pytest -m 'stageXX'"
+    timeout: 10
+
+frontend:
+  framework: jest
+  min_version: "29.0"
+
+  config:
+    testMatch: ["**/tests/stages/**/test_frontend_*.test.ts", "**/tests/stages/**/test_frontend_*.test.tsx"]
+    moduleNameMapper:
+      "^@/(.*)$": "<rootDir>/src/kadai/frontend/src/$1"
+
+  commands:
+    all: "npx jest tests/stages/ --passWithNoTests"
+    stage: "npx jest tests/stages/stageXX/ --passWithNoTests"
+    debug: "npx jest tests/stages/stageXX/ --verbose"
+
+  ci:
+    install: "npm ci"
+    command: "npx jest tests/stages/stageXX/ --passWithNoTests"
+    timeout: 30
