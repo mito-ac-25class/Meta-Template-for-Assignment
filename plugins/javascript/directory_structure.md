@@ -45,10 +45,10 @@ tests/
 
 ```bash
 # 全テスト（リポジトリルートから実行）
-npx jest --config src/kadai/package.json tests/stages/ --verbose
+npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/ --verbose
 
 # ステージ別（リポジトリルートから実行）
-npx jest --config src/kadai/package.json tests/stages/stage01/ --verbose
+npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/stage01/ --verbose
 ```
 
 ## CI（GitHub Classroom）

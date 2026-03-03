@@ -12,16 +12,16 @@ config:
 # テスト実行コマンド
 commands:
   # 全テスト実行
-  all: "npx jest --config src/kadai/package.json tests/stages/ --verbose"
+  all: "npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/ --verbose"
   # ステージ単体
-  stage: "npx jest --config src/kadai/package.json tests/stages/stageXX/ --verbose"
+  stage: "npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/stageXX/ --verbose"
   # デバッグ
-  debug: "npx jest --config src/kadai/package.json tests/stages/stageXX/ --verbose --detectOpenHandles"
+  debug: "npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/stageXX/ --verbose --detectOpenHandles"
   # キーワード検索
-  keyword: "npx jest --config src/kadai/package.json -t 'keyword' --verbose"
+  keyword: "npx --prefix src/kadai jest --config src/kadai/package.json -t 'keyword' --verbose"
 
 # CI での実行
 ci:
   install: "cd src/kadai && npm ci"
-  command: "npx jest --config src/kadai/package.json tests/stages/stageXX/ --passWithNoTests"
+  command: "npx --prefix src/kadai jest --config src/kadai/package.json tests/stages/stageXX/ --passWithNoTests"
   timeout: 10
