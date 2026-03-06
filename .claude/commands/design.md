@@ -7,7 +7,6 @@ allowed-tools: Read, Edit, Write, Bash, Glob
 
 > 起動方法: Claude Code で `/design` を実行します。
 
-
 課題の設計フェーズを実行します。トピック定義の検証、シナリオ提案（任意）、課題プランの作成までを一括で行います。
 
 ## 入力

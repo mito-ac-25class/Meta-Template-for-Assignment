@@ -17,6 +17,7 @@ import re
 import shutil
 import sys
 from pathlib import Path
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PROMPTS_DIR = REPO_ROOT / "prompts"
@@ -155,7 +156,7 @@ def add_invocation_note(body: str, note: str) -> str:
     """Insert a short invocation hint immediately after the first heading."""
     lines = body.splitlines()
     if lines and lines[0].startswith("# "):
-        rebuilt = [lines[0], "", f"> {note}", ""]
+        rebuilt = [lines[0], "", f"> {note}"]
         rebuilt.extend(lines[1:])
         return "\n".join(rebuilt)
     return f"> {note}\n\n{body}"
@@ -209,7 +210,7 @@ def build_copilot_prompt(name: str, metadata: dict[str, str], body: str) -> str:
     return "\n".join(lines)
 
 
-def build_skill(content: str, config: dict[str, str]) -> str:
+def build_skill(content: str, config: dict[str, Any]) -> str:
     """Build a SKILL.md file from markdown content and config."""
     lines = [
         "---",
@@ -224,7 +225,7 @@ def build_skill(content: str, config: dict[str, str]) -> str:
     return "\n".join(lines)
 
 
-def build_codex_openai_yaml(config: dict[str, str]) -> str:
+def build_codex_openai_yaml(config: dict[str, Any]) -> str:
     """Build the minimal agents/openai.yaml used by Codex skill UIs."""
     allow_implicit = str(config["allow_implicit_invocation"]).lower()
     return "\n".join([
@@ -273,8 +274,14 @@ def build_phase_outputs(
     """Build generated files for a prompt phase."""
     claude_path = CLAUDE_COMMANDS_DIR / f"{name}.md"
     copilot_path = COPILOT_PROMPTS_DIR / f"{name}.admin.prompt.md"
+    phase_skill_config = PHASE_SKILL_CONFIGS.get(name)
+    if phase_skill_config is None:
+        raise SystemExit(
+            f"Missing PHASE_SKILL_CONFIGS entry for prompt '{name}'. "
+            "Add a configuration for this phase or remove its prompt file."
+        )
     codex_config = {
-        **PHASE_SKILL_CONFIGS[name],
+        **phase_skill_config,
         "description": metadata.get("description", ""),
     }
     codex_skill_dir = CODEX_SKILLS_DIR / codex_config["name"]
