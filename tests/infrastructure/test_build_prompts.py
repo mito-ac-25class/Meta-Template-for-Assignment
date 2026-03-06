@@ -82,3 +82,16 @@ def test_build_prompts_generates_codex_skills(tmp_path, monkeypatch):
     assert 'default_prompt: "$design-admin を使って topics.yaml を検証し、課題プランを作成してください。"' in openai_content
     assert "allow_implicit_invocation: false" in openai_content
     assert "allow_implicit_invocation: true" in shared_openai_content
+
+
+def test_build_phase_outputs_raises_for_unknown_phase(tmp_path, monkeypatch):
+    """PHASE_SKILL_CONFIGS にないフェーズ名で SystemExit が発生することを確認"""
+    configure_temp_repo(monkeypatch, tmp_path)
+    (tmp_path / ".claude" / "commands").mkdir(parents=True, exist_ok=True)
+    (tmp_path / ".github" / "prompts").mkdir(parents=True, exist_ok=True)
+    (tmp_path / ".agents" / "skills").mkdir(parents=True, exist_ok=True)
+
+    import pytest
+
+    with pytest.raises(SystemExit, match="Missing PHASE_SKILL_CONFIGS entry for prompt 'unknown'"):
+        build_prompts.build_phase_outputs("unknown", {}, "body text", dry_run=False)
