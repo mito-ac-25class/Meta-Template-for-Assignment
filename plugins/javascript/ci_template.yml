@@ -12,11 +12,13 @@ setup:
       uses: actions/setup-node@v4
       with:
         node-version: "20"
+        cache: "npm"
+        cache-dependency-path: "src/kadai/package.json"
 
     - name: Install dependencies
       run: |
         cd src/kadai
-        npm ci
+        npm install
 
 # 自動採点
 autograding:
