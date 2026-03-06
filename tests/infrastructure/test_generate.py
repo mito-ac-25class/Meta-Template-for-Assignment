@@ -110,6 +110,22 @@ def test_classroom_template_django_react(env):
     assert "max-score: 50" in content
 
 
+def test_classroom_template_javascript(env):
+    """javascript スタックで classroom.yml.j2 が正しくレンダリングされることを確認"""
+    ctx = build_context({
+        "title": "JavaScript 課題",
+        "stack": "javascript",
+        "stages": [
+            {"name": "stage01", "feature": "関数実装", "acceptance_criteria": "関数が動作する", "score": 100},
+        ],
+    })
+    content = render_template(env, "classroom.yml.j2", ctx)
+    assert "setup-node" in content
+    assert 'cache: "npm"' in content
+    assert "cache-dependency-path: src/kadai/package*.json" in content
+    assert "cd src/kadai && npx jest --ci ../../tests/stages/stage01/ --passWithNoTests" in content
+
+
 def test_classroom_template_with_no_stages(env):
     """ステージなしで classroom.yml.j2 がエラーにならないことを確認"""
     ctx = build_context({"stages": []})

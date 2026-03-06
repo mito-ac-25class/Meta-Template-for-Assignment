@@ -1,0 +1,27 @@
+# JavaScript テストランナー設定リファレンス
+# src/kadai/package.json の jest 設定に反映される設定
+
+framework: jest
+min_version: "29.0"
+
+# Jest 設定
+config:
+  rootDir: "../.."
+  testMatch: ["<rootDir>/tests/stages/**/test_*.test.js"]
+
+# テスト実行コマンド
+commands:
+  # 全テスト実行
+  all: "cd src/kadai && npx jest ../../tests/stages/ --verbose"
+  # ステージ単体
+  stage: "cd src/kadai && npx jest ../../tests/stages/stageXX/ --verbose"
+  # デバッグ
+  debug: "cd src/kadai && npx jest ../../tests/stages/stageXX/ --verbose --detectOpenHandles"
+  # キーワード検索
+  keyword: "cd src/kadai && npx jest -t 'keyword' --verbose"
+
+# CI での実行
+ci:
+  install: "cd src/kadai && npm ci"
+  command: "cd src/kadai && npx jest --ci ../../tests/stages/stageXX/ --passWithNoTests"
+  timeout: 10

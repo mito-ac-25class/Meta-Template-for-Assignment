@@ -74,6 +74,7 @@ README に含める内容:
 
 - `stack: python` → `plugins/python/conventions.md`
 - `stack: django-react` → `plugins/django-react/conventions.md`
+- `stack: javascript` → `plugins/javascript/conventions.md`
 
 対応するプラグインの `conventions.md` を必ず読み、記載されたルールに従ってテストを実装してください。
 
@@ -91,6 +92,14 @@ README に含める内容:
 2. フロントエンドテスト: `tests/stages/stageXX/test_frontend_<コンポーネント名>.test.ts`（Jest）
 3. バックエンドは `@pytest.mark.stageXX` デコレータ、フロントエンドは `describe("StageXX: ...")` で分類
 4. 詳細は `plugins/django-react/conventions.md` を参照
+
+**JavaScript（stack: javascript）の主なルール:**
+
+1. テストファイルの配置: `tests/stages/stageXX/test_<モジュール名>.test.js`
+2. `describe("StageXX: <テスト対象>", () => { ... })` でグループ化
+3. CommonJS の `require()` でモジュールを読み込む
+4. 各アサーションの前に日本語コメントで検証内容を説明
+5. 1テストにつき1アサーション（推奨）
 
 #### テストコード例（stack: python）
 

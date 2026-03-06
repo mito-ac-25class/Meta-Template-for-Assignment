@@ -32,6 +32,22 @@ jobs:
       run: |
         cd src/kadai/frontend
         npm ci
+{% elif stack == "javascript" %}
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: "20"
+        cache: "npm"
+        cache-dependency-path: src/kadai/package*.json
+
+    - name: Install dependencies
+      run: |
+        cd src/kadai
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
 {% else %}
     - name: Setup environment
       run: |
@@ -46,6 +62,9 @@ jobs:
 {% if stack == "django-react" %}
         command: "pytest -m '{{ stage.name }}' && npx --prefix src/kadai/frontend jest tests/stages/{{ stage.name }}/ --passWithNoTests"
         timeout: 30
+{% elif stack == "javascript" %}
+        command: "cd src/kadai && npx jest --ci ../../tests/stages/{{ stage.name }}/ --passWithNoTests"
+        timeout: 10
 {% else %}
         command: "pytest -m '{{ stage.name }}'"
         timeout: 10
