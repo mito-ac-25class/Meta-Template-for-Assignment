@@ -122,7 +122,7 @@ def test_classroom_template_javascript(env):
     content = render_template(env, "classroom.yml.j2", ctx)
     assert "setup-node" in content
     assert 'cache: "npm"' in content
-    assert 'cache-dependency-path: "src/kadai/package-lock.json"' in content
+    assert "cache-dependency-path: src/kadai/package*.json" in content
     assert "cd src/kadai && npx jest --ci ../../tests/stages/stage01/ --passWithNoTests" in content
 
 
