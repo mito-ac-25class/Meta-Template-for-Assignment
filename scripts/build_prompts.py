@@ -92,7 +92,7 @@ PHASE_SKILL_CONFIGS = {
     "release": {
         "name": "release-admin",
         "display_name": "Release Admin",
-        "short_description": "課題リリース準備フェーズを明示実行します",
+        "short_description": "課題リリース準備フェーズを明示的に実行します",
         "default_prompt": (
             "$release-admin を使って包括検証とリリース準備を進めてください。"
         ),
