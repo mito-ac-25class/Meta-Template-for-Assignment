@@ -13,14 +13,16 @@ setup:
       with:
         node-version: "20"
         cache: "npm"
-        cache-dependency-path: |
-          src/kadai/package-lock.json
-          src/kadai/package.json
+        cache-dependency-path: src/kadai/package*.json
 
     - name: Install dependencies
       run: |
         cd src/kadai
-        npm install
+        if [ -f package-lock.json ]; then
+          npm ci
+        else
+          npm install
+        fi
 
 # 自動採点
 autograding:
