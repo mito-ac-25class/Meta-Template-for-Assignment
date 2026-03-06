@@ -7,7 +7,6 @@ allowed-tools: Read, Edit, Write, Bash, Glob, Grep
 
 > 起動方法: Claude Code で `/release` を実行します。
 
-
 課題のリリースフェーズを実行します。包括的な検証を行った後、開発用ファイルを削除して学生向けリポジトリを完成させます。
 
 ## 入力

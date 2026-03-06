@@ -7,7 +7,6 @@ allowed-tools: Read, Edit, Write, Bash, Glob, Grep
 
 > 起動方法: Claude Code で `/build` を実行します。
 
-
 課題のビルドフェーズを実行します。プランに基づいて学生向けドキュメント、テストコード、CI設定を生成し、動作検証します。
 
 ## 入力
