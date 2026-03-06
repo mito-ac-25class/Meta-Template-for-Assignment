@@ -1,0 +1,6 @@
+interface:
+  display_name: "Assignment Types"
+  short_description: "課題実施方式の選定基準と定義を参照します"
+  default_prompt: "$assignment-types を使って今回の課題に適した実施方式を比較してください。"
+policy:
+  allow_implicit_invocation: true

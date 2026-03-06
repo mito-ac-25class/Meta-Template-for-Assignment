@@ -2,14 +2,16 @@
 description: "課題ビルド: README・チュートリアル・テスト・CIを生成し、動作検証します"
 ---
 
-# /build コマンド
+# /build.admin プロンプト
+
+> 起動方法: GitHub Copilot で `/build.admin` を実行します。
 
 課題のビルドフェーズを実行します。プランに基づいて学生向けドキュメント、テストコード、CI設定を生成し、動作検証します。
 
 ## 入力
 
-- `agent-input/topics.yaml`（/design で検証済み）
-- `agent-output/plan.md`（/design で作成済み）
+- `agent-input/topics.yaml`（Design フェーズで検証済み）
+- `agent-output/plan.md`（Design フェーズで作成済み）
 
 ## 出力
 
@@ -179,11 +181,11 @@ pytest -k "bank_account" -v       # キーワードで絞り込み
 
 ## ブランチ命名規則
 
-| コマンド | ブランチ名 |
+| フェーズ | ブランチ名 |
 |---------|-----------|
-| `/design` | `feature/design-assignment` |
-| `/build` | `feature/build-assignment` |
-| `/release` | `feature/release-assignment` |
+| Design | `feature/design-assignment` |
+| Build | `feature/build-assignment` |
+| Release | `feature/release-assignment` |
 
 ## 基本ワークフロー
 
@@ -241,12 +243,12 @@ git push origin <ブランチ名>
 ```bash
 git checkout main
 git branch -D <ブランチ名>
-# 入力ファイルを修正後、コマンドを再実行
+# 入力ファイルを修正後、該当フェーズを再実行
 ```
 
 ## 注意事項
 
-- ブランチ名は各コマンドで一貫性を保つため、上記の命名規則に従ってください
+- ブランチ名は各フェーズで一貫性を保つため、上記の命名規則に従ってください
 - コミット前には必ず `git status` と `git diff` で変更内容を確認してください
 - 不要なファイル（ビルド成果物、一時ファイルなど）がコミットされないよう注意してください
 

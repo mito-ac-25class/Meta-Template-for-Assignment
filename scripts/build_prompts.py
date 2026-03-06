@@ -2,9 +2,11 @@
 """Build tool-specific prompts from canonical sources in prompts/.
 
 Reads prompts/*.md and generates:
-  - .claude/commands/{name}.md      (Claude Code slash commands)
-  - .claude/skills/{name}/SKILL.md  (Claude Code skills, from _shared/)
-  - .github/prompts/{name}.admin.prompt.md  (GitHub Copilot prompts)
+  - .claude/commands/{name}.md                 (Claude Code slash commands)
+  - .claude/skills/{name}/SKILL.md             (Claude Code shared skills)
+  - .github/prompts/{name}.admin.prompt.md     (GitHub Copilot prompts)
+  - .agents/skills/{name}/SKILL.md             (Codex skills)
+  - .agents/skills/{name}/agents/openai.yaml   (Codex skill metadata)
 
 Usage:
     python scripts/build_prompts.py
@@ -15,6 +17,7 @@ import re
 import shutil
 import sys
 from pathlib import Path
+from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
 PROMPTS_DIR = REPO_ROOT / "prompts"
@@ -23,9 +26,10 @@ SHARED_DIR = PROMPTS_DIR / "_shared"
 CLAUDE_COMMANDS_DIR = REPO_ROOT / ".claude" / "commands"
 CLAUDE_SKILLS_DIR = REPO_ROOT / ".claude" / "skills"
 COPILOT_PROMPTS_DIR = REPO_ROOT / ".github" / "prompts"
+CODEX_SKILLS_DIR = REPO_ROOT / ".agents" / "skills"
 
-# Mapping from include tag to shared file
 INCLUDE_PATTERN = re.compile(r"\{\{(\w+)\}\}")
+HEADING_PATTERN = re.compile(r"^# .+$", re.MULTILINE)
 
 INCLUDE_MAP = {
     "ASSIGNMENT_TYPES": "assignment-types.md",
@@ -33,8 +37,7 @@ INCLUDE_MAP = {
     "REVIEW_PROCESS": "review-process.md",
 }
 
-# Skill metadata for _shared files that should become Claude skills
-SKILL_CONFIGS = {
+SHARED_SKILL_CONFIGS = {
     "assignment-types.md": {
         "name": "assignment-types",
         "description": (
@@ -44,6 +47,12 @@ SKILL_CONFIGS = {
             "「課題形式」「実施方式」「プログラム実装」「リファクタリング」"
             "「テスト実装」「TDD」などのキーワードで自動的に適用されます。"
         ),
+        "display_name": "Assignment Types",
+        "short_description": "課題実施方式の選定基準と定義を参照します",
+        "default_prompt": (
+            "$assignment-types を使って今回の課題に適した実施方式を比較してください。"
+        ),
+        "allow_implicit_invocation": True,
     },
     "git-workflow.md": {
         "name": "git-workflow",
@@ -52,6 +61,42 @@ SKILL_CONFIGS = {
             "ブランチ作成、コミットメッセージ作成、プルリクエスト作成時に自動参照されます。\n"
             "「ブランチを作成」「コミット」「プッシュ」などのキーワードで自動的に適用されます。"
         ),
+        "display_name": "Git Workflow",
+        "short_description": "課題作成用の Git 運用手順を参照します",
+        "default_prompt": (
+            "$git-workflow を使ってこのフェーズの Git 手順を確認してください。"
+        ),
+        "allow_implicit_invocation": True,
+    },
+}
+
+PHASE_SKILL_CONFIGS = {
+    "design": {
+        "name": "design-admin",
+        "display_name": "Design Admin",
+        "short_description": "課題設計フェーズを明示的に実行します",
+        "default_prompt": (
+            "$design-admin を使って topics.yaml を検証し、課題プランを作成してください。"
+        ),
+        "allow_implicit_invocation": False,
+    },
+    "build": {
+        "name": "build-admin",
+        "display_name": "Build Admin",
+        "short_description": "課題構築フェーズを明示的に実行します",
+        "default_prompt": (
+            "$build-admin を使って README、テスト、CI の構築を進めてください。"
+        ),
+        "allow_implicit_invocation": False,
+    },
+    "release": {
+        "name": "release-admin",
+        "display_name": "Release Admin",
+        "short_description": "課題リリース準備フェーズを明示的に実行します",
+        "default_prompt": (
+            "$release-admin を使って包括検証とリリース準備を進めてください。"
+        ),
+        "allow_implicit_invocation": False,
     },
 }
 
@@ -69,7 +114,7 @@ def load_shared_files() -> dict[str, str]:
     return shared
 
 
-def parse_frontmatter(content: str) -> tuple[dict, str]:
+def parse_frontmatter(content: str) -> tuple[dict[str, str], str]:
     """Parse YAML frontmatter from markdown. Returns (metadata, body)."""
     if not content.startswith("---"):
         return {}, content
@@ -90,16 +135,53 @@ def parse_frontmatter(content: str) -> tuple[dict, str]:
 
 def resolve_includes(body: str, shared: dict[str, str]) -> str:
     """Replace {{TAG_NAME}} with shared file content."""
-    def replacer(match):
+
+    def replacer(match: re.Match[str]) -> str:
         tag = match.group(1)
         if tag in shared:
             return shared[tag]
-        return match.group(0)  # Leave unknown tags as-is
+        return match.group(0)
 
     return INCLUDE_PATTERN.sub(replacer, body)
 
 
-def build_claude_command(name: str, metadata: dict, body: str) -> str:
+def replace_first_heading(body: str, heading: str) -> str:
+    """Replace the first H1 heading with a tool-specific heading."""
+    if HEADING_PATTERN.search(body):
+        return HEADING_PATTERN.sub(heading, body, count=1)
+    return f"{heading}\n\n{body}"
+
+
+def add_invocation_note(body: str, note: str) -> str:
+    """Insert a short invocation hint immediately after the first heading."""
+    lines = body.splitlines()
+    if lines and lines[0].startswith("# "):
+        rebuilt = [lines[0], "", f"> {note}"]
+        rebuilt.extend(lines[1:])
+        return "\n".join(rebuilt)
+    return f"> {note}\n\n{body}"
+
+
+def format_phase_body(name: str, body: str, tool: str) -> str:
+    """Customize the canonical phase body for a specific tool."""
+    if tool == "claude":
+        heading = f"# /{name} コマンド"
+        note = f"起動方法: Claude Code で `/{name}` を実行します。"
+    elif tool == "copilot":
+        heading = f"# /{name}.admin プロンプト"
+        note = f"起動方法: GitHub Copilot で `/{name}.admin` を実行します。"
+    elif tool == "codex":
+        skill_name = PHASE_SKILL_CONFIGS[name]["name"]
+        heading = f"# ${skill_name} スキル"
+        note = f"起動方法: Codex で `${skill_name}` を明示的に起動します。"
+    else:
+        raise ValueError(f"Unknown tool: {tool}")
+
+    formatted = replace_first_heading(body, heading)
+    return add_invocation_note(formatted, note)
+
+
+def build_claude_command(name: str, metadata: dict[str, str], body: str) -> str:
     """Build a Claude Code command file."""
     description = metadata.get("description", "")
     allowed_tools = metadata.get("allowed-tools", "")
@@ -111,12 +193,11 @@ def build_claude_command(name: str, metadata: dict, body: str) -> str:
         lines.append(f"allowed-tools: {allowed_tools}")
     lines.append("---")
     lines.append("")
-    lines.append(body)
-
+    lines.append(format_phase_body(name, body, tool="claude"))
     return "\n".join(lines)
 
 
-def build_copilot_prompt(name: str, metadata: dict, body: str) -> str:
+def build_copilot_prompt(name: str, metadata: dict[str, str], body: str) -> str:
     """Build a GitHub Copilot admin prompt file."""
     description = metadata.get("description", "")
 
@@ -125,13 +206,12 @@ def build_copilot_prompt(name: str, metadata: dict, body: str) -> str:
         lines.append(f'description: "{description}"')
     lines.append("---")
     lines.append("")
-    lines.append(body)
-
+    lines.append(format_phase_body(name, body, tool="copilot"))
     return "\n".join(lines)
 
 
-def build_skill(filename: str, content: str, config: dict) -> str:
-    """Build a Claude Code SKILL.md file from shared content."""
+def build_skill(content: str, config: dict[str, Any]) -> str:
+    """Build a SKILL.md file from markdown content and config."""
     lines = [
         "---",
         f"name: {config['name']}",
@@ -142,27 +222,121 @@ def build_skill(filename: str, content: str, config: dict) -> str:
     lines.append("---")
     lines.append("")
     lines.append(content)
-
     return "\n".join(lines)
+
+
+def build_codex_openai_yaml(config: dict[str, Any]) -> str:
+    """Build the minimal agents/openai.yaml used by Codex skill UIs."""
+    allow_implicit = str(config["allow_implicit_invocation"]).lower()
+    return "\n".join([
+        "interface:",
+        f'  display_name: "{config["display_name"]}"',
+        f'  short_description: "{config["short_description"]}"',
+        f'  default_prompt: "{config["default_prompt"]}"',
+        "policy:",
+        f"  allow_implicit_invocation: {allow_implicit}",
+        "",
+    ])
+
+
+def write_file(path: Path, content: str):
+    """Write UTF-8 text to a file, creating parent directories when needed."""
+    path.parent.mkdir(parents=True, exist_ok=True)
+    path.write_text(content, encoding="utf-8")
 
 
 def clean_output_dirs():
     """Remove existing generated files."""
-    # Clean Claude commands (only generated ones)
     if CLAUDE_COMMANDS_DIR.exists():
         shutil.rmtree(CLAUDE_COMMANDS_DIR)
     CLAUDE_COMMANDS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Clean Claude skills (only generated ones)
     if CLAUDE_SKILLS_DIR.exists():
         shutil.rmtree(CLAUDE_SKILLS_DIR)
     CLAUDE_SKILLS_DIR.mkdir(parents=True, exist_ok=True)
 
-    # Clean Copilot prompts (only .admin.prompt.md files)
+    if CODEX_SKILLS_DIR.exists():
+        shutil.rmtree(CODEX_SKILLS_DIR)
+    CODEX_SKILLS_DIR.mkdir(parents=True, exist_ok=True)
+
     if COPILOT_PROMPTS_DIR.exists():
-        for f in COPILOT_PROMPTS_DIR.glob("*.admin.prompt.md"):
-            f.unlink()
+        for file_path in COPILOT_PROMPTS_DIR.glob("*.admin.prompt.md"):
+            file_path.unlink()
     COPILOT_PROMPTS_DIR.mkdir(parents=True, exist_ok=True)
+
+
+def build_phase_outputs(
+    name: str,
+    metadata: dict[str, str],
+    body: str,
+    dry_run: bool,
+):
+    """Build generated files for a prompt phase."""
+    claude_path = CLAUDE_COMMANDS_DIR / f"{name}.md"
+    copilot_path = COPILOT_PROMPTS_DIR / f"{name}.admin.prompt.md"
+    phase_skill_config = PHASE_SKILL_CONFIGS.get(name)
+    if phase_skill_config is None:
+        raise SystemExit(
+            f"Missing PHASE_SKILL_CONFIGS entry for prompt '{name}'. "
+            "Add a configuration for this phase or remove its prompt file."
+        )
+    codex_config = {
+        **phase_skill_config,
+        "description": metadata.get("description", ""),
+    }
+    codex_skill_dir = CODEX_SKILLS_DIR / codex_config["name"]
+    codex_skill_path = codex_skill_dir / "SKILL.md"
+    codex_openai_path = codex_skill_dir / "agents" / "openai.yaml"
+
+    if dry_run:
+        print(f"  Claude:  {claude_path.relative_to(REPO_ROOT)}")
+        print(f"  Copilot: {copilot_path.relative_to(REPO_ROOT)}")
+        print(f"  Codex:   {codex_skill_path.relative_to(REPO_ROOT)}")
+        print(f"  Codex:   {codex_openai_path.relative_to(REPO_ROOT)}")
+        return
+
+    write_file(claude_path, build_claude_command(name, metadata, body))
+    write_file(copilot_path, build_copilot_prompt(name, metadata, body))
+    write_file(
+        codex_skill_path,
+        build_skill(format_phase_body(name, body, tool="codex"), codex_config),
+    )
+    write_file(codex_openai_path, build_codex_openai_yaml(codex_config))
+
+    print(f"Generated: {claude_path.relative_to(REPO_ROOT)}")
+    print(f"Generated: {copilot_path.relative_to(REPO_ROOT)}")
+    print(f"Generated: {codex_skill_path.relative_to(REPO_ROOT)}")
+    print(f"Generated: {codex_openai_path.relative_to(REPO_ROOT)}")
+
+
+def build_shared_outputs(dry_run: bool):
+    """Build shared skills for Claude and Codex from prompts/_shared."""
+    for filename, config in SHARED_SKILL_CONFIGS.items():
+        shared_path = SHARED_DIR / filename
+        if not shared_path.exists():
+            continue
+
+        content = shared_path.read_text(encoding="utf-8")
+
+        claude_skill_dir = CLAUDE_SKILLS_DIR / config["name"]
+        claude_skill_path = claude_skill_dir / "SKILL.md"
+        codex_skill_dir = CODEX_SKILLS_DIR / config["name"]
+        codex_skill_path = codex_skill_dir / "SKILL.md"
+        codex_openai_path = codex_skill_dir / "agents" / "openai.yaml"
+
+        if dry_run:
+            print(f"  Skill:   {claude_skill_path.relative_to(REPO_ROOT)}")
+            print(f"  Codex:   {codex_skill_path.relative_to(REPO_ROOT)}")
+            print(f"  Codex:   {codex_openai_path.relative_to(REPO_ROOT)}")
+            continue
+
+        write_file(claude_skill_path, build_skill(content, config))
+        write_file(codex_skill_path, build_skill(content, config))
+        write_file(codex_openai_path, build_codex_openai_yaml(config))
+
+        print(f"Generated: {claude_skill_path.relative_to(REPO_ROOT)}")
+        print(f"Generated: {codex_skill_path.relative_to(REPO_ROOT)}")
+        print(f"Generated: {codex_openai_path.relative_to(REPO_ROOT)}")
 
 
 def main():
@@ -175,49 +349,15 @@ def main():
     if not args.dry_run:
         clean_output_dirs()
 
-    # Build command prompts from prompts/*.md
     prompt_files = sorted(PROMPTS_DIR.glob("*.md"))
     for prompt_file in prompt_files:
         name = prompt_file.stem
         content = prompt_file.read_text(encoding="utf-8")
-
         metadata, body = parse_frontmatter(content)
         resolved_body = resolve_includes(body, shared)
+        build_phase_outputs(name, metadata, resolved_body, dry_run=args.dry_run)
 
-        # Claude Code command
-        claude_content = build_claude_command(name, metadata, resolved_body)
-        claude_path = CLAUDE_COMMANDS_DIR / f"{name}.md"
-
-        # Copilot prompt
-        copilot_content = build_copilot_prompt(name, metadata, resolved_body)
-        copilot_path = COPILOT_PROMPTS_DIR / f"{name}.admin.prompt.md"
-
-        if args.dry_run:
-            print(f"  Claude:  {claude_path.relative_to(REPO_ROOT)}")
-            print(f"  Copilot: {copilot_path.relative_to(REPO_ROOT)}")
-        else:
-            claude_path.write_text(claude_content, encoding="utf-8")
-            copilot_path.write_text(copilot_content, encoding="utf-8")
-            print(f"Generated: {claude_path.relative_to(REPO_ROOT)}")
-            print(f"Generated: {copilot_path.relative_to(REPO_ROOT)}")
-
-    # Build skills from _shared files
-    for filename, config in SKILL_CONFIGS.items():
-        shared_path = SHARED_DIR / filename
-        if not shared_path.exists():
-            continue
-
-        content = shared_path.read_text(encoding="utf-8")
-        skill_content = build_skill(filename, content, config)
-        skill_dir = CLAUDE_SKILLS_DIR / config["name"]
-        skill_path = skill_dir / "SKILL.md"
-
-        if args.dry_run:
-            print(f"  Skill:   {skill_path.relative_to(REPO_ROOT)}")
-        else:
-            skill_dir.mkdir(parents=True, exist_ok=True)
-            skill_path.write_text(skill_content, encoding="utf-8")
-            print(f"Generated: {skill_path.relative_to(REPO_ROOT)}")
+    build_shared_outputs(dry_run=args.dry_run)
 
     if args.dry_run:
         print("\n(dry run — no files written)")

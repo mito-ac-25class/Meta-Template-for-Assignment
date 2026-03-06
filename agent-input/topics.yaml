@@ -1,5 +1,5 @@
 # 課題トピック定義
-# このファイルを記入し、/design コマンドで課題プランを生成します。
+# このファイルを記入し、Design フェーズで課題プランを生成します。
 # スキーマ: schema/topics.schema.yaml
 # バリデーション: python scripts/validate.py
 
@@ -38,7 +38,7 @@ tutorial_reason: ""     # 必要な場合の理由
 tutorial_topics: []     # チュートリアルで扱うトピック
 
 # --- ステージ構成 ---
-# /design コマンドで自動設定されますが、手動で記入することも可能です。
+# Design フェーズで自動設定されますが、手動で記入することも可能です。
 # name は stage01, stage02, ... の形式で、score の合計は 100 にしてください。
 
 stages:

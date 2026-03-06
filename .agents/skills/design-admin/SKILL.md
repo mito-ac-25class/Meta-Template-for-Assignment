@@ -1,11 +1,12 @@
 ---
-description: 課題設計: トピック検証 + シナリオ提案(任意) + 課題プラン作成を一括で行います
-allowed-tools: Read, Edit, Write, Bash, Glob
+name: design-admin
+description: |
+  課題設計: トピック検証 + シナリオ提案(任意) + 課題プラン作成を一括で行います
 ---
 
-# /design コマンド
+# $design-admin スキル
 
-> 起動方法: Claude Code で `/design` を実行します。
+> 起動方法: Codex で `$design-admin` を明示的に起動します。
 
 課題の設計フェーズを実行します。トピック定義の検証、シナリオ提案（任意）、課題プランの作成までを一括で行います。
 

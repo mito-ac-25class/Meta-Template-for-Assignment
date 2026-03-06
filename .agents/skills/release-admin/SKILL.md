@@ -1,11 +1,12 @@
 ---
-description: リリース準備: 包括的検証を行い、開発用ファイルを削除して学生向けリポジトリを完成させます
-allowed-tools: Read, Edit, Write, Bash, Glob, Grep
+name: release-admin
+description: |
+  リリース準備: 包括的検証を行い、開発用ファイルを削除して学生向けリポジトリを完成させます
 ---
 
-# /release コマンド
+# $release-admin スキル
 
-> 起動方法: Claude Code で `/release` を実行します。
+> 起動方法: Codex で `$release-admin` を明示的に起動します。
 
 課題のリリースフェーズを実行します。包括的な検証を行った後、開発用ファイルを削除して学生向けリポジトリを完成させます。
 

@@ -26,6 +26,7 @@ def test_releaseignore_includes_key_patterns():
     # 主要な削除対象が含まれていること
     assert "prompts/" in patterns
     assert "scripts/" in patterns
+    assert ".agents/skills/" in patterns
     assert "agent-input/" in patterns
     assert "agent-output/" in patterns
     assert "templates/" in patterns

@@ -1,11 +1,12 @@
 ---
-description: 課題ビルド: README・チュートリアル・テスト・CIを生成し、動作検証します
-allowed-tools: Read, Edit, Write, Bash, Glob, Grep
+name: build-admin
+description: |
+  課題ビルド: README・チュートリアル・テスト・CIを生成し、動作検証します
 ---
 
-# /build コマンド
+# $build-admin スキル
 
-> 起動方法: Claude Code で `/build` を実行します。
+> 起動方法: Codex で `$build-admin` を明示的に起動します。
 
 課題のビルドフェーズを実行します。プランに基づいて学生向けドキュメント、テストコード、CI設定を生成し、動作検証します。
 

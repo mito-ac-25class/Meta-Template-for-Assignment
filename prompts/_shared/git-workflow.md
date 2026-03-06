@@ -4,11 +4,11 @@
 
 ## ブランチ命名規則
 
-| コマンド | ブランチ名 |
+| フェーズ | ブランチ名 |
 |---------|-----------|
-| `/design` | `feature/design-assignment` |
-| `/build` | `feature/build-assignment` |
-| `/release` | `feature/release-assignment` |
+| Design | `feature/design-assignment` |
+| Build | `feature/build-assignment` |
+| Release | `feature/release-assignment` |
 
 ## 基本ワークフロー
 
@@ -66,11 +66,11 @@ git push origin <ブランチ名>
 ```bash
 git checkout main
 git branch -D <ブランチ名>
-# 入力ファイルを修正後、コマンドを再実行
+# 入力ファイルを修正後、該当フェーズを再実行
 ```
 
 ## 注意事項
 
-- ブランチ名は各コマンドで一貫性を保つため、上記の命名規則に従ってください
+- ブランチ名は各フェーズで一貫性を保つため、上記の命名規則に従ってください
 - コミット前には必ず `git status` と `git diff` で変更内容を確認してください
 - 不要なファイル（ビルド成果物、一時ファイルなど）がコミットされないよう注意してください

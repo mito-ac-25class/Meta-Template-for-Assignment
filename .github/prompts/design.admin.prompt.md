@@ -2,7 +2,9 @@
 description: "課題設計: トピック検証 + シナリオ提案(任意) + 課題プラン作成を一括で行います"
 ---
 
-# /design コマンド
+# /design.admin プロンプト
+
+> 起動方法: GitHub Copilot で `/design.admin` を実行します。
 
 課題の設計フェーズを実行します。トピック定義の検証、シナリオ提案（任意）、課題プランの作成までを一括で行います。
 
@@ -170,11 +172,11 @@ python scripts/validate.py
 
 ## ブランチ命名規則
 
-| コマンド | ブランチ名 |
+| フェーズ | ブランチ名 |
 |---------|-----------|
-| `/design` | `feature/design-assignment` |
-| `/build` | `feature/build-assignment` |
-| `/release` | `feature/release-assignment` |
+| Design | `feature/design-assignment` |
+| Build | `feature/build-assignment` |
+| Release | `feature/release-assignment` |
 
 ## 基本ワークフロー
 
@@ -232,12 +234,12 @@ git push origin <ブランチ名>
 ```bash
 git checkout main
 git branch -D <ブランチ名>
-# 入力ファイルを修正後、コマンドを再実行
+# 入力ファイルを修正後、該当フェーズを再実行
 ```
 
 ## 注意事項
 
-- ブランチ名は各コマンドで一貫性を保つため、上記の命名規則に従ってください
+- ブランチ名は各フェーズで一貫性を保つため、上記の命名規則に従ってください
 - コミット前には必ず `git status` と `git diff` で変更内容を確認してください
 - 不要なファイル（ビルド成果物、一時ファイルなど）がコミットされないよう注意してください
 
