@@ -5,7 +5,7 @@
 ```
 src/kadai/
 ├── package.json         # 依存関係 + Jest 設定
-├── package-lock.json    # ロックファイル（npm install 後に生成・コミット推奨）
+├── package-lock.json    # ロックファイル（npm install 後に生成・コミット推奨、必須ではない）
 ├── <module>.js          # 学生が実装するモジュール
 └── ...
 
