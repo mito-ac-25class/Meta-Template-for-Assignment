@@ -3,14 +3,14 @@ description: "課題ビルド: README・チュートリアル・テスト・CI�
 allowed-tools: Read, Edit, Write, Bash, Glob, Grep
 ---
 
-# /build コマンド
+# Build フェーズ
 
 課題のビルドフェーズを実行します。プランに基づいて学生向けドキュメント、テストコード、CI設定を生成し、動作検証します。
 
 ## 入力
 
-- `agent-input/topics.yaml`（/design で検証済み）
-- `agent-output/plan.md`（/design で作成済み）
+- `agent-input/topics.yaml`（Design フェーズで検証済み）
+- `agent-output/plan.md`（Design フェーズで作成済み）
 
 ## 出力
 

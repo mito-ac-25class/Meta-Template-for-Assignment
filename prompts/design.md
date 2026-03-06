@@ -3,7 +3,7 @@ description: "課題設計: トピック検証 + シナリオ提案(任意) + �
 allowed-tools: Read, Edit, Write, Bash, Glob
 ---
 
-# /design コマンド
+# Design フェーズ
 
 課題の設計フェーズを実行します。トピック定義の検証、シナリオ提案（任意）、課題プランの作成までを一括で行います。
 

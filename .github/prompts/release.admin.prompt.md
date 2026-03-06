@@ -2,13 +2,16 @@
 description: "リリース準備: 包括的検証を行い、開発用ファイルを削除して学生向けリポジトリを完成させます"
 ---
 
-# /release コマンド
+# /release.admin プロンプト
+
+> 起動方法: GitHub Copilot で `/release.admin` を実行します。
+
 
 課題のリリースフェーズを実行します。包括的な検証を行った後、開発用ファイルを削除して学生向けリポジトリを完成させます。
 
 ## 入力
 
-- /design と /build で作成された全ファイル
+- Design / Build フェーズで作成された全ファイル
 
 ## 出力
 
@@ -75,6 +78,7 @@ python scripts/release.py
 **ファイルの削除（`.releaseignore` に基づく）:**
 - `prompts/` — プロンプトソース
 - `.claude/commands/`, `.claude/skills/` — 生成されたコマンド・スキル
+- `.agents/skills/` — Codex 用スキル
 - `.github/prompts/*.admin.prompt.md` — Copilot プロンプト
 - `schema/`, `scripts/`, `plugins/` — 開発ツール
 - `agent-input/`, `agent-output/`, `templates/` — 作業ファイル
@@ -87,7 +91,7 @@ python scripts/release.py
 
 ```
 README.md              (学生向け課題説明)
-AGENTS.md              (AI利用ポリシー)
+AGENTS.md              (AGENTS 対応 AI 向けポリシー)
 CLAUDE.md              (Claude Code ポリシー、存在する場合)
 TUTORIAL.md            (チュートリアル、該当時)
 src/kadai/__init__.py  (学生実装ディレクトリ)
@@ -107,11 +111,11 @@ requirements-dev.txt
 
 ## ブランチ命名規則
 
-| コマンド | ブランチ名 |
+| フェーズ | ブランチ名 |
 |---------|-----------|
-| `/design` | `feature/design-assignment` |
-| `/build` | `feature/build-assignment` |
-| `/release` | `feature/release-assignment` |
+| Design | `feature/design-assignment` |
+| Build | `feature/build-assignment` |
+| Release | `feature/release-assignment` |
 
 ## 基本ワークフロー
 
@@ -169,12 +173,12 @@ git push origin <ブランチ名>
 ```bash
 git checkout main
 git branch -D <ブランチ名>
-# 入力ファイルを修正後、コマンドを再実行
+# 入力ファイルを修正後、該当フェーズを再実行
 ```
 
 ## 注意事項
 
-- ブランチ名は各コマンドで一貫性を保つため、上記の命名規則に従ってください
+- ブランチ名は各フェーズで一貫性を保つため、上記の命名規則に従ってください
 - コミット前には必ず `git status` と `git diff` で変更内容を確認してください
 - 不要なファイル（ビルド成果物、一時ファイルなど）がコミットされないよう注意してください
 
@@ -208,19 +212,19 @@ git push origin feature/release-assignment
 
 ## フェーズ別レビュー観点
 
-### /design フェーズ
+### Design フェーズ
 - トピック定義が明確で具体的か
 - 選定された課題実施方式が適切か
 - ユーザーストーリーが理解しやすいか
 - テストシナリオのステージ構成と点数配分が妥当か
 
-### /build フェーズ
+### Build フェーズ
 - README が学生にとって理解しやすいか
 - チュートリアル（該当時）が段階的で適切か
 - テストがプランのシナリオを正確に実装しているか
 - CI設定が正しいか
 
-### /release フェーズ
+### Release フェーズ
 - 開発用ファイルが適切に削除されているか
 - 学生向けファイルが正しく配置されているか
 
@@ -235,4 +239,3 @@ git push origin feature/release-assignment
 - 課題の方向性の大幅な変更
 - テストシナリオの大規模な再構成
 - 課題実施方式の変更
-

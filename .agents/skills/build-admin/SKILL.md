@@ -1,10 +1,12 @@
 ---
-description: "課題ビルド: README・チュートリアル・テスト・CIを生成し、動作検証します"
+name: build-admin
+description: |
+  課題ビルド: README・チュートリアル・テスト・CIを生成し、動作検証します
 ---
 
-# /build.admin プロンプト
+# $build-admin スキル
 
-> 起動方法: GitHub Copilot で `/build.admin` を実行します。
+> 起動方法: Codex で `$build-admin` を明示的に起動します。
 
 
 課題のビルドフェーズを実行します。プランに基づいて学生向けドキュメント、テストコード、CI設定を生成し、動作検証します。

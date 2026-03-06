@@ -1,0 +1,6 @@
+interface:
+  display_name: "Design Admin"
+  short_description: "課題設計フェーズを明示的に実行します"
+  default_prompt: "$design-admin を使って topics.yaml を検証し、課題プランを作成してください。"
+policy:
+  allow_implicit_invocation: false

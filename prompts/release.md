@@ -3,13 +3,13 @@ description: "リリース準備: 包括的検証を行い、開発用ファイ�
 allowed-tools: Read, Edit, Write, Bash, Glob, Grep
 ---
 
-# /release コマンド
+# Release フェーズ
 
 課題のリリースフェーズを実行します。包括的な検証を行った後、開発用ファイルを削除して学生向けリポジトリを完成させます。
 
 ## 入力
 
-- /design と /build で作成された全ファイル
+- Design / Build フェーズで作成された全ファイル
 
 ## 出力
 
@@ -76,6 +76,7 @@ python scripts/release.py
 **ファイルの削除（`.releaseignore` に基づく）:**
 - `prompts/` — プロンプトソース
 - `.claude/commands/`, `.claude/skills/` — 生成されたコマンド・スキル
+- `.agents/skills/` — Codex 用スキル
 - `.github/prompts/*.admin.prompt.md` — Copilot プロンプト
 - `schema/`, `scripts/`, `plugins/` — 開発ツール
 - `agent-input/`, `agent-output/`, `templates/` — 作業ファイル
@@ -88,7 +89,7 @@ python scripts/release.py
 
 ```
 README.md              (学生向け課題説明)
-AGENTS.md              (AI利用ポリシー)
+AGENTS.md              (AGENTS 対応 AI 向けポリシー)
 CLAUDE.md              (Claude Code ポリシー、存在する場合)
 TUTORIAL.md            (チュートリアル、該当時)
 src/kadai/__init__.py  (学生実装ディレクトリ)

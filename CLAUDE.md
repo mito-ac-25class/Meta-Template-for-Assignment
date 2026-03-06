@@ -13,6 +13,7 @@
 | ディレクトリ | 用途 |
 |------------|------|
 | `prompts/` | プロンプトの正本（`_shared/` に共通定義） |
+| `.agents/skills/` | Codex 用スキル（`build_prompts.py` で自動生成） |
 | `.claude/commands/` | Claude Code 用スラッシュコマンド（`build_prompts.py` で自動生成） |
 | `.claude/skills/` | Claude Code 用スキル（`build_prompts.py` で自動生成） |
 | `.github/prompts/` | GitHub Copilot 用プロンプト（`build_prompts.py` で自動生成） |
@@ -46,7 +47,7 @@
 
 ## プロンプトの管理
 
-プロンプトの正本は `prompts/` ディレクトリにあります。`.claude/commands/` と `.github/prompts/` のファイルは `scripts/build_prompts.py` で自動生成されるため、**直接編集しないでください**。
+プロンプトの正本は `prompts/` ディレクトリにあります。`.agents/skills/`、`.claude/commands/`、`.claude/skills/`、`.github/prompts/` のファイルは `scripts/build_prompts.py` で自動生成されるため、**直接編集しないでください**。
 
 ```bash
 python scripts/build_prompts.py  # プロンプトの再生成
@@ -54,9 +55,10 @@ python scripts/build_prompts.py  # プロンプトの再生成
 
 ## 併用について
 
-このリポジトリは GitHub Copilot と Claude Code の両方で使用できます：
+このリポジトリは Codex、GitHub Copilot、Claude Code の併用を想定しています：
 
 | ツール | コマンド |
 |-------|--------|
 | Claude Code | `/design`, `/build`, `/release` |
 | GitHub Copilot | `/design.admin`, `/build.admin`, `/release.admin` |
+| Codex | `$design-admin`, `$build-admin`, `$release-admin` |

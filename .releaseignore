@@ -5,6 +5,7 @@
 prompts/
 .claude/commands/
 .claude/skills/
+.agents/skills/
 .github/prompts/*.admin.prompt.md
 
 # 開発ツール
