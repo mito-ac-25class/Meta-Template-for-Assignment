@@ -4,6 +4,8 @@ import shutil
 import sys
 from pathlib import Path
 
+import pytest
+
 sys.path.insert(0, str(Path(__file__).parent.parent.parent / "scripts"))
 
 import build_prompts
@@ -90,8 +92,6 @@ def test_build_phase_outputs_raises_for_unknown_phase(tmp_path, monkeypatch):
     (tmp_path / ".claude" / "commands").mkdir(parents=True, exist_ok=True)
     (tmp_path / ".github" / "prompts").mkdir(parents=True, exist_ok=True)
     (tmp_path / ".agents" / "skills").mkdir(parents=True, exist_ok=True)
-
-    import pytest
 
     with pytest.raises(SystemExit, match="Missing PHASE_SKILL_CONFIGS entry for prompt 'unknown'"):
         build_prompts.build_phase_outputs("unknown", {}, "body text", dry_run=False)
